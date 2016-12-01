@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./MainTemplete.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="contenido">
+        <div class="mj_lightgraytbg mj_resumepreview mj_toppadder80 mj_bottompadder80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
+                        <div class="mj_mainheading mj_toppadder20 mj_bottompadder50">
+                            <h1>Resumen de pagos</h1>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mj_bottompadder50">
+                        <div class="woo-cart-table mj_carttable">
+                            <table class="table">
+                                <tr>
+                                    <th></th>
+                                    <th>Descripcion del Trabajo</th>
+                                    <th>Valor Cotizado</th>
+                                    <th>Tiempo Acordado</th>
+                                    <th>Precio Final</th>
+                                </tr>
+                                <tr>
+                                    <td><a href="#"><i class="fa fa-times"></i></a></td>
+                                    <td>
+                                        <h6>#{pagosBean.cotizacionPagar.descripcion}</h6>
+                                        <p><label>Trabajador:</label>#{pagosBean.nombresTrabajador}</p>
+                                        <p><label>FECHA:</label>#{pagosBean.cotizacionPagar.fechaTrabajo}</p>
+                                    </td>
+                                    <td><span>#{pagosBean.presupuestado}</span></td>
+                                    <td>
+                                        <p>#{pagosBean.cotizacionPagar.unidadesTrabajo}</p>
+                                    </td>
+                                    <td><span class="mj_blue_text">#{pagosBean.valorUnitario}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="cart_totals">
+                        <div class="cart-heading">Resumen</div>
+                        <div class="cart-subtotal">
+                            <p>
+                                <label>Subtotal (Dia):</label> <span>#{pagosBean.valorUnitario}</span>
+                            </p>
+                        </div>
+                        <div class="order-total">
+                            <p>
+                                <label>total:</label> <span class="mj_blue_text">#{pagosBean.formatedValorTotal}</span>
+                            </p>
+                        </div>
+                        <div class="mj_showmore">
+                            
+                            <form method="post" action="https://sandbox.gateway.payulatam.com/ppp-web-gateway/">
+                                <input name="merchantId"    type="hidden"  value="#{pagosBean.merchandID}"   />
+                                <input name="accountId"     type="hidden"  value="#{pagosBean.accountID}" />
+                                <input name="description"   type="hidden"  value="Pago de servicios Metropolis"  />
+                                <input name="referenceCode" type="hidden"  value="#{pagosBean.cotizacionPagar.idCotizacion}" />
+                                <input name="amount"        type="hidden"  value="#{pagosBean.valorTotal}"   />
+                                <input name="tax"           type="hidden"  value="0"  />
+                                <input name="taxReturnBase" type="hidden"  value="0" />
+                                <input name="currency"      type="hidden"  value="COP" />
+                                <input name="signature"     type="hidden"  value="#{pagosBean.signature}"  /> <!--ba9ffa71559580175585e45ce70b6c37-->
+                                <input name="test"          type="hidden"  value="1" />
+                                <input name="buyerFullName"    type="hidden"  value="#{pagosBean.nombresCliente}" />
+                                <input name="buyerEmail"    type="hidden"  value="#{pagosBean.mailCliente}" />
+                                <input name="responseUrl"    type="hidden"  value="http://localhost:8080/Metropolis/Front/Payu_landing.xhtml" />
+                                <input name="confirmationUrl"    type="hidden"  value="http://localhost:8080/Metropolis/Front/Payu_landing.xhtml" />
+                                <input name="Submit"  class="mj_showmorebtn mj_bigbtn mj_greenbtn" type="submit"  value="Pagar" />
+                           </form>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+
+
+

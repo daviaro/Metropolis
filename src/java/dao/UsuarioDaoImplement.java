@@ -5,7 +5,6 @@
  */
 package dao;
 
-import java.io.Serializable;
 import java.util.List;
 import model.Usuario;
 import org.hibernate.HibernateException;
@@ -18,7 +17,7 @@ import util.HibernateUtil;
  *
  * @author anfevari
  */
-public class UsuarioDaoImplement implements UsuarioDao,Serializable {
+public class UsuarioDaoImplement implements UsuarioDao {
 
     List<Usuario> usuarios;
     Integer usuariosCount;
@@ -258,6 +257,24 @@ public class UsuarioDaoImplement implements UsuarioDao,Serializable {
         return user;
     }
 
+    @Override
+    public Usuario buscarUsuariobyID(String ID) {
+        Usuario usuario = null;
+        Session session = null;
+        //Se crea un try catch para hacer la consulta
+        String sql = "from Usuario where idUsuario = '" + ID + "'";
+        try {            
+            session = HibernateUtil.getSessionFactory().getCurrentSession();            
+            session.beginTransaction();
+            Query query = session.createQuery(sql);
+            query.setMaxResults(1);
+            usuario = (Usuario) query.uniqueResult();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+        }
+        return usuario;
+    }
     @Override
     public int insertarUsuario2(Usuario usuario) {
         int usuarioID = -1;

@@ -53,8 +53,8 @@ public class PagoUtil {
     public String getMD5(String referencia, int Total) {
 
         //Buscar valores fijos en web.xml /APIKEY, merchandId, currency
-        String ApiKey = "3Tnprb2xKM4F1Ne6jA2WwS5ten";
-        String merchandId = "565605";
+        String ApiKey = "4Vj8eK4rloUd272L48hsrarnUA";
+        String merchandId = getMerchandID();
         String currency = "COP";
         String separador = "~";
         String cadena = ApiKey + separador + merchandId + separador + referencia + separador + String.valueOf(Total) + separador + currency;
@@ -76,4 +76,39 @@ public class PagoUtil {
         return cadena;
     }
     
+    public String getMD5Respuesta(String referencia, String MerchandID, String respuesta, String total) {
+
+        //Buscar valores fijos en web.xml /APIKEY, merchandId, currency
+        String ApiKey = "4Vj8eK4rloUd272L48hsrarnUA";
+        String merchandId = MerchandID;
+        String currency = "COP";
+        String separador = "~";
+        String respuestaCom = respuesta;
+        String cadena = ApiKey + separador + merchandId + separador + referencia + separador + total + separador + currency + separador + respuestaCom;
+        
+        try {
+            MessageDigest ds = MessageDigest.getInstance("MD5");
+            ds.reset();
+            ds.update(cadena.getBytes());
+            byte[] digest = ds.digest();
+            BigInteger bigInt = new BigInteger(1, digest);
+            String hashtext = bigInt.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            cadena = hashtext;
+        } catch (Exception e) {
+
+        }
+        return cadena;
+    }
+    
+    
+    public String getMerchandID(){
+        return "508029";
+    }
+    
+    public String getAccountID(){
+        return "512326";
+    }
 }

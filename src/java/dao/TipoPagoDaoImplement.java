@@ -18,15 +18,19 @@ public class TipoPagoDaoImplement implements TipoPagoDao {
 
     @Override
     public TipoPago buscarTipoPago(String nombre) {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();;
+        Session session = null;
         TipoPago tp = null;
         String sql = "FROM TipoPago WHERE nombre ='" + nombre + "'";
         try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
             tp = (TipoPago) session.createQuery(sql).uniqueResult();
-            session.beginTransaction().commit();
+            session.getTransaction().commit();
         } catch (Exception e) {
-            session.beginTransaction().rollback();
+            if (session != null) {
+                session.beginTransaction().rollback();
+                session.close();
+            }
         }
         return tp;
     }
