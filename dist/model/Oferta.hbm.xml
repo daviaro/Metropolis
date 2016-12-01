@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 4/07/2016 02:03:25 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Oferta" table="oferta" catalog="metropol_contrataciondb" optimistic-lock="version">
+        <id name="idOferta" type="java.lang.Integer">
+            <column name="idOferta" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="jornada" class="model.Jornada" fetch="select">
+            <column name="Jornada_idJornada" not-null="true" />
+        </many-to-one>
+        <many-to-one name="trabajo" class="model.Trabajo" fetch="select">
+            <column name="trabajo_idTrabajo" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuario" class="model.Usuario" fetch="select">
+            <column name="usuario_idUsuarioOferta" not-null="true" />
+        </many-to-one>
+        <property name="costo" type="int">
+            <column name="costo" not-null="true" />
+        </property>
+        <property name="fechaCreacion" type="date">
+            <column name="fecha_creacion" length="10" not-null="true" />
+        </property>
+        <property name="fechaUltimaActualizacion" type="date">
+            <column name="fecha_ultima_actualizacion" length="10" />
+        </property>
+        <property name="fechaLimite" type="date">
+            <column name="fecha_limite" length="10" />
+        </property>
+        <property name="estado" type="boolean">
+            <column name="estado" not-null="true" />
+        </property>
+        <set name="portafolios" table="portafolio" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="oferta_idOferta" not-null="true" />
+            </key>
+            <one-to-many class="model.Portafolio" />
+        </set>
+        <set name="cotizacions" table="cotizacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="oferta_idOferta" not-null="true" />
+            </key>
+            <one-to-many class="model.Cotizacion" />
+        </set>
+    </class>
+</hibernate-mapping>

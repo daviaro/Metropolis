@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 4/07/2016 02:03:25 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.MedicionTrabajo" table="medicion_trabajo" catalog="metropol_contrataciondb" optimistic-lock="version">
+        <id name="idMedicionTrabajo" type="java.lang.Integer">
+            <column name="idMedicionTrabajo" />
+            <generator class="identity" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="45" not-null="true" />
+        </property>
+        <property name="estado" type="boolean">
+            <column name="estado" not-null="true" />
+        </property>
+        <set name="trabajos" table="trabajo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="medicion_trabajo_idMedicionTrabajo" not-null="true" />
+            </key>
+            <one-to-many class="model.Trabajo" />
+        </set>
+    </class>
+</hibernate-mapping>
