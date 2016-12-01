@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Metropolis2/Ciudad de Oportunidades</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="keywords" content=""></meta>
+        <meta name="author" content=""></meta>
+        <meta name="MobileOptimized" content="320"></meta>
+        <link href="/Metropolis2/css/main.css" rel="stylesheet" type="text/css" />
+        <ui:insert name="head"></ui:insert>
+        <link rel="shortcut icon" type="image/png" href="/Metropolis2/images/favicon.png" />
+    </h:head>
+    <body>
+        <div>TODO write content</div>
+        
+        <h:form id="formPrueba">
+        <p:selectOneMenu value="" >
+            <f:selectItems value="#{ofertaBean.categorias}" var="c" itemValue="#{c.idCategoria}" itemLabel="#{c.nombre}" />
+            
+        </p:selectOneMenu>
+        
+             <h:selectOneMenu id="ur_ub1"   value="#{loginBean.usuarioReg.ubicacion.idUbicacion}" required="true" requiredMessage="Por favor seleccione una ubicación" >
+                    <!--<f:selectItem itemLabel="Seleccione Ubicacion" itemValue="" />-->
+                    <f:selectItems value="#{ubicacionBean.ubicaciones}" var="ub" itemLabel="#{ub.barrio}" itemValue="#{ub.idUbicacion}"/>
+                </h:selectOneMenu>
+            
+        </h:form>    
+        
+         <!-- Script Start -->
+        <script src="/Metropolis2/js/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.4.1.js"></script>
+        <script src="/Metropolis2/js/bootstrap.js" type="text/javascript"></script>
+        <script src="/Metropolis2/js/modernizr.custom.js" type="text/javascript"></script>
+        <script type="text/javascript" src="/Metropolis2/js/plugins/rsslider/jquery.themepunch.tools.min.js"></script>
+        <script type="text/javascript" src="/Metropolis2/js/plugins/rsslider/jquery.themepunch.revolution.min.js"></script>
+        <script type="text/javascript" src="/Metropolis2/js/plugins/rsslider/revolution.extension.layeranimation.min.js"></script>
+        <script type="text/javascript" src="/Metropolis2/js/plugins/rsslider/revolution.extension.navigation.min.js"></script>
+        <script type="text/javascript" src="/Metropolis2/js/plugins/rsslider/revolution.extension.parallax.min.js"></script>
+        <script type="text/javascript" src="/Metropolis2/js/plugins/rsslider/revolution.extension.slideanims.min.js"></script>
+        <script src="/Metropolis2/js/plugins/countto/jquery.countTo.js" type="text/javascript"></script>
+        <script src="/Metropolis2/js/plugins/owl/owl.carousel.js" type="text/javascript"></script>
+        <script src="/Metropolis2/js/plugins/bootstrap-slider/bootstrap-slider.js" type="text/javascript"></script>
+        <script src="/Metropolis2/js/plugins/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+        <script src="/Metropolis2/js/plugins/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+        <script src="/Metropolis2/js/jquery.mixitup.js" type="text/javascript"></script>
+        <script src="/Metropolis2/js/plugins/jquery-ui/jquery-ui.js"></script>
+        <script src="/Metropolis2/js/plugins/isotop/isotope.pkgd.js"></script>
+        <script src="/Metropolis2/js/plugins/ckeditor/ckeditor.js"></script>
+        <script src="/Metropolis2/js/plugins/ckeditor/adapters/jquery.js"></script>
+        <script src="/Metropolis2/js/custom.js" type="text/javascript"></script>
+    </body>
+</html>

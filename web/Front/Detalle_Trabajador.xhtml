@@ -1,0 +1,209 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./MainTemplete.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="contenido">
+        <div class="mj_pagetitle2">
+            <div class="mj_pagetitleimg">
+                <img src="../images/FONDO PERFIL.png" alt=""/>
+                <div class="mj_mainheading_overlay"></div>
+            </div>
+            <div class="mj_pagetitle_inner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="mj_mainheading">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <div class="mj_joblogo">
+                                            <p:graphicImage value="#{ofertaBean.ofertaSelected.usuario.foto}" ></p:graphicImage>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                        <div class="mj_pageheading mj_toppadder50">
+                                            <h1><h:outputLabel value="#{(ofertaBean.ofertaSelected.usuario.nombres).concat('  ').concat(ofertaBean.ofertaSelected.usuario.apellidos)}"></h:outputLabel> </h1>
+                                            <ul>
+                                                <li>
+                                                    <label><i class="fa fa-map-marker"></i>
+                                                    </label><a href="#"> <h:outputLabel value="#{ofertaBean.ofertaSelected.usuario.ubicacion.barrio}"></h:outputLabel> </a>
+                                                </li>
+                                                <li>
+                                                    <label>Ocupacion</label><a href="#"><h:outputLabel value="#{ofertaBean.ofertaSelected.usuario.profesion}"></h:outputLabel></a>
+                                                </li>
+                                                <li>
+                                                    <label>Calificacion</label><span class="mj_green_text">*****</span>
+                                                </li>
+                                                <li>
+                                                    <label>Promedio costo trabajo</label><span class="mj_green_text"><h:outputLabel value="#{ofertaBean.ofertaSelected.costo}"><f:convertNumber type="currency" currencyCode="COP" currencySymbol="$" /></h:outputLabel></span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mj_lightgraytbg mj_bottompadder80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
+                        <div class="mj_social_media_section mj_candidatepage_media mj_toppadder40 mj_bottompadder40">
+                            <ul>
+                                <h:form id="form">
+                                    <li><a id="hrefCotizar" href="#" class="mj_mainbtn mj_btnblue" data-text="Cotizar" onclick="jQuery('#form\\:hdnBtn').click();" ><span>Cotizar</span></a>
+                                        <p:commandButton id="hdnBtn" actionListener="#{ofertaBean.toCotizar()}" style="display: none;" />
+                                    </li>
+                                    <li><a href="#" class="mj_mainbtn mj_btnred" data-text="Guardar perfil"><span>guardar perfil</span></a>
+                                    </li>
+                                    
+                                </h:form>
+                            </ul>
+                            <p><a href="#"><i class="fa fa-download"></i></a>
+                            </p>
+                            <p><a href="#"><i class="fa fa-print"></i></a>
+                            </p>
+                            <p><a href="#"><i class="fa fa-share-alt"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="mj_postdiv mj_jobdetail mj_toppadder50 mj_bottompadder50">
+                            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                        <label>Resumen</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                        <div class="mj_detaildiv">
+                                            <p><h:outputLabel value="#{ofertaBean.ofertaSelected.usuario.perfil}"></h:outputLabel></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mj_toppadder30 mj_bottompadder30">
+                                        <div class="mj_divider"></div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                        <label>Trabajo</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                        <div class="mj_detaildiv">
+
+
+                                            <ul>
+                                                <li>
+                                                    <h3>Título</h3><br />
+                                                    <h:outputLabel value="#{ofertaBean.ofertaSelected.trabajo.titulo}"></h:outputLabel>
+                                                </li><br />
+                                                <li>
+                                                    <span>Descripción</span><br />
+                                                    <h:outputLabel value="#{ofertaBean.ofertaSelected.trabajo.descripcion}"></h:outputLabel>
+                                                </li><br />
+                                                <li>
+                                                    <h3>Categoría</h3><br />
+                                                    <h:outputLabel value="#{ofertaBean.ofertaSelected.trabajo.categoria.nombre}"></h:outputLabel>
+                                                </li><br />
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mj_toppadder30 mj_bottompadder30">
+                                        <div class="mj_divider"></div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                        <label>Experiencia</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                        <div class="mj_detaildiv">
+
+                                            <blockquote class="mj_blueblockquote">
+
+                                                <p><h:outputLabel value="#{ofertaBean.ofertaSelected.usuario.experiencia}"></h:outputLabel></p>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mj_toppadder30 mj_bottompadder30">
+                                        <div class="mj_divider"></div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                        <label>Trabajos</label>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                        <div class="mj_detaildiv mj_bottompadder30">
+                                            <span>Muebles, burmsdf, CALI </span>
+                                            <blockquote class="mj_yellowblockquote">
+                                                <span><i class="fa fa-calendar"></i> Jul 2012 - Dec 2013</span>
+                                                <h5>MAderas CCC, CALI</h5>
+                                                <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+                                            </blockquote>
+                                        </div>
+                                        <div class="mj_detaildiv mj_bottompadder30">
+                                            <span>World-span, Ottawa, ON</span>
+                                            <blockquote class="mj_yellowblockquote">
+                                                <span><i class="fa fa-calendar"></i> Jul 2013 - Dec 2014</span>
+                                                <h5>Ventas productos dereivados de la madera</h5>
+                                                <p>Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima.</p>
+                                            </blockquote>
+                                        </div>
+                                        <div class="mj_detaildiv mj_bottompadder30">
+                                            <span>Portilla Puertas (propio)</span>
+                                            <blockquote class="mj_yellowblockquote">
+                                                <span><i class="fa fa-calendar"></i> Jul 2014 - Dec 2015</span>
+                                                <h5>Director de producto</h5>
+                                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mj_bottompadder30">
+                        <div class="mj_about_section mj_toppadder80 mj_bottompadder80">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
+                                    <h1>Acerca del candidato</h1>
+                                    <p>Envato is a bootstrapped Australian company that operates an ecosystem of sites with a global community. We’re passionate about the web, and about enabling creators to make a living doing what they love. At Envato, we make websites that help people from all over the world change the way they earn and learn online.</p>
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-link"></i> Website</a>
+                                        </li>
+                                        <li><a href="#"><i class="fa fa-twitter"></i>Twitter</a>
+                                        </li>
+                                        <li><a href="#"><i class="fa fa-facebook"></i>facebook</a>
+                                        </li>
+                                        <li><a href="#"><i class="fa fa-dribbble"></i>dribbble</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $("#hrefCotizar").on('click', function () {
+                var idOferta = $('#form\\:idOferta').val();
+                document.getElementById("form:idOferta").value = idOferta;
+
+            });
+            $(document).ready(function (){
+                if(#{ofertaBean.esMiOferta()}){
+                    document.getElementById("hrefCotizar").style = "display: none";
+                }else{
+                document.getElementById("hrefCotizar").style = "display: block";
+            }
+            });
+        </script>
+    </ui:define>
+</ui:composition>

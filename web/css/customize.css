@@ -1,0 +1,32 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 27/11/2016, 11:23:03 PM
+    Author     : desarrollo001
+*/
+
+
+.ui-selectonemenu {
+    display: inline-block;
+    position: relative;
+    width: auto;
+    zoom: 1;
+    cursor: pointer;
+    padding-right: 22px;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger {
+    border-right: 0;
+    border-top: 0;
+    border-bottom: 0;
+    cursor: pointer;
+    width: 24px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0 3px;
+}

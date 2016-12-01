@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 4/07/2016 02:03:25 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Liquidacion" table="liquidacion" catalog="contrataciondb" optimistic-lock="version">
+        <id name="idliquidacion" type="java.lang.Integer">
+            <column name="idliquidacion" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="usuario" class="model.Usuario" fetch="select">
+            <column name="usuario_idUsuario" not-null="true" />
+        </many-to-one>
+        <property name="comision" type="int">
+            <column name="comision" not-null="true" />
+        </property>
+        <property name="subtotal" type="int">
+            <column name="subtotal" not-null="true" />
+        </property>
+        <property name="total" type="int">
+            <column name="total" not-null="true" />
+        </property>
+        <property name="pago" type="boolean">
+            <column name="pago" not-null="true" />
+        </property>
+        <property name="fechaPago" type="date">
+            <column name="fecha_pago" length="10" not-null="true" />
+        </property>
+        <property name="fechaLiquidacion" type="date">
+            <column name="fecha_liquidacion" length="10" not-null="true" />
+        </property>
+        <set name="contratos" table="contrato" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="liquidacion_idliquidacion" />
+            </key>
+            <one-to-many class="model.Contrato" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,315 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./MainTemplete_Logeado.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+
+    <ui:define name="contenido">
+        <div class="mj_pagetitle2 mj_bottompadder80">
+            
+            <div class="mj_pagetitle_inner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="mj_mainheading">
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <div class="mj_joblogo">
+                                            <p:graphicImage value="/images/#{loginBean.usuarioLog.foto}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                        <div class="mj_pageheading mj_toppadder50">
+                                            <h1><span>#{loginBean.usuarioLog.nombres} #{loginBean.usuarioLog.apellidos}</span></h1>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mj_lightgraytbg mj_blogsidebar mj_bottompadder80 mj_toppadder80 ">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="mj_sidebar_wrapper">
+                            <aside class="widget widget_posts">
+                                <h4 class="widget-title">Administracion</h4>
+                                <ul>
+                                    <li><a href="cuentaUsuario.xhtml"><i class="fa fa fa-user"></i> Mi cuenta </a>
+                                    </li> 
+                                    <li><a href="administrarTrabajos.xhtml"><i class="fa fa fa-suitcase"></i> Administrar Trabajos </a>
+                                    </li>                                    
+                                </ul>
+                            </aside>                            
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" >
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div id="divPerfil" >
+                                    <div class="mj_postdiv mj_shadow_blue mj_postpage mj_toppadder50 mj_bottompadder50">
+
+                                        <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
+
+
+                                            <div class="mj_mainheading " >
+                                                <h2><span>Modificar Cuenta</span></h2>
+                                            </div>
+                                            <h:form id="formModificarUsuario">
+                                                <p:growl id="growlModificarUsuario" globalOnly="true"/>
+                                                <div class="form-group">
+                                                    <h:outputLabel for="modNombre" value="Nombre Completo" />
+                                                    <p:inplace id="modNombre" editor="true" styleClass="form-control">
+                                                        <p:inputText id="ur_nombre" styleClass="form-control"  
+                                                                     value="#{loginBean.usuarioModificar.nombres}" 
+                                                                     required="true" 
+                                                                     requiredMessage="Como te llamas?"
+                                                                     validatorMessage="Por favor ingrese nombres correctos.">
+                                                            <f:validateLength minimum="2" maximum="45" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_nombre" value="Nombres" />
+                                                        <p:message for="ur_nombre" />
+                                                    </p:inplace>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <h:outputLabel for="modApellido" value="Apellido Completo" />
+                                                    <p:inplace id="modApellido" editor="true" styleClass="form-control">
+                                                        <p:inputText id="ur_apellidos" styleClass="form-control" 
+                                                                     value="#{loginBean.usuarioModificar.apellidos}" 
+                                                                     required="true" 
+                                                                     requiredMessage="Cual es tu apellido?"
+                                                                     validatorMessage="Por favor ingrese apellidos correctos.">
+                                                            <f:validateLength minimum="2" maximum="45" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_apellidos" value="Apellidos" />
+                                                        <p:message for="ur_apellidos" />
+                                                    </p:inplace>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <h:outputLabel for="modDocumento" value="Documento Identidad" />
+                                                    <p:inplace id="modDocumento" editor="true" styleClass="form-control">
+                                                        <p:inputText id="ur_DI" styleClass="form-control"
+                                                                     value="#{loginBean.usuarioModificar.documentoIdentidad}" 
+                                                                     required="true"
+                                                                     requiredMessage="Cual es su documento de identidad?"
+                                                                     validatorMessage="Documento de Identidad incorrecto.">
+                                                            <f:validateLength minimum="2" maximum="11" />
+                                                            <p:clientValidator event="keyup" />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_DI" value="Documento de identidad" />
+                                                        <p:message for="ur_DI" />
+                                                    </p:inplace>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <h:outputLabel for="modTelefono" value="Telefono" />
+                                                    <p:inplace id="modTelefono" editor="true" styleClass="form-control">
+                                                        <p:inputText id="ur_tel" styleClass="form-control"
+                                                                     value="#{loginBean.usuarioModificar.telefono}" 
+                                                                     required="true" 
+                                                                     requiredMessage="Cual es su número de telefono?"
+                                                                     validatorMessage="Telefono incorrecto.">
+                                                            <f:validateLength minimum="4" maximum="45" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_tel" value="Telefono" />
+                                                        <p:message for="ur_tel" />
+                                                    </p:inplace>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <h:outputLabel for="modDireccion" value="Direccion" />
+                                                    <p:inplace id="modDireccion" editor="true" styleClass="form-control">
+                                                        <p:inputText id="ur_dir" styleClass="form-control"  value="#{loginBean.usuarioModificar.direccion}" 
+                                                                     required="true" requiredMessage="Cual es su direccion?">
+                                                            <f:validateLength maximum="45" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_dir" value="Direccion" />
+                                                        <p:message for="ur_dir" />
+                                                    </p:inplace>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <p:outputLabel for="ur_ub" value="Ubicacion"/> 
+                                                    <h:selectOneMenu id="ur_ub" styleClass="custom-select" value="#{loginBean.usuarioModificar.ubicacion.idUbicacion}" required="true" requiredMessage="Por favor seleccione una ubicación" >
+                                                        <f:selectItem itemLabel="Seleccione Ubicacion" itemValue="" />
+                                                        <f:selectItems value="#{ubicacionBean.ubicaciones}" var="ub" itemLabel="#{ub.barrio}" itemValue="#{ub.idUbicacion}"/>
+                                                    </h:selectOneMenu>
+                                                    <h:message for="ur_ub" />
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <h:outputLabel for="modEmail" value="Email" />
+                                                    <p:inplace id="modEmail" editor="true" styleClass="form-control">
+                                                        <p:inputText id="ur_em" styleClass="form-control"  
+                                                                     value="#{loginBean.usuarioModificar.email}" required="true"
+                                                                     size="40" requiredMessage="Cual es su direccion de correo?"
+                                                                     validatorMessage="Formato de correo incorrecto">
+                                                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_em" value="Direccion de correo" />
+                                                        <p:message for="ur_em" />
+                                                    </p:inplace>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <h:outputLabel for="modEmailAlterno" value="Email Alterno" />
+                                                    <p:inplace id="modEmailAlterno" editor="true" styleClass="form-control" emptyLabel="No seleccionado">
+                                                        <p:inputText id="ur_em2" styleClass="form-control" 
+                                                                     value="#{loginBean.usuarioModificar.emailAlterno}" 
+                                                                     size="40" 
+                                                                     validatorMessage="Formato de correo incorrecto" >
+                                                            <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_em2" value="Direccion de correo Alternativo" />
+                                                        <p:message for="ur_em2" />
+                                                    </p:inplace>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <h:outputLabel for="modEmailAlterno2" value="Email Alterno 2" />
+                                                    <p:inplace id="modEmailAlterno2" editor="true" styleClass="form-control" emptyLabel="No seleccionado">
+                                                        <p:inputText id="ur_em3" styleClass="form-control"  
+                                                                     value="#{loginBean.usuarioModificar.emailAlterno2}"  size="40" 
+                                                                     validatorMessage="Formato de correo incorrecto"
+                                                                     >
+                                                            <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_em3" value="Direccion de correo Alternativo 2" />
+                                                        <p:message for="ur_em3" />
+                                                    </p:inplace>
+                                                </div>
+
+                                                <div class="form-group" id="divExperiencia" style="display: #{not empty loginBean.usuarioLog.experiencia}" >
+                                                    <h:outputLabel for="modExperiencia" value="Experiencia" rendered="#{not empty loginBean.usuarioLog.experiencia}"/>
+                                                    <p:inplace id="modExperiencia" editor="true" styleClass="form-control" 
+                                                               rendered="#{not empty loginBean.usuarioLog.experiencia}">
+                                                        <p:inputTextarea id="ue_experiencia" rows="5" cols="30" counter="displayExperiencia" maxlength="300" counterTemplate="{0} caracteres restantes." autoResize="false"
+                                                                         placeholder="Describa brevemente su experiencia laboral" value="#{loginBean.usuarioModificar.experiencia}"
+                                                                         required="true" styleClass="form-control" rendered="#{not empty loginBean.usuarioLog.experiencia}"/>
+                                                        <h:outputText id="displayExperiencia" />
+                                                        <h:messages for="ue_experiencia" rendered="#{not empty loginBean.usuarioLog.experiencia}" />
+                                                    </p:inplace>
+                                                </div>
+
+                                                <div class="form-group" id="divPerfilCuentaUsuario" style="display: #{not empty loginBean.usuarioLog.perfil}">
+                                                    <h:outputLabel for="modPerfil" value="Perfil" rendered="#{not empty loginBean.usuarioLog.perfil}" />
+                                                    <p:inplace id="modPerfil" editor="true" styleClass="form-control"
+                                                               rendered="#{not empty loginBean.usuarioLog.perfil}">
+                                                        <p:inputTextarea id="ue_perfil" rows="5" cols="30" counter="displayPerfil" maxlength="300" counterTemplate="{0} caracteres restantes." autoResize="false"
+                                                                         placeholder="Describa brevemente su perfil" value="#{loginBean.usuarioModificar.perfil}"
+                                                                         required="true" styleClass="form-control" rendered="#{not empty loginBean.usuarioLog.perfil}"/>
+                                                        <h:outputText id="displayPerfil" rendered="#{not empty loginBean.usuarioLog.perfil}"/>
+                                                        <h:messages for="ue_perfil" rendered="#{not empty loginBean.usuarioLog.perfil}"/>
+                                                    </p:inplace>
+                                                </div>
+
+                                                <div class="form-group" id="divProfesion" style="display: #{not empty loginBean.usuarioLog.profesion}">
+                                                    <h:outputLabel for="modProfesion" value="Profesion" rendered="#{not empty loginBean.usuarioLog.profesion}"/>
+                                                    <p:inplace id="modProfesion" editor="true" styleClass="form-control"
+                                                               rendered="#{not empty loginBean.usuarioLog.profesion}">
+                                                        <p:inputTextarea id="ue_profesion" rows="5" cols="30" counter="displayProfesion" maxlength="300" counterTemplate="{0} caracteres restantes." autoResize="false"
+                                                                         placeholder="Describa brevemente su profesion" value="#{loginBean.usuarioModificar.profesion}"
+                                                                         required="true" styleClass="form-control" rendered="#{not empty loginBean.usuarioLog.profesion}"/>
+                                                        <h:outputText id="displayProfesion" rendered="#{not empty loginBean.usuarioLog.profesion}"/>
+                                                        <h:messages for="ue_profesion" rendered="#{not empty loginBean.usuarioLog.profesion}"/>
+                                                    </p:inplace>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <h:outputText value="Modificar Contraseña?" styleClass="form-control" />
+                                                    <h:selectBooleanCheckbox styleClass="form-control" id="sbc1" onclick="hideOrShow(this.checked);" value="true" />                                                            
+                                                </div>
+                                                <div class="form-group" id="divpass">
+                                                    <p:password id="ur_pw" styleClass="form-control"  
+                                                                value="#{loginBean.usuarioModificar.contrasena}" feedback="true"
+                                                                promptLabel="Por favor ingrese una contraseña" 
+                                                                weakLabel="Contraseña Debil" 
+                                                                goodLabel="Contraseña Buena" strongLabel="Contraseña Fuerte"
+                                                                inline="true" disabled="false"
+                                                                match="ur_pw2" 
+                                                                validatorMessage="Contraseña incorrecta o sin coincidencia. Ingrese una contraseña de minimo 8 caracteres." >
+                                                        <f:validateLength minimum="8" maximum="45" ></f:validateLength>
+                                                    </p:password>
+
+                                                    <p:watermark for="ur_pw" value="Contraseña" />
+                                                    <p:message for="ur_pw" id="msg_ur_pw" />
+                                                </div>
+
+                                                <div class="form-group" id="divpass2">
+                                                    <p:password id="ur_pw2" styleClass="form-control" disabled="false"
+                                                                value="#{loginBean.usuarioModificar.contrasena}"
+                                                                validatorMessage="Contraseña incorrecta. Ingrese una contraseña de minimo 8 caracteres. " >
+                                                        <f:validateLength minimum="8" maximum="45" ></f:validateLength>
+                                                    </p:password>                                                        
+
+                                                    <p:watermark for="ur_pw2" value="Confirma tu Contraseña" />
+                                                    <p:message for="ur_pw2" id="msg_ur_pw2" />
+                                                </div>
+
+                                                <div class="mj_showmore">
+                                                    <p:commandLink  styleClass="mj_showmorebtn mj_bigbtn mj_yellowbtn" actionListener="#{loginBean.modificarUsuario()}"
+                                                                    update="growlModificarUsuario formModificarUsuario" validateClient="true">
+                                                        <h:outputText value="Modificar Usuario" />
+                                                    </p:commandLink>
+                                                </div>
+
+
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            function hideOrShow(show) {
+                // Get the panel using its ID
+                var obj = document.getElementById("formModificarUsuario:ur_pw");
+                var div1 = document.getElementById("divpass");
+                var obj2 = document.getElementById("formModificarUsuario:ur_pw2");
+                var div2 = document.getElementById("divpass2");
+                if (show) {
+                    obj.style.display = "block";
+                    obj.disabled = false;
+                    obj2.style.display = "block";
+                    obj2.disabled = false;
+                    div1.style.display = "block";
+                    div2.style.display = "block";
+                } else {
+                    obj.style.display = "none";
+                    obj.disabled = true;
+                    obj2.style.display = "none";
+                    obj2.disabled = true;
+                    div1.style.display = "none";
+                    div2.style.display = "none";
+                }
+            }
+        </script>
+    </ui:define>
+</ui:composition>

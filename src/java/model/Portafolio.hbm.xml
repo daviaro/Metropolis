@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 4/07/2016 02:03:25 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Portafolio" table="portafolio" catalog="contrataciondb" optimistic-lock="version">
+        <id name="idPortafolio" type="java.lang.Integer">
+            <column name="idPortafolio" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="oferta" class="model.Oferta" fetch="select">
+            <column name="oferta_idOferta" not-null="true" />
+        </many-to-one>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="300" not-null="true" />
+        </property>
+        <property name="fechaCreacion" type="date">
+            <column name="fecha_creacion" length="10" not-null="true" />
+        </property>
+        <property name="fechaUltimaActualizacion" type="date">
+            <column name="fecha_ultima_actualizacion" length="10" />
+        </property>
+        <property name="estado" type="boolean">
+            <column name="estado" not-null="true" />
+        </property>
+        <set name="imageneses" table="imagenes" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="portafolio_idPortafolio" not-null="true" />
+            </key>
+            <one-to-many class="model.Imagenes" />
+        </set>
+    </class>
+</hibernate-mapping>

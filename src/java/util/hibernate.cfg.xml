@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/contrataciondb?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">pruebas123</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.format_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <mapping resource="model/Usuario.hbm.xml"/>
+    <mapping resource="model/Comision.hbm.xml"/>
+    <mapping resource="model/Busqueda.hbm.xml"/>
+    <mapping resource="model/Oferta.hbm.xml"/>
+    <mapping resource="model/Contrato.hbm.xml"/>
+    <mapping resource="model/Pago.hbm.xml"/>
+    <mapping resource="model/Jornada.hbm.xml"/>
+    <mapping resource="model/Etiqueta.hbm.xml"/>
+    <mapping resource="model/Imagenes.hbm.xml"/>
+    <mapping resource="model/MedicionTrabajo.hbm.xml"/>
+    <mapping resource="model/Trabajo.hbm.xml"/>
+    <mapping resource="model/Acceso.hbm.xml"/>
+    <mapping resource="model/TipoPago.hbm.xml"/>
+    <mapping resource="model/Rol.hbm.xml"/>
+    <mapping resource="model/Liquidacion.hbm.xml"/>
+    <mapping resource="model/Categoria.hbm.xml"/>
+    <mapping resource="model/Portafolio.hbm.xml"/>
+    <mapping resource="model/Cotizacion.hbm.xml"/>
+    <mapping resource="model/Ubicacion.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

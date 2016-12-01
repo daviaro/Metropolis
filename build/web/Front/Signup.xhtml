@@ -1,0 +1,544 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:body>
+        <ui:composition template="./MainTemplete.xhtml" >
+            <ui:define name="contenido">
+                <div class="mj_transprentbg">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="mj_signup_section mj_yellow_bg">
+                                        <div class="mj_mainheading mj_toppadder80 mj_bottompadder30">
+                                            <h1>Encuentra,</h1>
+                                            <h1>Cotiza
+                                                &amp; Contrata</h1>
+                                        </div>
+                                        <div class="mj_blog_btn">
+                                            <a href="#" class="mj_mainbtn mj_btnblack" data-text="contratar" data-toggle="modal" data-target="#myModal"><span>contratar</span></a>
+                                        </div>
+                                        <div class="mj_signup_section_img">
+                                            <img src="../images/SING_OFERTAR.png" class="img-responsive" alt="contratar"></img>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="mj_signup_section mj_blue_bg">
+                                        <div class="mj_mainheading mj_toppadder80 mj_bottompadder30">
+                                            <h1> TU eres la empresa... Con Metrópolis</h1>
+                                            <h1>tu trabajo llega a más personas</h1>
+                                        </div>
+                                        <div class="mj_blog_btn">
+                                            <a href="#" class="mj_mainbtn mj_btnblack" data-text="trabajar" data-toggle="modal" data-target="#myModal1"><span>trabajar</span></a>
+                                        </div>
+                                        <div class="mj_signup_section_img">
+                                            <img src="../images/SING_TRABAJAR.png" class="img-responsive" alt="trabjar"></img>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <!-- Modal -->
+                <div class="modal fade mj_popupdesign" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel"> Cuenta Cliente</h4>
+                                <p>Ahora podras encontrar la persona idonea, solo ingresa, busca, oferta y espera por un sin numero de posibilidades para darle solucion a esa necesidad.</p>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
+                                    <div class="row">
+                                        <div class="mj_pricingtable mj_yellowtable mj_createaccount_form_wrapper">
+                                            <h:form id="formSignUpClient">
+                                                <p:growl  showDetail="true" life="3000" globalOnly="true" />
+                                                <div class="mj_createaccount_form">
+                                                    <div class="form-group">                                                        
+                                                        <p:inputText id="ur_nombre" label="ur_nombre" styleClass="form-control"  
+                                                                     value="#{loginBean.usuarioReg.nombres}" 
+                                                                     required="true" onkeydown="setaFoco(this)"
+                                                                     requiredMessage="Como te llamas?"
+                                                                     validatorMessage="Por favor ingrese nombres correctos." placeholder="Nombres">
+                                                            <f:validateLength minimum="2" maximum="45" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_nombre" value="Nombres" />
+                                                        <p:message for="ur_nombre" />
+                                                    </div>
+                                                    <div class="form-group">
+
+                                                        <p:inputText id="ur_apellidos" styleClass="form-control" 
+                                                                     value="#{loginBean.usuarioReg.apellidos}" 
+                                                                     required="true" onkeydown="setaFoco(this)"
+                                                                     requiredMessage="Cual es tu apellido?"
+                                                                     validatorMessage="Por favor ingrese apellidos correctos." placeholder="Apellidos">
+                                                            <f:validateLength minimum="2" maximum="45" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_apellidos" value="Apellidos" />
+                                                        <p:message for="ur_apellidos" />
+                                                    </div>
+                                                    <div class="form-group">
+
+                                                        <p:inputText id="ur_DI" styleClass="form-control"
+                                                                     value="#{loginBean.usuarioReg.documentoIdentidad}" 
+                                                                     required="true" 
+                                                                     requiredMessage="Cual es su documento de identidad?"
+                                                                     validatorMessage="Documento de Identidad incorrecto."
+                                                                     placeholder="Documento de Identidad" >
+                                                            <f:validateLength minimum="8" maximum="11" />
+                                                            <p:clientValidator event="keyup" />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_DI" value="Documento de identidad" />
+                                                        <p:message for="ur_DI" />
+                                                    </div>
+                                                    <div class="form-group">
+
+                                                        <p:inputText id="ur_tel" styleClass="form-control"
+                                                                     value="#{loginBean.usuarioReg.telefono}" 
+                                                                     required="true" onkeydown="setaFoco(this)"
+                                                                     requiredMessage="Cual es su número de telefono?"
+                                                                     validatorMessage="Telefono incorrecto."
+                                                                     placeholder="Teléfono">
+                                                            <f:validateLength minimum="4" maximum="45" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_tel" value="Telefono" />
+                                                        <p:message for="ur_tel" />
+                                                    </div>
+                                                    <div class="form-group">
+
+                                                        <p:inputText id="ur_dir" styleClass="form-control"  value="#{loginBean.usuarioReg.direccion}" 
+                                                                     required="true" requiredMessage="Cual es su dirección?" onkeydown="setaFoco(this)" 
+                                                                     placeholder="Dirección">
+                                                            <f:validateLength maximum="45" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_dir" value="Direccion" />
+                                                        <p:message for="ur_dir" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <p:outputLabel for="ur_ub" value="Ubicacion: " /> 
+                                                        <h:selectOneMenu id="ur_ub" styleClass="custom-select" value="#{loginBean.usuarioReg.ubicacion.idUbicacion}" required="true" requiredMessage="Por favor seleccione una ubicación" >
+                                                            <f:selectItem itemLabel="Seleccione Ubicacion" itemValue="" />
+                                                            <f:selectItems value="#{ubicacionBean.ubicaciones}" var="ub" itemLabel="#{ub.barrio}" itemValue="#{ub.idUbicacion}"/>
+                                                        </h:selectOneMenu>
+                                                        <h:message for="ur_ub" />
+                                                    </div>                                            
+                                                    <div class="form-group">
+                                                        <p:inputText id="ur_em" styleClass="form-control"  
+                                                                     value="#{loginBean.usuarioReg.email}" required="true"
+                                                                     onkeydown="setaFoco(this)" size="40" requiredMessage="Cual es su direccion de correo?"
+                                                                     validatorMessage="Formato de correo incorrecto"
+                                                                     placeholder="email">
+                                                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_em" value="Direccion de correo" />
+                                                        <p:message for="ur_em" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <p:password id="ur_pw" styleClass="form-control"  
+                                                                    value="#{loginBean.usuarioReg.contrasena}" feedback="true"
+                                                                    promptLabel="Por favor ingrese una contraseña" 
+                                                                    weakLabel="Contraseña Debil" 
+                                                                    goodLabel="Contraseña Buena" strongLabel="Contraseña Fuerte"
+                                                                    inline="true" required="true" 
+                                                                    requiredMessage="Por favor ingrese su contraseña" match="ur_pw2"
+                                                                    validatorMessage="Contraseña incorrecta o sin coincidencia. Ingrese una contraseña de minimo 8 caracteres." 
+                                                                    placeholder="Contraseña">
+                                                            <f:validateLength minimum="8" maximum="45" ></f:validateLength>
+                                                        </p:password>
+
+                                                        <p:watermark for="ur_pw" value="Contraseña" />
+                                                        <p:message for="ur_pw" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <p:password id="ur_pw2" styleClass="form-control"
+                                                                    value="#{loginBean.usuarioReg.contrasena}" 
+                                                                    required="true" 
+                                                                    requiredMessage="Por favor confirme su contraseña"
+                                                                    validatorMessage="Contraseña incorrecta. Ingrese una contraseña de minimo 8 caracteres. " 
+                                                                    placeholder="Confirmación contraseña">
+                                                            <f:validateLength minimum="8" maximum="45" ></f:validateLength>
+                                                        </p:password>                                                        
+
+                                                        <p:watermark for="ur_pw2" value="Confirma tu Contraseña" />
+                                                        <p:message for="ur_pw2" />
+                                                    </div>
+
+                                                    <!-- Correo alterno -->
+
+                                                    <div class="form-group">
+                                                        <h:outputText value="Ingresar correo Alternativo?" styleClass="form-control"/>
+                                                        <h:selectBooleanCheckbox id="sbc1" onclick="hideOrShow(this.checked);" />
+                                                    </div>
+                                                    <div class="form-group" >
+                                                        <p:inputText id="ur_em2" styleClass="form-control" 
+                                                                     value="#{loginBean.usuarioReg.emailAlterno}" 
+                                                                     onkeydown="setaFoco(this)" size="40" 
+                                                                     validatorMessage="Formato de correo incorrecto"
+                                                                     placeholder="email Alternativo">
+                                                            <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_em2" value="Direccion de correo Alternativo" />
+                                                        <p:message for="ur_em2" />
+                                                    </div>
+
+                                                    <!-- End Correo alterno -->
+
+                                                    <!-- Correo alterno 2 -->
+
+                                                    <div class="form-group">
+                                                        <h:outputText value="Ingresar correo Alternativo 2?" styleClass="form-control" />
+                                                        <h:selectBooleanCheckbox onclick="hideOrShow2(this.checked);" />                                                            
+                                                    </div>
+                                                    <div class="form-group" >
+                                                        <p:inputText id="ur_em3" styleClass="form-control"  
+                                                                     value="#{loginBean.usuarioReg.emailAlterno2}" onkeydown="setaFoco(this)" size="40" 
+                                                                     validatorMessage="Formato de correo incorrecto"
+                                                                     placeholder="otro email Alternativo">
+                                                            <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:watermark for="ur_em3" value="Direccion de correo Alternativo 2" />
+                                                        <p:message for="ur_em3" />
+                                                    </div>
+                                                    <div class="form-group mj_toppadder20">
+                                                        <div class="mj_checkbox">                                                    
+                                                            <p:selectBooleanCheckbox value="#{loginBean.aceptaPoliticas}" label="check2" />                                                    
+                                                        </div>
+                                                        <span>  He leido, entiendo y estoy de acuerdo con los <a href="#">Acuerdos</a> y <a href="#">Politicas de privacidad</a>.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mj_pricing_footer">
+                                                    <p:commandLink id="registroC" validateClient="true" update="formSignUpClient" actionListener="#{loginBean.registrarCliente()}" oncomplete="clicCloseButton()">
+                                                        <h:outputText value="Registrarse ahora!" />
+                                                    </p:commandLink>                                                        
+                                                </div>
+                                            </h:form>
+
+
+
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="../images/close.png" alt=""></img>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade mj_popupdesign" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel1"> Cuenta Trabjador</h4>
+                                <p>a continuacion ingresa tus datos para abrir una cuenta y empezar a trabjar en esta ciudad llena de oportunidades </p>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
+                                    <div class="row">
+                                        <div class="mj_pricingtable mj_bluetable mj_freelancer_form_wrapper">
+                                            <p class="mj_toppadder40">Ingresar Datos</p>
+                                            <h:form id="formSignUpEmpleado">
+                                                <p:growl showDetail="true" life="3000" globalOnly="true" />
+                                                <div class="mj_createaccount_form">
+                                                    <div class="form-group">
+
+                                                        <p:inputText id="ue_nombre" styleClass="form-control"  
+                                                                     value="#{loginBean.empleadoReg.nombres}" 
+                                                                     required="true" onkeydown="setaFocoEmpleado(this)"
+                                                                     requiredMessage="Como te llamas?"
+                                                                     validatorMessage="Por favor ingrese nombres correctos."
+                                                                     placeholder="Nombres">
+                                                            <f:validateLength minimum="2" maximum="45" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+
+                                                        <p:message for="ue_nombre" />
+                                                    </div>
+                                                    <div class="form-group">
+
+                                                        <p:inputText id="ue_apellidos" styleClass="form-control" 
+                                                                     value="#{loginBean.empleadoReg.apellidos}" 
+                                                                     required="true" onkeydown="setaFocoEmpleado(this)"
+                                                                     requiredMessage="Cual es tu apellido?"
+                                                                     validatorMessage="Por favor ingrese apellidos correctos."
+                                                                     placeholder="Apellidos">
+                                                            <f:validateLength minimum="2" maximum="45" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+
+                                                        <p:message for="ue_apellidos" />
+                                                    </div>
+                                                    <div class="form-group">
+
+                                                        <p:inputText id="ue_DI" styleClass="form-control"
+                                                                     value="#{loginBean.empleadoReg.documentoIdentidad}" 
+                                                                     required="true" onkeydown="setaFocoEmpleado(this)"
+                                                                     requiredMessage="Cual es su documento de identidad?"
+                                                                     validatorMessage="Documento de Identidad incorrecto."
+                                                                     placeholder="Documento de identidad">
+                                                            <f:validateLength minimum="2" maximum="11" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+
+                                                        <p:message for="ue_DI" />
+                                                    </div>
+                                                    <div class="form-group">
+
+                                                        <p:inputText id="ue_tel" styleClass="form-control"
+                                                                     value="#{loginBean.empleadoReg.telefono}" 
+                                                                     required="true" onkeydown="setaFocoEmpleado(this)"
+                                                                     requiredMessage="Cual es su número de telefono?"
+                                                                     validatorMessage="Telefono incorrecto."
+                                                                     placeholder="Teléfono">
+                                                            <f:validateLength minimum="4" maximum="45" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+
+                                                        <p:message for="ue_tel" />
+                                                    </div>
+                                                    <div class="form-group">
+
+                                                        <p:inputText id="ue_dir" styleClass="form-control"  value="#{loginBean.empleadoReg.direccion}" required="true" requiredMessage="Cual es su dirección?" 
+                                                                     onkeydown="setaFocoEmpleado(this)" placeholder="Dirección" >
+                                                            <f:validateLength maximum="45" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+
+                                                        <p:message for="ue_dir" />
+                                                    </div>
+                                                    <!-- TODO: Foto sin implementar
+                                                    <div class="form-group">
+                                                        <p:outputLabel for="ue_foto" value="Foto: " style="display: none " /> 
+                                                        <p:inputText id="ue_foto" styleClass="form-control" pt:placeholder="Direccion"  value="#{loginBean.empleadoReg.direccion}" required="true" onkeydown="setaFocoEmpleado(this)" >
+                                                            <f:validateLength maximum="45" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:message for="ue_foto" />
+                                                    </div>
+                                                    -->
+                                                    <div class="form-group">
+                                                        <p:outputLabel for="ue_ub" value="Ubicación: " /> 
+                                                        <h:selectOneMenu id="ue_ub" styleClass="custom-select" value="#{loginBean.empleadoReg.ubicacion.idUbicacion}" required="true" requiredMessage="Por favor seleccione una uicación" >
+                                                            <f:selectItem itemLabel="Seleccione Ubicacion" itemValue="" />
+                                                            <f:selectItems value="#{ubicacionBean.ubicaciones}" var="ub" itemLabel="#{ub.barrio}" itemValue="#{ub.idUbicacion}"/>
+                                                        </h:selectOneMenu>
+                                                        <h:message for="ue_ub" />
+                                                    </div>
+
+                                                    <div class="form-group" >
+                                                        <p:outputLabel for="ue_perfil" value="Perfíl" />
+
+                                                        <p:inputTextarea id="ue_perfil" rows="5" cols="30" counter="displayPerfil" maxlength="300" counterTemplate="{0} caracteres restantes." autoResize="false"
+                                                                         placeholder="Describa brevemente su perfil" value="#{loginBean.empleadoReg.perfil}"
+                                                                         required="true" styleClass="form-control"/>
+                                                        <h:outputText id="displayPerfil" />
+                                                        <h:messages for="ue_perfil" />
+                                                    </div>        
+
+                                                    <div class="form-group" >
+                                                        <p:outputLabel for="ue_experiencia" value="Experiencia" />
+
+                                                        <p:inputTextarea id="ue_experiencia" rows="5" cols="30" counter="displayExperiencia" maxlength="300" counterTemplate="{0} caracteres restantes." autoResize="false"
+                                                                         placeholder="Describa brevemente su experiencia laboral" value="#{loginBean.empleadoReg.experiencia}"
+                                                                         required="true" styleClass="form-control"/>
+                                                        <h:outputText id="displayExperiencia" />
+                                                        <h:messages for="ue_experiencia" />
+                                                    </div> 
+
+                                                    <div class="form-group" >
+                                                        <p:outputLabel for="ue_profesion" value="Profesion" />
+
+                                                        <p:inputTextarea id="ue_profesion" rows="5" cols="30" counter="displayProfesion" maxlength="300" counterTemplate="{0} caracteres restantes." autoResize="false"
+                                                                         placeholder="Describa brevemente su profesion" value="#{loginBean.empleadoReg.profesion}"
+                                                                         required="true" styleClass="form-control"/>
+                                                        <h:outputText id="displayProfesion" />
+                                                        <h:messages for="ue_profesion" />
+                                                    </div>        
+
+                                                    <div class="form-group">
+                                                        <p:inputText id="ue_em" styleClass="form-control"  
+                                                                     value="#{loginBean.empleadoReg.email}" required="true"
+                                                                     onkeydown="setaFocoEmpleado(this)" size="40" requiredMessage="Cual es su direccion de correo?"
+                                                                     validatorMessage="Formato de correo incorrecto"
+                                                                     placeholder="Email">
+                                                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+
+                                                        <p:message for="ue_em" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <p:password id="ue_pw" styleClass="form-control"  
+                                                                    value="#{loginBean.empleadoReg.contrasena}" feedback="true"
+                                                                    promptLabel="Por favor ingrese una contraseña" 
+                                                                    weakLabel="Contraseña Debil" 
+                                                                    goodLabel="Contraseña Buena" strongLabel="Contraseña Fuerte"
+                                                                    inline="true" required="true" 
+                                                                    requiredMessage="Por favor ingrese su contraseña" match="ue_pw2"
+                                                                    validatorMessage="Contraseña incorrecta o sin coincidencia. Ingrese una contraseña de minimo 8 caracteres." 
+                                                                    placeholder="Contraseña">
+                                                            <f:validateLength minimum="8" maximum="45" ></f:validateLength>
+                                                        </p:password>
+
+                                                        <p:message for="ue_pw" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <p:password id="ue_pw2" styleClass="form-control"
+                                                                    value="#{loginBean.empleadoReg.contrasena}" 
+                                                                    required="true" 
+                                                                    requiredMessage="Por favor confirme su contraseña"
+                                                                    validatorMessage="Contraseña incorrecta. Ingrese una contraseña de minimo 8 caracteres. " 
+                                                                    placeholder="Confirmar contraseña">
+                                                            <f:validateLength minimum="8" maximum="45" ></f:validateLength>
+                                                        </p:password>                                                        
+
+                                                        <p:message for="ue_pw2" />
+                                                    </div>
+
+                                                    <!-- Correo alterno -->
+
+                                                    <div class="form-group">
+                                                        <h:outputText value="Ingresar correo Alternativo?" styleClass="form-control" />
+                                                        <h:selectBooleanCheckbox id="sbc1" onclick="hideOrShowE(this.checked);" />
+                                                    </div>
+                                                    <div class="form-group" >
+                                                        <p:inputText id="ue_em2" styleClass="form-control" 
+                                                                     value="#{loginBean.empleadoReg.emailAlterno}" 
+                                                                     onkeydown="setaFocoEmpleado(this)" size="40" 
+                                                                     validatorMessage="Formato de correo incorrecto" 
+                                                                     placeholder="Correo Alternativo">
+                                                            <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+
+                                                        <p:message for="ue_em2" />
+                                                    </div>
+
+
+                                                    <!-- End Correo alterno -->
+
+                                                    <!-- Correo alterno 2 -->
+
+                                                    <div class="form-group">
+                                                        <h:outputText value="Ingresar correo Alternativo 2?" styleClass="form-control" />
+                                                        <h:selectBooleanCheckbox onclick="hideOrShowE2(this.checked);" />                                                            
+                                                    </div>
+                                                    <div class="form-group" >
+                                                        <p:inputText id="ue_em3" styleClass="form-control"  
+                                                                     value="#{loginBean.empleadoReg.emailAlterno2}"  onkeydown="setaFocoEmpleado(this)" size="40" 
+                                                                     validatorMessage="Formato de correo incorrecto"
+                                                                     placeholder="Otro Correo Alternativo">
+                                                            <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+
+                                                        <p:message for="ue_em3" />
+                                                    </div>
+
+                                                    <!-- End Correo alterno 2 -->
+                                                    <div class="form-group">
+                                                        <p:outputLabel for="ur_foto2"  styleClass="mj_blue_text" value="Foto:" />
+                                                        <p:fileUpload id="ur_foto2" value="#{loginBean.uploadedFile2}" mode="advanced"
+                                                                      fileUploadListener="#{loginBean.uploadFoto2}" 
+                                                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                                                      multiple="false" auto="true" update="formSignUpEmpleado:image2" process="@this">
+                                                        </p:fileUpload>
+                                                        <p:message for="ur_foto2" />
+
+                                                    </div>
+
+
+                                                    <p:graphicImage styleClass="mj_profileimg" id="image2" 
+                                                                    cache="false" width="50" 
+                                                                    value="#{loginBean.clientImage2 != null ? loginBean.clientImage2 : '/images/perfil-sinfoto.png'}"/>
+
+
+
+                                                </div>
+                                                <div class="mj_pricing_footer">
+                                                    <p:commandLink id="registroE" validateClient="true" update="formSignUpEmpleado, image2" actionListener="#{loginBean.registrarEmpleado()}" oncomplete="clicCloseButton2()">
+                                                        <h:outputText value="Iniciar Ya!" />
+                                                    </p:commandLink>                                                        
+                                                </div>
+                                            </h:form>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="../images/close.png" alt=""></img>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade mj_popupdesign" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel2"> l<span>ogin to my </span> A<span>ccount</span></h4>
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </p>
+                            </div>
+                            <div class="modal-body">
+                                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
+                                    <div class="row">
+                                        <div class="mj_pricingtable mj_greentable mj_login_form_wrapper">
+                                            <form>
+                                                <div class="mj_login_form">
+                                                    <div class="form-group">
+                                                        <input type="text" placeholder="Username or Email" id="usr_name" class="form-control"></input>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="password" placeholder="Your Password" id="usr_password" class="form-control"></input>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mj_toppadder20">
+                                                            <div class="form-group  pull-left">
+                                                                <div class="mj_checkbox">
+                                                                    <input type="checkbox" value="1" id="check4" name="checkbox"></input>
+                                                                    <label for="check4"></label>
+                                                                </div>
+                                                                <span> remember me</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mj_toppadder20">
+                                                            <div class="form-group pull-right">
+                                                                <span><a href="#">forget password ?</a></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mj_pricing_footer">
+                                                    <a href="#">login Now</a>
+                                                </div>
+                                            </form>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="../images/close.png" alt=""></img>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>

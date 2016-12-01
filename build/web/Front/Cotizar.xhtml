@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./MainTemplete_Logeado.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+  
+
+    <ui:define name="contenido">
+        <div class="mj_lightgraytbg mj_resumepreview mj_toppadder80 mj_bottompadder80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
+                        <div class="mj_resume_heading">
+                            <p:graphicImage value="#{ofertaBean.ofertaSelected.usuario.foto}" ></p:graphicImage>
+
+                            <h1>O<span>ferta</span> <span>#{ofertaBean.ofertaSelected.trabajo.titulo}</span></h1>
+                            <ul>
+                                <li>
+                                    <label><i class="fa fa-map-marker"></i>
+                                    </label>#{ofertaBean.ofertaSelected.usuario.ubicacion.barrio}
+                                </li>
+                                <li>
+                                    <label>Categoria</label><h:outputText value="#{ofertaBean.ofertaSelected.trabajo.categoria.nombre}" />
+                                    <h:inputText style="display: none" id="idOferta" value="#{ofertaBean.ofertaSelected.idOferta}" ></h:inputText>
+                                </li>                                 
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h:form id="formCotizacion"> 
+                    <p:growl id="growlCotizacion" sticky="true" showDetail="true" life="3000"  globalOnly="true" />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="mj_postdiv mj_jobdetail mj_toppadder50 mj_bottompadder50">
+                                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                            <label>Resumen Oferta</label>
+                                        </div>
+                                        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                            <div class="mj_detaildiv">
+                                                <span>#{ofertaBean.ofertaSelected.usuario.nombres} #{ofertaBean.ofertaSelected.usuario.apellidos}, #{ofertaBean.ofertaSelected.trabajo.titulo} </span>
+                                                <blockquote class="mj_blueblockquote">                                            
+                                                    <p>Descripcion: #{ofertaBean.ofertaSelected.trabajo.descripcion}</p>
+                                                    <p>Costo: #{ofertaBean.ofertaSelected.costo} / #{ofertaBean.ofertaSelected.trabajo.medicionTrabajo.nombre} </p>
+                                                    <p>Jornada: #{ofertaBean.ofertaSelected.jornada.nombre} </p>
+                                                    <p>Fecha limite #{ofertaBean.ofertaSelected.fechaLimite} </p>
+                                                </blockquote>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mj_toppadder30 mj_bottompadder30">
+                                            <div class="mj_divider"></div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                            <label>Cotizacion</label>
+                                        </div>
+                                        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                            <div class="mj_detaildiv">
+                                                <span>Ingrese los datos del trabajo solicitado</span>
+                                                <blockquote class="mj_yellowblockquote">
+
+                                                    <div class="form-group" >
+                                                        <p:outputLabel for="cFechaTrabajo" value="Fecha Trabajo" />
+                                                        <div class="mj_datepicker">
+                                                            <p:calendar id="cFechaTrabajo" value="#{ofertaBean.cotizacionNueva.fechaTrabajo}" locale="es" 
+                                                                        required="true" requiredMessage="Cuando necesita el trabajo?"
+                                                                        mindate="#{ofertaBean.currentDate}" maxdate="#{ofertaBean.ofertaSelected.fechaLimite}"
+                                                                        placeholder="Fecha de realizacion" pattern="MM/dd/yyyy">
+                                                            </p:calendar>
+                                                            <p:message for="cFechaTrabajo" />
+                                                        </div>
+                                                    </div>                                                    
+                                                    <div class="form-group" >
+                                                        <h:outputLabel for="itvalorPresupuesto" value="Presupuesto" style="font-weight:bold"/>                    
+                                                        <p:inputText id="itvalorPresupuesto" value="#{ofertaBean.cotizacionNueva.valorPresupuesto}" 
+                                                                     label="Costo" styleClass="form-control"
+                                                                     placeholder="Ingrese el valor a pagar" required="true"
+                                                                     requiredMessage="Cual es su presupuesto?" validatorMessage="Valor presupuesto incorrecto.">
+                                                            <f:validateDoubleRange minimum="1" maximum="2147483647" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:message for="itvalorPresupuesto" />
+                                                    </div>
+                                                    <div class="form-group" >
+                                                        <h:outputLabel for="itUnidad" value="Unidades de trabajo : #{ofertaBean.ofertaSelected.trabajo.medicionTrabajo.nombre}" style="font-weight:bold"/>
+                                                        <p:inputText id="itUnidad" value="#{ofertaBean.cotizacionNueva.unidadesTrabajo}" label="Unidades de trabajo" styleClass="form-control"
+                                                                     placeholder="Unidades de trabajo / #{ofertaBean.ofertaSelected.trabajo.medicionTrabajo.nombre}" required="true"
+                                                                     requiredMessage="Cuantas unidades de trabajo necesita?" validatorMessage="Unidades incorrectas. Ingrese un valor numerico.">
+                                                            <f:validateDoubleRange minimum="1" maximum="2147483647" />
+                                                            <p:clientValidator />
+                                                        </p:inputText>
+                                                        <p:message for="itUnidad" />
+                                                    </div>
+                                                    <div class="form-group" >
+                                                        <p:outputLabel for="itDescripcion" value="Descripcion del trabajo" />
+
+                                                        <p:inputTextarea id="itDescripcion" rows="5" cols="30" counter="display" maxlength="300" counterTemplate="{0} caracteres restantes." autoResize="false"
+                                                                         placeholder="Describa brevemente el trabajo que requiere" value="#{ofertaBean.cotizacionNueva.descripcion}"
+                                                                         styleClass="form-control"/>
+                                                        <h:outputText id="display" />
+                                                        <p:messages for="itDescripcion" />
+                                                    </div>
+                                                </blockquote>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="mj_resumepreview_footer">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="row">
+                                    <div class="mj_resume_changeing mj_bluebg">
+                                        <a href="detalleOferta.xhtml"><i class="fa fa-angle-left"></i>Atras</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="row">
+                                    <div class="mj_resume_changeing mj_yellowbg">
+                                        <p:commandLink id="clcotizacion" validateClient="true" update="formCotizacion growlCotizacion" actionListener="#{ofertaBean.enviarCotizacion}" >
+                                            <h:outputText value="Enviar Cotizacion" /><i class="fa fa-angle-right"></i>
+                                        </p:commandLink>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </h:form>
+
+            </div>            
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                //Actualizar valor de costo
+                document.getElementById("formCotizacion:itvalorPresupuesto").value = #{ofertaBean.ofertaSelected.costo};
+                document.getElementById("formCotizacion:itUnidad").value = "";
+            });
+        </script>
+
+    </ui:define>
+
+</ui:composition>
