@@ -53,14 +53,7 @@
                             <ul class="nav navbar-nav">
                                 <li class="active"><a href="index.xhtml">INICIO</a>
                                 </li>
-                                <li><a href="#">BUSCAR TRABAJO</a>
-                                    <ul class="sub_menu">
-                                        <li><a href="Trabajador.xhtml">PERSONALIZADA</a>
-                                        </li>
-                                        <li><a href="Trabajador.xhtml">BUSACAR POR UBICACION</a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                <li><a href="Trabajador.xhtml">BUSCAR TRABAJO</a></li>
                                 <li><a href="Ofertar.xhtml">OFERTAR</a>
                                 </li>
                                 <li><a href="#">COMO FUNCIONA</a>
@@ -75,14 +68,14 @@
                                         </li>
                                         <li><a href="#">COMO TERMINAR TRABAJO</a>
                                         </li>
-                                        <li><a href="Contacto.html">CONTACTO</a>
-                                        </li>
+
                                         <li><a href="Signup.xhtml">CREAR CUENTA</a>
                                         </li>
-                                        <li><a href="login.html">INICIAR SESION</a>
+                                        <li><a href="login.xhtml">INICIAR SESION</a>
                                         </li>
                                     </ul>
                                 </li>
+                                <li><a href="Contacto.xhtml">CONTACTO</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right mj_right_menu mj_withoutlogin_menu">
                                 <li class="mj_searchbtn"><a href="#"><i class="fa fa-search"></i></a>
@@ -209,6 +202,25 @@
                     </div>
                 </div>
             </div>
+
+            <script type="text/javascript">
+                function handleLoginRequest(xhr, status, args) {
+                    if (args.validationFailed || !args.loggedIn) {
+                        //cambio
+                        jQuery('#formLogin').effect("shake", {times: 5}, 100);
+                    } else {
+                        //cambio: ruta enviada desde el bean.
+                        location.href = args.ruta;
+                    }
+                }
+
+                function setaFoco(elemento) {
+                    var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+                    if (keyCode == 13) {
+                        jQuery('#formLogin\\:loginLink').click();
+                    }
+                }
+            </script>
         </div>
 
         <!-- Script Start -->
