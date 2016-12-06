@@ -186,7 +186,7 @@ public class LoginBean implements Serializable {
         this.aceptaPoliticas = aceptaPoliticas;
     }
 
-    public void login(ActionEvent event) {
+    public String login(ActionEvent event) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message;
         String ruta = "";
@@ -214,6 +214,8 @@ public class LoginBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
         context.addCallbackParam("loggedIn", loggedIn);
         context.addCallbackParam("ruta", ruta);
+        
+        return "index";
     }
 
     public boolean isLogged() {
