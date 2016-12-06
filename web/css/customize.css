@@ -30,3 +30,10 @@ and open the template in the editor.
     top: 0;
     padding: 0 3px;
 }
+
+
+.ui-selectonemenu-jornada {
+    
+    width: 100%;
+    font-size: 12px;
+}
