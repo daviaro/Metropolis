@@ -82,7 +82,7 @@
                                         <f:selectItem itemLabel="Seleccione jornada" itemValue="0"  />
                                         <f:selectItems value="#{ofertaBean.jornadas}" var="jor" itemLabel="#{jor.nombre}" itemValue="#{jor.idJornada}" />
 
-                                        <p:clientValidator />
+                                        <!--<p:clientValidator />-->
                                     </p:selectOneMenu>
                                     <p:message for="somJornada" />
                                 </div> 
@@ -91,7 +91,7 @@
                                     <p:inputText id="costo" styleClass="form-control" placeholder="Ingrese el costo de su trabajo" value="#{ofertaBean.ofertaCreate.costo}" 
                                                  required="true" requiredMessage="Cual es el costo de su trabajo?" validatorMessage="El valor ingresado es incorrecto." >
                                         <f:validateDoubleRange minimum="1" maximum="2147483647" />
-                                        <p:clientValidator />
+                                       <!-- <p:clientValidator />-->
                                     </p:inputText>
                                     <p:message for="costo" />
 
