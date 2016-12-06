@@ -49,7 +49,7 @@
                         </div>
                     </div>
                 </div>
-               
+
                 <!-- Modal -->
                 <div class="modal fade mj_popupdesign" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
@@ -198,25 +198,6 @@
                                                         <p:message for="ur_em2" />
                                                     </div>
 
-                                                    <!-- End Correo alterno -->
-
-                                                    <!-- Correo alterno 2 -->
-
-                                                    <div class="form-group">
-                                                        <h:outputText value="Ingresar correo Alternativo 2?" styleClass="form-control" />
-                                                        <h:selectBooleanCheckbox onclick="hideOrShow2(this.checked);" />                                                            
-                                                    </div>
-                                                    <div class="form-group" >
-                                                        <p:inputText id="ur_em3" styleClass="form-control"  
-                                                                     value="#{loginBean.usuarioReg.emailAlterno2}" onkeydown="setaFoco(this)" size="40" 
-                                                                     validatorMessage="Formato de correo incorrecto"
-                                                                     placeholder="otro email Alternativo">
-                                                            <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
-                                                            <p:clientValidator />
-                                                        </p:inputText>
-                                                        <p:watermark for="ur_em3" value="Direccion de correo Alternativo 2" />
-                                                        <p:message for="ur_em3" />
-                                                    </div>
                                                     <div class="form-group mj_toppadder20">
                                                         <div class="mj_checkbox">                                                    
                                                             <p:selectBooleanCheckbox value="#{loginBean.aceptaPoliticas}" label="check2" />                                                    
@@ -432,27 +413,7 @@
                                                     </div>
 
 
-                                                    <!-- End Correo alterno -->
 
-                                                    <!-- Correo alterno 2 -->
-
-                                                    <div class="form-group">
-                                                        <h:outputText value="Ingresar correo Alternativo 2?" styleClass="form-control" />
-                                                        <h:selectBooleanCheckbox onclick="hideOrShowE2(this.checked);" />                                                            
-                                                    </div>
-                                                    <div class="form-group" >
-                                                        <p:inputText id="ue_em3" styleClass="form-control"  
-                                                                     value="#{loginBean.empleadoReg.emailAlterno2}"  onkeydown="setaFocoEmpleado(this)" size="40" 
-                                                                     validatorMessage="Formato de correo incorrecto"
-                                                                     placeholder="Otro Correo Alternativo">
-                                                            <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
-                                                            <p:clientValidator />
-                                                        </p:inputText>
-
-                                                        <p:message for="ue_em3" />
-                                                    </div>
-
-                                                    <!-- End Correo alterno 2 -->
                                                     <div class="form-group">
                                                         <p:outputLabel for="ur_foto2"  styleClass="mj_blue_text" value="Foto:" />
                                                         <p:fileUpload id="ur_foto2" value="#{loginBean.uploadedFile2}" mode="advanced"
@@ -536,7 +497,82 @@
                         </div>
                     </div>
                 </div>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        alert('hola');
+                        //Limpiar value Documento Identidad Cliente
+                        document.getElementById("formSignUpClient:ur_DI").value = "";
+                        document.getElementById("formSignUpClient:ur_em2").style.display = "none";
+                        document.getElementById("formSignUpClient:ur_em3").style.display = "none";
+                        document.getElementById("formSignUpEmpleado:ue_DI").value = "";
+                        document.getElementById("formSignUpEmpleado:ue_em2").style.display = "none";
+                        document.getElementById("formSignUpEmpleado:ue_em3").style.display = "none";
+                        hideOrShow(false);
+                        
 
+                    });
+
+                    function setaFoco(elemento) {
+                        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+                        if (keyCode == 13) {
+                            jQuery('#formSignUpClient\\:registroC').click()();
+                        }
+                    }
+                    function setaFocoEmpleado(elemento) {
+                        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+                        if (keyCode == 13) {
+                            jQuery('#formSignUpEmpleado\\:registroE').click()();
+                        }
+                    }
+
+                    function hideOrShow(show) {
+                        // Get the panel using its ID
+                        var obj = document.getElementById("formSignUpClient:ur_em2");
+                        if (show) {
+                            obj.style.display = "block";
+                        } else {
+                            obj.style.display = "none";
+                        }
+                    }
+
+                    function hideOrShow2(show) {
+                        // Get the panel using its ID
+                        var obj = document.getElementById("formSignUpClient:ur_em3");
+
+                        if (show) {
+                            obj.style.display = "block";
+                        } else {
+                            obj.style.display = "none";
+                        }
+                    }
+                    function hideOrShowE(show) {
+                        // Get the panel using its ID
+                        var obj = document.getElementById("formSignUpEmpleado:ue_em2");
+                        if (show) {
+                            obj.style.display = "block";
+                        } else {
+                            obj.style.display = "none";
+                        }
+                    }
+
+                    function hideOrShowE2(show) {
+                        // Get the panel using its ID
+                        var obj = document.getElementById("formSignUpEmpleado:ue_em3");
+
+                        if (show) {
+                            obj.style.display = "block";
+                        } else {
+                            obj.style.display = "none";
+                        }
+                    }
+
+                    function clicCloseButton() {
+                        document.getElementById("closeBoton").click();
+                    }
+                    function clicCloseButton2() {
+                        document.getElementById("closeBotonE").click();
+                    }
+                </script>
             </ui:define>
         </ui:composition>
 

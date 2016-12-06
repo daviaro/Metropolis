@@ -202,7 +202,7 @@ public class LoginBean implements Serializable {
             }
 
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido ", this.usuarioLog.getNombres());
-            ruta = "/contratacion2/views/front-end/Usuario/inicioUsuario.xhtml";
+            ruta = "/Front/index.xhtml";
             this.usuarioModificar = this.usuarioLog;
         } else {
             this.loggedIn = false;
@@ -225,7 +225,7 @@ public class LoginBean implements Serializable {
     //Metodo para eliminar la session creada
     public void logout() {
         //Rura de redirecciÃ³n
-        String ruta = "/contratacion2/views/front-end/NoUsuario/index.xhtml";
+        String ruta = "/Front/index.xhtml";
         //Instancia actual
         RequestContext context = RequestContext.getCurrentInstance();
         FacesContext facesContext = FacesContext.getCurrentInstance();
