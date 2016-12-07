@@ -7,8 +7,6 @@ package dao;
 
 import java.util.List;
 import model.Categoria;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -20,29 +18,19 @@ import util.HibernateUtil;
  * @author chris
  */
 public class CategoriaDaoImplement implements CategoriaDao{
-    
-    private Logger logger = LogManager.getLogger(CategoriaDaoImplement.class);
 
     @Override
     public List<Categoria> mostrarCategorias() {
-        
-        logger.info("Se incia  ejecucion del metodo mostrarCategorias");
         Session session= HibernateUtil.getSessionFactory().getCurrentSession();
         List<Categoria> lista=null;
         String sql = "FROM Categoria";
-        logger.debug("Consulta a categoria "+sql);
         try{
-            logger.info("Se incia transaccion ");
             session.beginTransaction();
             lista = session.createQuery(sql).list();
-            for(Categoria categoria:lista){
-                logger.debug("Listado de Catergoria {} ", categoria.getNombre());
-            }
-            logger.info("Se obtiene lista de categorias. Tamaño {} ",lista.size());
             session.getTransaction().commit();
         }catch(HibernateException e){
-            session.getTransaction().rollback();    
-            logger.error("Error mostrarCaterogiras [{}] ",e.getMessage());
+            session.getTransaction().rollback();            
+            System.out.println(e.getMessage());
         }
         return lista;
     }
@@ -128,25 +116,16 @@ public class CategoriaDaoImplement implements CategoriaDao{
     
     @Override
     public List<Categoria> mostrarCategoriasPrincipales() {
-        
-        logger.info("Se incia  ejecucion del metodo mostrarCategoriasPrincipales");
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         List<Categoria> lista = null;
-        String sql = "FROM Categoria c WHERE categoria = null ";
-        logger.debug("Consulta a categoria "+sql);
-               // + "WHERE categoria = null";
+        String sql = "FROM Categoria c WHERE categoria = null";
         try {
-            logger.info("Se incia transaccion ");
             session.beginTransaction();
             lista = session.createQuery(sql).list();
-            for(Categoria categoria:lista){
-                logger.debug("Listado de Catergoria {} ", categoria.getNombre());
-            }
-            logger.info("Se obtiene lista de categorias. Tamaño {} ",lista.size());
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            logger.error("Error mostrarCaterogirasPrincipales [{}] ",e.getMessage());
+            System.out.println(e.getMessage());
         }
         return lista;
     }
