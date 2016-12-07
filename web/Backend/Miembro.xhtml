@@ -1,0 +1,383 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <body>
+
+        <ui:composition template="/WEB-INF/templates/MainTemplate.xhtml">
+
+            <ui:define name="title">
+                Miembros
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="loading">
+                Cargando Usuarios
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="mj_lightgraytbg mj_toppadder80 mj_bottompadder80">
+                    <div class="container">
+
+                        <p:growl id="msgs" showDetail="true"/> 
+                        <h:form>
+                            <p:commandButton id="btnUsuarioCreate" update=":formCreate" oncomplete="PF('dialogusuariocreate').show()" title="Crear" value="Crear"/>
+                        </h:form>
+                        <p:separator/>
+
+                        <h:form id="formDataTable" >        
+                            <p:dataTable emptyMessage="No se encontraron resultados" styleClass="table table-striped" var="usuario" value="#{usuarioBean.usuarios}" rows="10"
+                                         paginator="true"
+                                         paginatorPosition="bottom" paginatorAlwaysVisible="false"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"> 
+
+                                <f:facet name="header">
+                                    <p:outputPanel>
+                                        <h:outputText value="Usuarios" />                                        
+                                    </p:outputPanel>
+                                </f:facet>
+
+                                <p:column headerText="Id" filterBy="#{usuario.idUsuario}" filterMatchMode="contains">
+                                    <h:outputText value="#{usuario.idUsuario}" />
+                                </p:column>
+                                <p:column headerText="Nombres" filterBy="#{usuario.nombres}" filterMatchMode="contains" >
+                                    <h:outputText value="#{usuario.nombres}" />
+                                </p:column>
+                                <p:column headerText="Apellidos" filterBy="#{usuario.apellidos}" filterMatchMode="contains" >
+                                    <h:outputText value="#{usuario.apellidos}" />
+                                </p:column>
+                                <p:column headerText="Email" filterBy="#{usuario.email}" filterMatchMode="contains">
+                                    <h:outputText value="#{usuario.email}" />
+                                </p:column>                                    
+                                <p:column headerText="Documento Identidad" filterBy="#{usuario.documentoIdentidad}" filterMatchMode="contains">
+                                    <h:outputText value="#{usuario.documentoIdentidad}" />
+                                </p:column>
+                                <p:column headerText="Foto">
+                                    <h:graphicImage value="/images/#{usuario.foto}" alt="user" height="50" width="50" />
+                                </p:column>
+                                <p:column headerText="Estado">
+                                    <h:outputText value="#{usuario.estado}" />
+                                </p:column>
+                                <f:facet name="footer">
+                                    En total hay #{fn:length(usuarioBean.usuarios)} usuarios.
+                                </f:facet>
+
+                                <p:column>
+                                    <p:commandButton update=":formUpdate" oncomplete="PF('dialogusuarioupdate').show()" icon="ui-icon-search" title="Modificar">
+                                        <f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.usuario}" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>  
+
+
+                        <h:form id="formUpdate"> 
+
+                            <p:dialog header="Modificar Usuario" widgetVar="dialogusuarioupdate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgUsuarioUpdate">
+
+                                <h:panelGrid id="display" columns="3"  cellpadding="5" columnClasses="label,value">
+
+                                    <p:outputLabel for="ur_id" styleClass="mj_blue_text" value="Id:" />
+                                    <p:inputText id="ur_id" value="#{usuarioBean.usuario.idUsuario}" disabled="true" />
+                                    <p:message for="ur_id" display="tooltip"/>
+
+
+                                    <p:outputLabel for="ur_em" styleClass="mj_blue_text" value="Email:" />                                    
+                                    <p:inputText id="ur_em"   
+                                                 value="#{usuarioBean.usuario.email}" required="true"
+                                                 requiredMessage="Cual es su direccion de correo?"
+                                                 validatorMessage="Formato de correo incorrecto" placeholder="Direccion de correo">
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_em" />
+
+                                    <p:outputLabel for="ur_nombre" value="Nombres: " styleClass="mj_blue_text" /> 
+                                    <p:inputText id="ur_nombre"   
+                                                 value="#{usuarioBean.usuario.nombres}" 
+                                                 required="true" 
+                                                 requiredMessage="Como te llamas?" placeholder="Nombres"
+                                                 validatorMessage="Por favor ingrese nombres correctos." >
+                                        <f:validateLength minimum="2" maximum="45" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_nombre" />
+
+                                    <p:outputLabel for="ur_apellidos" value="Apellidos: " styleClass="mj_blue_text" /> 
+                                    <p:inputText id="ur_apellidos" 
+                                                 value="#{usuarioBean.usuario.apellidos}" 
+                                                 required="true" placeholder="Apellidos"
+                                                 requiredMessage="Cual es tu apellido?"
+                                                 validatorMessage="Por favor ingrese apellidos correctos.">
+                                        <f:validateLength minimum="2" maximum="45" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_apellidos" />
+
+
+                                    <p:outputLabel for="ur_DI" value="Documento Identidad: " styleClass="mj_blue_text" /> 
+                                    <p:inputText id="ur_DI" 
+                                                 value="#{usuarioBean.usuario.documentoIdentidad}" 
+                                                 required="true" 
+                                                 requiredMessage="Cual es su documento de identidad?"
+                                                 validatorMessage="Documento de Identidad incorrecto."
+                                                 placeholder="Documento de identidad">
+                                        <f:validateLength minimum="2" maximum="11" />
+                                        <p:clientValidator event="keyup" />
+                                    </p:inputText>
+                                    <p:message for="ur_DI" />
+
+                                    <p:outputLabel for="ur_tel" value="Telefono: " styleClass="mj_blue_text" /> 
+                                    <p:inputText id="ur_tel" 
+                                                 value="#{usuarioBean.usuario.telefono}" 
+                                                 required="true"  placeholder="Telefono"
+                                                 requiredMessage="Cual es su número de telefono?"
+                                                 validatorMessage="Telefono incorrecto.">
+                                        <f:validateLength minimum="4" maximum="45" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_tel" />
+
+                                    <p:outputLabel for="ur_dir" value="Direccion: " styleClass="mj_blue_text" /> 
+                                    <p:inputText id="ur_dir" 
+                                                 value="#{usuarioBean.usuario.direccion}"
+                                                 required="true" requiredMessage="Cual es su dirección?" 
+                                                 placeholder="Direccion">
+                                        <f:validateLength maximum="45" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_dir" />
+
+                                    <p:outputLabel for="ur_ubi" value="Ubicacion: " styleClass="mj_blue_text" /> 
+                                    <p:selectOneMenu id="ur_ubi" value="#{usuarioBean.usuario.ubicacion}" styleClass="custom-select"
+                                                     required="true" requiredMessage="Por favor seleccione una ubicación" effect="size" 
+                                                     converter="ubicacionConverter" converterMessage="No se pudo convertir">
+                                        <f:selectItem itemLabel="-- Seleccione --" itemValue="" />
+                                        <f:selectItems value="#{ubicacionBean.ubicaciones}" var="ubi" itemLabel="#{ubi.barrio}" itemValue="#{ubi}"/>
+                                        
+                                    </p:selectOneMenu>
+                                    <p:message for="ur_ubi" />
+
+                                    <p:outputLabel for="ur_pw" styleClass="mj_blue_text" value="Contraseña:" />
+                                    <p:inputText id="ur_pw" value="#{usuarioBean.usuario.contrasena}"
+                                                 required="true" requiredMessage="Por favor ingrese su contraseña"
+                                                 validatorMessage="Contraseña incorrecta. Ingrese una contraseña de minimo 8 caracteres."
+                                                 placeholder="Contraseña">
+                                        <f:validateLength minimum="8" maximum="45" ></f:validateLength>
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_pw" />                                    
+
+
+                                    <p:outputLabel for="ur_em2" styleClass="mj_blue_text" value="Email Alterno:" />                                    
+                                    <p:inputText id="ur_em2"  
+                                                 value="#{usuarioBean.usuario.emailAlterno}"
+                                                 validatorMessage="Formato de correo incorrecto" 
+                                                 placeholder="Direccion de correo">
+                                        <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_em2" />
+
+
+
+                                    <p:outputLabel for="ur_em3" styleClass="mj_blue_text" value="Email Alterno 2:" />                                    
+                                    <p:inputText id="ur_em3" 
+                                                 value="#{usuarioBean.usuario.emailAlterno2}"
+                                                 validatorMessage="Formato de correo incorrecto" 
+                                                 placeholder="Direccion de correo">
+                                        <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_em3" />
+
+                                    <h:outputText styleClass="mj_blue_text" value="Foto:" />
+                                    <p:inputText value="#{usuarioBean.usuario.foto}" />
+                                    <p:separator />
+
+                                    <h:outputText styleClass="mj_blue_text" value="Estado" />
+                                    <p:selectBooleanCheckbox value="#{usuarioBean.usuario.estado}" />
+
+                                    <f:facet name="footer">
+
+                                        <p:commandButton id="btnUpdateAceptar" update=":formDataTable formUpdate :msgs"
+                                                         oncomplete="PF('dialogusuarioupdate').hide()" 
+                                                         actionListener="#{usuarioBean.btnUpdateUsuario(actionEvent)}"
+                                                         icon="fa fa-fw fa-edit" title="Guardar" value="Guardar"
+                                                         validateClient="true"/>
+                                        <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogusuarioupdate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+
+                            </p:dialog>
+                        </h:form>
+                        <h:form id="formCreate" enctype="multipart/form-data">  
+                            <p:dialog header="Crear Usuario" widgetVar="dialogusuariocreate" modal="true" showEffect="fade" hideEffect="blind" resizable="false" id="dlgUsuarioCreate">
+
+                                <h:panelGrid id="display" columns="3"  cellpadding="5" columnClasses="label,value">
+
+
+
+                                    <p:outputLabel for="ur_em" styleClass="mj_blue_text" value="Email:" />                                    
+                                    <p:inputText id="ur_em"   
+                                                 value="#{usuarioBean.createUsuario.email}" required="true"
+                                                 requiredMessage="Cual es su direccion de correo?"
+                                                 validatorMessage="Formato de correo incorrecto" placeholder="Direccion de correo">
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_em" />
+
+                                    <p:outputLabel for="ur_nombre" value="Nombres: " styleClass="mj_blue_text" /> 
+                                    <p:inputText id="ur_nombre"   
+                                                 value="#{usuarioBean.createUsuario.nombres}" 
+                                                 required="true" 
+                                                 requiredMessage="Como te llamas?" placeholder="Nombres"
+                                                 validatorMessage="Por favor ingrese nombres correctos." >
+                                        <f:validateLength minimum="2" maximum="45" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_nombre" />
+
+                                    <p:outputLabel for="ur_apellidos" value="Apellidos: " styleClass="mj_blue_text" /> 
+                                    <p:inputText id="ur_apellidos" 
+                                                 value="#{usuarioBean.createUsuario.apellidos}" 
+                                                 required="true" placeholder="Apellidos"
+                                                 requiredMessage="Cual es tu apellido?"
+                                                 validatorMessage="Por favor ingrese apellidos correctos.">
+                                        <f:validateLength minimum="2" maximum="45" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_apellidos" />
+
+
+                                    <p:outputLabel for="ur_DI" value="Documento Identidad: " styleClass="mj_blue_text" /> 
+                                    <p:inputText id="ur_DI" 
+                                                 value="#{usuarioBean.createUsuario.documentoIdentidad}" 
+                                                 required="true" 
+                                                 requiredMessage="Cual es su documento de identidad?"
+                                                 validatorMessage="Documento de Identidad incorrecto."
+                                                 placeholder="Documento de identidad">
+                                        <f:validateLength minimum="2" maximum="11" />
+                                        <p:clientValidator event="keyup" />
+                                    </p:inputText>
+                                    <p:message for="ur_DI" />
+
+                                    <p:outputLabel for="ur_tel" value="Telefono: " styleClass="mj_blue_text" /> 
+                                    <p:inputText id="ur_tel" 
+                                                 value="#{usuarioBean.createUsuario.telefono}" 
+                                                 required="true"  placeholder="Telefono"
+                                                 requiredMessage="Cual es su número de telefono?"
+                                                 validatorMessage="Telefono incorrecto.">
+                                        <f:validateLength minimum="4" maximum="45" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_tel" />
+
+                                    <p:outputLabel for="ur_dir" value="Direccion: " styleClass="mj_blue_text" /> 
+                                    <p:inputText id="ur_dir" 
+                                                 value="#{usuarioBean.createUsuario.direccion}"
+                                                 required="true" requiredMessage="Cual es su dirección?" 
+                                                 placeholder="Direccion">
+                                        <f:validateLength maximum="45" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_dir" />
+                                    
+                                    <p:outputLabel for="ur_ubi" value="Ubicacion: " styleClass="mj_blue_text" /> 
+                                    <p:selectOneMenu id="ur_ubi" value="#{usuarioBean.createUsuario.ubicacion}" styleClass="custom-select"
+                                                     required="true" requiredMessage="Por favor seleccione una ubicación" effect="size" 
+                                                     converter="ubicacionConverter" converterMessage="No se pudo convertir">
+                                        <f:selectItem itemLabel="-- Seleccione --" itemValue="" />
+                                        <f:selectItems value="#{ubicacionBean.ubicaciones}" var="ubi" itemLabel="#{ubi.barrio}" itemValue="#{ubi}"/>
+                                        <p:clientValidator />
+                                    </p:selectOneMenu>
+                                    <p:message for="ur_ubi" />
+
+                                    <p:outputLabel for="ur_pw" styleClass="mj_blue_text" value="Contraseña:" />
+                                    <p:inputText id="ur_pw" value="#{usuarioBean.createUsuario.contrasena}"
+                                                 required="true" requiredMessage="Por favor ingrese su contraseña"
+                                                 validatorMessage="Contraseña incorrecta. Ingrese una contraseña de minimo 8 caracteres."
+                                                 placeholder="Contraseña">
+                                        <f:validateLength minimum="8" maximum="45" ></f:validateLength>
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_pw" />                                    
+
+
+                                    <p:outputLabel for="ur_em2" styleClass="mj_blue_text" value="Email Alterno:" />                                    
+                                    <p:inputText id="ur_em2"  
+                                                 value="#{usuarioBean.createUsuario.emailAlterno}"
+                                                 validatorMessage="Formato de correo incorrecto" 
+                                                 placeholder="Direccion de correo">
+                                        <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_em2" />
+
+
+
+                                    <p:outputLabel for="ur_em3" styleClass="mj_blue_text" value="Email Alterno 2:" />                                    
+                                    <p:inputText id="ur_em3" 
+                                                 value="#{usuarioBean.createUsuario.emailAlterno2}"
+                                                 validatorMessage="Formato de correo incorrecto" 
+                                                 placeholder="Direccion de correo">
+                                        <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
+                                        <p:clientValidator />
+                                    </p:inputText>
+                                    <p:message for="ur_em3" />
+
+                                    <p:outputLabel for="ur_foto"  styleClass="mj_blue_text" value="Foto:" />
+                                    <p:fileUpload id="ur_foto" value="#{usuarioBean.uploadedFile}" mode="advanced"
+                                                  fileUploadListener="#{usuarioBean.uploadFoto}" 
+                                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                                  multiple="false" auto="true" update="image" process="@this">
+                                    </p:fileUpload>
+                                    <p:message for="ur_foto" />
+
+                                    <p:outputLabel styleClass="mj_blue_text" value="Actual:" />
+                                    <p:graphicImage styleClass="mj_profileimg" id="image" 
+                                                    cache="false" width="50" 
+                                                    value="#{usuarioBean.clientImage != null ? usuarioBean.clientImage : '/images/perfil-sinfoto.png'}"/>
+                                    <p:separator />
+
+
+                                    <h:outputText styleClass="mj_blue_text" value="Estado" />
+                                    <p:selectBooleanCheckbox value="#{usuarioBean.createUsuario.estado}" />
+                                    <p:separator />
+
+                                    <f:facet name="footer">
+                                        <p:commandButton id="btnCreateAceptar" update=":formDataTable, :msgs, image" 
+                                                         oncomplete="PF('dialogusuariocreate').hide()" 
+                                                         actionListener="#{usuarioBean.btnCreateUsuario(actionevent)}" 
+                                                         icon="ui-icon-save" title="Guardar" value="Guardar"
+                                                         validateClient="true"/>   
+                                        <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogusuariocreate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
+                                    </f:facet>
+
+                                </h:panelGrid>
+
+                            </p:dialog>
+                        </h:form>
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function () {
+
+                        document.getElementById("liAdminUsuario").className = "active";
+                    });
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

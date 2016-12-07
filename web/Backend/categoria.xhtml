@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+
+        <ui:composition template="./../../backend/Usuario/TemplateA.xhtml">
+
+            <ui:define name="title">
+                Categoria
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="loading">
+                Cargando Categorias
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="mj_lightgraytbg mj_toppadder80 mj_bottompadder80">
+                    <div class="container">
+                        <p:growl id="msgs" showDetail="true"/> 
+                        <h:form>
+                            <p:commandButton id="btnCategoriaCreate" update=":formCreate" oncomplete="PF('dialogcategoriacreate').show()" title="Crear" value="Crear"/>
+                        </h:form>
+                        <p:separator/>
+                        <h:form id="formDataTable">        
+                            <p:dataTable emptyMessage="No se encontraron resultados" styleClass="table table-striped" var="categoria" value="#{categoriaBean.categorias}"  rows="10"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                <p:column filterBy="#{categoria.idCategoria}" filterMatchMode="contains" headerText="Id">
+                                    <h:outputText value="#{categoria.idCategoria}" />
+                                </p:column>
+                                <p:column filterBy="#{categoria.nombre}" filterMatchMode="contains" headerText="Nombre">
+                                    <h:outputText value="#{categoria.nombre}" />
+                                </p:column>
+                                <p:column headerText="Estado">
+                                    <h:outputText value="#{categoria.estado}" />
+                                </p:column>
+                                <p:column headerText="id Subcategoria">                                   
+                                    <h:outputText value="#{categoria.categoria.nombre}" />
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton update=":formUpdate" oncomplete="PF('dialogcategoriaupdate').show()" icon="ui-icon-search" title="Modificar">
+                                        <f:setPropertyActionListener value="#{categoria}" target="#{categoriaBean.selectedCategoria}" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>   
+                        <h:form id="formUpdate"> 
+
+                            <p:dialog header="Modificar Categoria" widgetVar="dialogcategoriaupdate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgCategoriaUpdate">
+
+                                <h:panelGrid id="display" columns="2"  columnClasses="label,value">
+
+                                    <h:outputText class="mj_blue_text"  value="Nombre" />
+                                    <p:inputText value="#{categoriaBean.selectedCategoria.nombre}" />
+
+                                    <h:outputText class="mj_blue_text"  value="Hablitada" />
+                                    <p:selectBooleanCheckbox value="#{categoriaBean.selectedCategoria.estado}"/>
+
+                                    <h:outputText class="mj_blue_text"  value="Categoria" />
+                                    <p:selectOneMenu value="#{categoriaBean.selectedCategoria.categoria}" required="false"
+                                                     converter="categoriaConverter" converterMessage="No se pudo convertir" >
+                                        <f:selectItem  itemLabel="Seleccione Categoria" itemValue=""  />
+                                        <f:selectItems value="#{categoriaBean.categoriasPrincipales}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat}" />
+                                    </p:selectOneMenu>
+                                    
+                                    <f:facet name="footer">
+
+                                        <p:commandButton id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogcategoriaupdate').hide()" actionListener="#{categoriaBean.btnUpdateCategoria(actionEvent)}" icon="ui-icon-save" title="Guardar" value="Guardar"/>
+                                        <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogcategoriaupdate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+
+                            </p:dialog>
+                        </h:form>
+                        <h:form id="formCreate"> 
+                            <p:dialog header="Crear Categoria" widgetVar="dialogcategoriacreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgCategoriaCreate">
+
+                                <h:panelGrid  id="display" columns="2"  columnClasses="label,value">
+
+                                    <h:outputText class="mj_blue_text"  value="Nombre" />
+                                    <p:inputText value="#{categoriaBean.createdCategoria.nombre}" />
+
+                                    <h:outputText class="mj_blue_text"  value="Hablitada" />
+                                    <p:selectBooleanCheckbox value="#{categoriaBean.createdCategoria.estado}"/>
+
+                                    <h:outputText class="mj_blue_text"  value="Categoria" />
+                                    <p:selectOneMenu value="#{categoriaBean.createdCategoria.categoria}" required="false"
+                                                     converter="categoriaConverter" converterMessage="No se pudo convertir">
+                                        <f:selectItem  itemLabel="Seleccione Categoria" itemValue="" />
+                                        <f:selectItems value="#{categoriaBean.categoriasPrincipales}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat}" />
+                                    </p:selectOneMenu>
+
+                                    <f:facet name="footer">
+                                        <p:commandButton id="btnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogcategoriacreate').hide()" actionListener="#{categoriaBean.btnCreateCategoria(actionEvent)}" icon="ui-icon-save" title="Guardar" value="Guardar"/>   
+                                        <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogcategoriacreate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+
+                            </p:dialog>
+                        </h:form>
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function () {
+
+                        document.getElementById("liAdminCategoria").className = "active";
+                    });
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
+

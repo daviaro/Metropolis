@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <body>
+
+        <ui:composition template="./../../backend/Usuario/TemplateA.xhtml">
+
+            <ui:define name="title">
+                Contratos
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="loading">
+                Cargando Contratos
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="mj_lightgraytbg mj_toppadder80 mj_bottompadder80">
+                    <div class="container">
+                        <p:growl id="msgs" globalOnly="true"/> 
+
+
+                        <h:form id="formDataTable" >        
+                            <p:dataTable emptyMessage="No se encontraron contratos vigentes" styleClass="table table-striped"
+                                         value="#{contratoBean.contratos}" var="contrato"  rows="10"
+                                         paginator="true" paginatorPosition="bottom" paginatorAlwaysVisible="false"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"> 
+
+                                <f:facet name="header">
+                                    <p:outputPanel>
+                                        <h:outputText value="Contratos Vigentes" />                                        
+                                    </p:outputPanel>
+                                </f:facet>
+                                <p:column style="width:25px">
+                                    <p:rowToggler />
+                                </p:column>
+
+                                <p:column headerText="Id" filterBy="#{contrato.idContrato}" filterMatchMode="contains">
+                                    <h:outputText value="#{contrato.idContrato}" />
+                                </p:column>
+
+                                <p:column headerText="Fecha" filterBy="#{contrato.fecha}" filterMatchMode="contains">
+                                    <h:outputText value="#{contrato.fecha}" />
+                                </p:column>
+
+                                <p:column headerText="Valor Total" filterBy="#{contrato.valorTotal}" filterMatchMode="contains">
+                                    <h:outputText value="#{contrato.valorTotal}" />
+                                </p:column>
+
+                                <p:column headerText="Nombre Empleado" filterBy="#{contrato.cotizacion.oferta.usuario.nombres}" filterMatchMode="contains">
+                                    <h:outputText value="#{contrato.cotizacion.oferta.usuario.nombres}" />
+                                </p:column>
+                                <p:column headerText="Apellido Empleado" filterBy="#{contrato.cotizacion.oferta.usuario.apellidos}" filterMatchMode="contains">
+                                    <h:outputText value="#{contrato.cotizacion.oferta.usuario.apellidos}" />
+                                </p:column>
+                                
+                                 <p:column headerText="Estado" filterBy="#{contrato.estado}" filterMatchMode="contains">
+                                     <p:selectBooleanCheckbox value="#{contrato.estado}" disabled="true"  />
+                                </p:column>
+                                <p:rowExpansion>
+                                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:300px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Cotizacion" /> 
+                                        </f:facet>
+
+                                        <h:outputText value="Id Cotizacion" style="color: #333333; font-size: 120%;font-family: 'Roboto', sans-serif;"/>                                        
+                                        <h:outputText value="#{contrato.cotizacion.idCotizacion}" />
+
+                                        <h:outputText value="Descripción" style="color: #333333; font-size: 120%;font-family: 'Roboto', sans-serif;" />
+                                        <h:outputText value="#{contrato.cotizacion.descripcion}" />
+
+                                        <h:outputText value="Nombres" style="color: #333333; font-size: 120%;font-family: 'Roboto', sans-serif;"/>                                        
+                                        <h:outputText value="#{contrato.cotizacion.usuario.nombres}" />
+
+                                        <h:outputText value="Apellidos" style="color: #333333; font-size: 120%;font-family: 'Roboto', sans-serif;"/>                                        
+                                        <h:outputText value="#{contrato.cotizacion.usuario.apellidos}" />
+
+                                        <h:outputText value="Calificación" style="color: #333333; font-size: 120%;font-family: 'Roboto', sans-serif;"/>                                        
+                                        <p:rating value="#{contrato.calificacion}" />
+
+                                        <h:outputText value="Comentario" style="color: #333333; font-size: 120%;font-family: 'Roboto', sans-serif;"/>                                        
+                                        <h:outputText value="#{contrato.comentario}" />
+
+                                    </p:panelGrid>
+                                </p:rowExpansion>
+                                <f:facet name="footer">
+                                    En total hay #{fn:length(contratoBean.contratos)} contratos vigentes.
+                                </f:facet>
+
+                                <p:column>
+                                    <p:commandButton update=":formUpdate" oncomplete="PF('dialogcontratoupdate').show()" icon="ui-icon-search" title="Modificar">
+                                        <f:setPropertyActionListener value="#{contrato}" target="#{contratoBean.contratoUpdate}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+                        </h:form>
+
+                        <h:form id="formUpdate"> 
+
+                            <p:dialog header="Modificar Contrato" widgetVar="dialogcontratoupdate" 
+                                      modal="true" showEffect="fade" hideEffect="fade" 
+                                      resizable="false" id="dlgContratoUpdate" height="550">
+
+                                <h:panelGrid id="display" columns="2"  cellpadding="5" columnClasses="label,value">
+
+                                    <h:outputText class="mj_blue_text" value="Id:" />
+                                    <p:inputText id="ur_id" value="#{contratoBean.contratoUpdate.idContrato}" readonly="true" />
+                                    
+                                    <p:outputLabel styleClass="mj_blue_text" value="Fecha:" />
+                                    <p:calendar class="mj_black_text" value="#{contratoBean.contratoUpdate.fecha}" mode="inline"  pattern="MM/dd/yyyy HH:mm:ss" readonly="true" readonlyInput="true" />
+
+                                    <p:outputLabel styleClass="mj_blue_text" value="Valor Total:" />
+                                    <p:inputText value="#{contratoBean.contratoUpdate.valorTotal}" readonly="true" />
+
+                                    <p:outputLabel styleClass="mj_blue_text" value="Nombres y Apellidos Empleado" />
+                                    <p:inputText value="#{contratoBean.contratoUpdate.cotizacion.oferta.usuario.nombres} #{contratoBean.contratoUpdate.cotizacion.oferta.usuario.apellidos}"
+                                                 readonly="true"/>
+
+                                    <p:outputLabel styleClass="mj_blue_text" value="Id Cotizacion" />
+                                    <p:inputText value="#{contratoBean.contratoUpdate.cotizacion.idCotizacion}" readonly="true" />
+
+                                    <p:outputLabel styleClass="mj_blue_text" value="Nombres y Apellidos Cliente" />
+                                    <p:inputText value="#{contratoBean.contratoUpdate.cotizacion.usuario.nombres} #{contratoBean.contratoUpdate.cotizacion.usuario.apellidos}" 
+                                                 readonly="true"/>
+
+                                    <p:outputLabel styleClass="mj_blue_text" value="Descripcion" />
+                                    <p:inputText value="#{contratoBean.contratoUpdate.cotizacion.descripcion}"
+                                                 readonly="true"/>
+
+                                    <p:outputLabel styleClass="mj_blue_text" value="Calificacion" />
+                                    <p:rating value="#{contratoBean.contratoUpdate.calificacion}" readonly="true" />
+
+                                    <p:outputLabel styleClass="mj_blue_text" value="Comentario" />
+                                    <p:inputText value="#{contratoBean.contratoUpdate.comentario}" readonly="true" />
+
+
+                                    <p:outputLabel styleClass="mj_blue_text" value="Habilitado" />
+                                    <p:selectBooleanCheckbox value="#{contratoBean.contratoUpdate.estado}" />
+                                    <f:facet name="footer">
+
+                                        <p:commandButton id="btnUpdateAceptar" update=":formDataTable :msgs"
+                                                         oncomplete="PF('dialogcontratoupdate').hide()" 
+                                                         actionListener="#{contratoBean.btnUpdateContrato(actionEvent)}"
+                                                         icon="fa fa-fw fa-edit" title="Guardar" value="Guardar"/>
+                                        <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogcontratoupdate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+
+                            </p:dialog>
+                        </h:form>
+
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function () {
+
+                        document.getElementById("liAdminContrato").className = "active";
+                    });
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

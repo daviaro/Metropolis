@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+
+        <ui:composition template="./../../backend/Usuario/TemplateA.xhtml">
+
+            <ui:define name="title">
+                Etiqueta
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="loading">
+                Cargando etiquetas
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="mj_lightgraytbg mj_toppadder80 mj_bottompadder80">
+                    <div class="container">
+                        <p:growl id="msgs" showDetail="true" globalOnly="true"/> 
+                        <h:form>
+                            <p:commandButton id="btnEtiquetaCreate" update=":formCreate" oncomplete="PF('dialogetiquetacreate').show()" title="Crear" value="Crear"/>
+                        </h:form>
+                        <p:separator/>
+
+                        <h:form id="formDataTable">        
+                            <p:dataTable emptyMessage="No se encontraron etiquetas" styleClass="table table-striped"
+                                         var="etiqueta" value="#{etiquetaBean.etiquetas}"  rows="10"
+                                         paginator="true" paginatorPosition="bottom"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                <p:column headerText="Id Etiqueta" filterBy="#{etiqueta.idEtiqueta}" filterMatchMode="contains">
+                                    <h:outputText value="#{etiqueta.idEtiqueta}" />
+                                </p:column>
+                                <p:column headerText="Nombre" filterBy="#{etiqueta.nombre}" filterMatchMode="contains">
+                                    <h:outputText value="#{etiqueta.nombre}" />
+                                </p:column>
+                                <p:column headerText="Nombre Categoria" filterBy="#{etiqueta.categoria.nombre}" filterMatchMode="contains">
+                                    <h:outputText value="#{etiqueta.categoria.nombre}" />
+                                </p:column>
+                                <p:column headerText="Estado" filterBy="#{etiqueta.estado}" filterMatchMode="contains">
+                                    <h:outputText value="#{etiqueta.estado}" />
+                                </p:column>
+
+                                <p:column headerText="Detalles">
+                                    <p:commandButton update=":formUpdate" oncomplete="PF('dialogetiquetaupdate').show()" icon="ui-icon-search" title="Modificar">
+                                        <f:setPropertyActionListener value="#{etiqueta}" target="#{etiquetaBean.selectedEtiqueta}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+                        </h:form>   
+
+                        <h:form id="formUpdate"> 
+
+                            <p:dialog header="Modificar Etiqueta" widgetVar="dialogetiquetaupdate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgEtiquetaUpdate">
+
+                                <h:panelGrid id="display" columns="2"  columnClasses="label,value">
+
+                                    <h:outputText class="mj_blue_text"  value="Id:" />
+                                    <p:inputText value="#{etiquetaBean.selectedEtiqueta.idEtiqueta}" disabled="true" />
+
+                                    <h:outputText class="mj_blue_text"  value="Nombre" />
+                                    <p:inputText value="#{etiquetaBean.selectedEtiqueta.nombre}" />
+
+                                    <h:outputText class="mj_blue_text"  value="Categoria" />
+                                    <p:selectOneMenu value="#{etiquetaBean.selectedEtiqueta.categoria}" required="true"
+                                                     requiredMessage="Por favor seleccione una categoria"
+                                                     converter="categoriaConverter" converterMessage="No se pudo convertir">
+                                        <f:selectItem  itemLabel="Seleccione Categoria" itemValue="" />
+                                        <f:selectItems value="#{etiquetaBean.categorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat}" />
+                                    </p:selectOneMenu>
+
+                                    <h:outputText class="mj_blue_text"  value="Habilitada" />
+                                    <p:selectBooleanCheckbox value="#{etiquetaBean.selectedEtiqueta.estado}" />
+
+                                    <f:facet name="footer">
+                                        <p:commandButton id="btnUpdateAceptar" update=":formDataTable,:msgs" oncomplete="PF('dialogetiquetaupdate').hide()" actionListener="#{etiquetaBean.btnUpdateEtiqueta(actionEvent)}" icon="ui-icon-save" title="Guardar" value="Guardar"/>
+                                        <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogetiquetaupdate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+
+                            </p:dialog>
+                        </h:form>
+                        <h:form id="formCreate"> 
+                            <p:dialog header="Crear Etiqueta" widgetVar="dialogetiquetacreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgEtiquetaCreate">
+
+                                <h:panelGrid  id="display" columns="2"  columnClasses="label,value">
+
+                                    <h:outputText class="mj_blue_text"  value="Nombre Etiqueta" />
+                                    <p:inputText value="#{etiquetaBean.createEtiqueta.nombre}" />
+
+                                    <h:outputText class="mj_blue_text"  value="Nombre Categoria" />
+                                    <p:selectOneMenu value="#{etiquetaBean.createEtiqueta.categoria}" required="true"
+                                                     requiredMessage="Por favor seleccione una categoria"
+                                                     converter="categoriaConverter" converterMessage="No se pudo convertir">
+                                        <f:selectItem  itemLabel="Seleccione Categoria" itemValue="" />
+                                        <f:selectItems value="#{etiquetaBean.categorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat}" />
+                                    </p:selectOneMenu>
+
+                                    <h:outputText class="mj_blue_text"  value="Estado" />
+                                    <p:selectBooleanCheckbox value="#{etiquetaBean.createEtiqueta.estado}" />
+
+                                    <f:facet name="footer">
+                                        <p:commandButton id="btnCreateAceptar" update=":formDataTable,:msgs" oncomplete="PF('dialogetiquetacreate').hide()" actionListener="#{etiquetaBean.btnCreateEtiqueta(actionEvent)}" icon="ui-icon-save" title="Guardar" value="Guardar"/>   
+                                        <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogetiquetacreate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+
+                            </p:dialog>
+                        </h:form>
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function () {
+
+                        document.getElementById("liAdminEtiqueta").className = "active";
+                    });
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
+

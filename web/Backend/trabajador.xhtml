@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../backend/Usuario/TemplateA.xhtml">
+
+            <ui:define name="title">
+                Trabajador
+            </ui:define>
+
+            <ui:define name="head">
+            </ui:define>
+
+            <ui:define name="loading">
+                loading
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="mj_lightgraytbg mj_toppadder80 mj_bottompadder80">
+                    <div class="container">
+
+                        <p:growl id="msgs" showDetail="true"/> 
+                        
+                        <h:form id="formDataTable" >        
+                            <p:dataTable emptyMessage="No se encontraron resultados" styleClass="table table-striped" var="usuario" value="#{usuarioBean.usuarios}" rows="10"
+                         paginator="true"
+                         paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"> 
+                                
+                                <p:column headerText="Búsqueda" >
+                                    <h:outputText value="#{usuario.idUsuario}" />
+                                </p:column>
+                                <p:column filterBy="#{usuario.nombres}" filterMatchMode="contains" >
+                                    <h:outputText value="#{usuario.nombres} #{usuario.apellidos}" />
+                                </p:column>
+                                <p:column filterBy="#{usuario.profesion}" filterMatchMode="contains">
+                                    <h:outputText value="#{usuario.profesion}" />
+                                </p:column>
+                                <p:column filterBy="#{usuario.ubicacion.barrio}" filterMatchMode="contains">
+                                    <h:outputText value="#{usuario.ubicacion.barrio}" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{usuario.foto}" />
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton update=":formUpdate" oncomplete="PF('dialogusuarioupdate').show()" icon="ui-icon-search" title="Modificar">
+                                        <f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.usuario}" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>   
+                        <h:form id="formUpdate"> 
+
+                            <p:dialog header="Modificar Usuario" widgetVar="dialogusuarioupdate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgUsuarioUpdate">
+
+                                <h:panelGrid id="display" columns="2"  columnClasses="label,value">
+                                    
+                                    <h:outputText class="mj_blue_text" value="Nombre:" />
+                                    <p:inputText value="#{usuarioBean.usuario.nombres} #{usuarioBean.usuario.apellidos}" readonly="true" />
+                                    
+                                    <h:outputText class="mj_blue_text" value="Experiencia:" />
+                                    <p:inputText value="#{usuarioBean.usuario.experiencia}" />
+
+                                    <h:outputText class="mj_blue_text" value="Profesion:" />
+                                    <p:inputText value="#{usuarioBean.usuario.profesion}" />                                                                       
+                                    
+                                    <h:outputText class="mj_blue_text" value="Perfil:" />
+                                    <p:inputTextarea rows="4" cols="20" autoResize="false" value="#{usuarioBean.usuario.perfil}" />
+                                                                        
+                                                                           
+                                    <h:outputText class="mj_blue_text" value="Ubicacion:" />
+                                    <h:selectOneMenu id="car" value="#{usuarioBean.usuario.ubicacion.idUbicacion}" >
+                                        <f:selectItem itemLabel="-- Seleccione --" itemValue="" />
+                                        <f:selectItems value="#{ubicacionBean.selectOneItemsUbicacion}" />
+                                    </h:selectOneMenu>
+                          
+                                    <f:facet name="footer">
+
+                                        <p:commandButton id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogusuarioupdate').hide()" actionListener="#{usuarioBean.btnUpdateUsuario(actionEvent)}" icon="fa fa-fw fa-edit" title="Guardar" value="Guardar"/>
+                                        <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogusuarioupdate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+
+                            </p:dialog>
+                        </h:form>
+                        <h:form id="formCreate"> 
+                            <p:dialog header="Crear Usuario" widgetVar="dialogusuariocreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgUsuarioCreate">
+
+                                <h:panelGrid  id="display" columns="4"  columnClasses="label,value">
+
+                                    <h:outputText class="mj_blue_text" value="Id:" />
+                                    <p:inputText value="#{usuarioBean.usuario.idUsuario}" />
+
+                                    <h:outputText class="mj_blue_text" value="Email:" />
+                                    <p:inputText value="#{usuarioBean.usuario.email}" />                                                                       
+                                    
+                                    <h:outputText class="mj_blue_text" value="Nombres:" />
+                                    <p:inputText value="#{usuarioBean.usuario.nombres}" />
+                                    
+                                    <h:outputText class="mj_blue_text" value="Email Alterno:" />
+                                    <p:inputText value="#{usuarioBean.usuario.emailAlterno}" />
+                                    
+                                    <h:outputText class="mj_blue_text" value="Apellidos:" />
+                                    <p:inputText value="#{usuarioBean.usuario.apellidos}" />
+                                                                       
+                                    <h:outputText class="mj_blue_text" value="Email Alterno:" />
+                                    <p:inputText value="#{usuarioBean.usuario.emailAlterno2}" />
+                                    
+                                    <h:outputText class="mj_blue_text" value="Documento de Identidad:" />
+                                    <p:inputText value="#{usuarioBean.usuario.documentoIdentidad}" />
+                                    
+                                    <h:outputText class="mj_blue_text" value="Contraseña:" />
+                                    <p:password value="#{usuarioBean.usuario.contrasena}"/>
+                                   
+                                    <h:outputText class="mj_blue_text" value="Direccion:" />
+                                    <p:inputText value="#{usuarioBean.usuario.direccion}" />
+                                    
+                                    <h:outputText class="mj_blue_text" value="Foto:" />
+                                    <p:inputText value="#{usuarioBean.usuario.foto}" />
+                                    
+                                    <h:outputText class="mj_blue_text" value="Telefono:" />
+                                    <p:inputText value="#{usuarioBean.usuario.telefono}" />
+                                    
+                                    <h:outputText class="mj_blue_text" value="Ubicacion:" />
+                                    <h:selectOneMenu id="somUbicacion" value="#{usuarioBean.usuario.ubicacion.idUbicacion}" styleClass="custom-select">
+                                        <f:selectItem itemLabel="-- Seleccione --" itemValue="0" />
+                                        <f:selectItems value="#{ubicacionBean.selectOneItemsUbicacion}"/>
+                                    </h:selectOneMenu>
+
+
+
+                                    <f:facet name="footer">
+                                        <p:commandButton id="btnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogusuariocreate').hide()" actionListener="#{usuarioBean.btnCreateUsuario(actionevent)}" icon="ui-icon-save" title="Guardar" value="Guardar"/>   
+                                        <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogusuariocreate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+
+                            </p:dialog>
+                        </h:form>
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function () {
+
+                        document.getElementById("liAdminTrabajador").className = "active";
+                    });
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../backend/Usuario/TemplateA.xhtml">
+
+            <ui:define name="title">
+                Ubicacion
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="loading">
+                Cargando Ubicaciones
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="mj_lightgraytbg mj_toppadder80 mj_bottompadder80">
+                    <div class="container">
+
+                        <p:growl id="msgs" showDetail="true"/> 
+                        <h:form>
+                            <p:commandButton id="btnUbicacionCreate" update=":formCreate" oncomplete="PF('dialogubicacioncreate').show()" title="Crear" value="Crear"/>
+                        </h:form>
+                        <p:separator/>
+                        <h:form id="formDataTable" >        
+                            <p:dataTable emptyMessage="No se encontraron resultados" styleClass="table table-striped" var="ubicacion" value="#{ubicacionBean.ubicaciones}" 
+                                         rows="10"
+                         paginator="true"
+                         paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"> 
+                                <p:column headerText="Id:" filterBy="#{ubicacion.idUbicacion}" filterMatchMode="contains" >
+                                    <h:outputText value="#{ubicacion.idUbicacion}" />
+                                </p:column>
+                                <p:column headerText="Barrio:" filterBy="#{ubicacion.barrio}" filterMatchMode="contains">
+                                    <h:outputText value="#{ubicacion.barrio}" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{ubicacion.latitud}" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{ubicacion.longitud}" />
+                                </p:column>
+                                <p:column>
+                                    <h:outputText value="#{ubicacion.estado}" />
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton update=":formUpdate" oncomplete="PF('dialogubicacionupdate').show()" icon="ui-icon-search" title="Modificar">
+                                        <f:setPropertyActionListener value="#{ubicacion}" target="#{ubicacionBean.selectedUbicacion}" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>   
+                        <h:form id="formUpdate"> 
+
+                            <p:dialog header="Modificar Ubicación" widgetVar="dialogubicacionupdate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgUbicacionUpdate">
+
+                                <h:panelGrid id="display" columns="2"  columnClasses="label,value">
+                               
+                                    <h:outputText class="mj_blue_text" value="Barrio:" />
+                                    <p:inputText value="#{ubicacionBean.selectedUbicacion.barrio}" />
+
+                                    <h:outputText class="mj_blue_text" value="Latitud:" />
+                                    <p:inputText value="#{ubicacionBean.selectedUbicacion.latitud}" />
+
+                                    <h:outputText class="mj_blue_text" value="Longitud:" />
+                                    <p:inputText value="#{ubicacionBean.selectedUbicacion.longitud}" />
+
+                                    <h:outputText class="mj_blue_text" value="Estado:" />
+                                    <p:selectBooleanCheckbox value="#{ubicacionBean.selectedUbicacion.estado}" />
+                                    <f:facet name="footer">
+
+                                        <p:commandButton id="btnUpdateAceptar" update=":formDataTable :msgs formUpdate" actionListener="#{ubicacionBean.btnUpdateUbicacion}" oncomplete="PF('dialogubicacionupdate').hide()"  icon="ui-icon-save" title="Guardar" value="Guardar"/>
+                                        <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogubicacionupdate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+
+                            </p:dialog>
+                        </h:form>
+                        <h:form id="formCreate"> 
+                            <p:dialog header="Crear Ubicación" widgetVar="dialogubicacioncreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgUbicacionCreate">
+
+                                <h:panelGrid  id="display" columns="2"  columnClasses="label,value">
+
+                                    <h:outputText class="mj_blue_text" value="Barrio:" />
+                                    <p:inputText value="#{ubicacionBean.createdUbicacion.barrio}" required="true" />
+
+                                    <h:outputText class="mj_blue_text" value="Latitud:" />
+                                    <p:inputText value="#{ubicacionBean.createdUbicacion.latitud}" required="false" />
+
+                                    <h:outputText class="mj_blue_text" value="Longitud:" />
+                                    <p:inputText value="#{ubicacionBean.createdUbicacion.longitud}" required="false" />
+
+                                    <h:outputText class="mj_blue_text" value="Estado:" />
+                                    <p:selectBooleanCheckbox value="#{ubicacionBean.createdUbicacion.estado}" required="true" />
+
+
+                                    <f:facet name="footer">
+                                        <p:commandButton id="btnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogubicacioncreate').hide()" actionListener="#{ubicacionBean.btnCreateUbicacion(actionEvent)}" icon="ui-icon-save" title="Guardar" value="Guardar"/>   
+                                        <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogubicacioncreate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+
+                            </p:dialog>
+                        </h:form>
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function () {
+
+                        document.getElementById("liAdminUbicacion").className = "active";
+                    });
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

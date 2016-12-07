@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../backend/Usuario/TemplateA.xhtml">
+
+            <ui:define name="title">
+                Jornada
+            </ui:define>
+
+            <ui:define name="head">
+
+            </ui:define>
+
+            <ui:define name="loading">
+                Cargando Jornadas
+            </ui:define>
+
+            <ui:define name="contenido">
+                <div class="mj_lightgraytbg mj_toppadder80 mj_bottompadder80">
+                    <div class="container">
+
+                        <p:growl id="msgs" showDetail="true"/> 
+                        <h:form>
+                            <p:commandButton id="btnJornadaCreate" update=":formCreate" oncomplete="PF('dialogjornadacreate').show()" title="Crear" value="Crear"/>
+                        </h:form>
+                        <p:separator/>
+                        <h:form id="formDataTable" >        
+                            <p:dataTable emptyMessage="No se encontraron resultados" styleClass="table table-striped" var="jornada" value="#{jornadaBean.jornadas}"  rows="10"
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                <p:column headerText="Id:" filterBy="#{jornada.idJornada}" filterMatchMode="contains"> 
+                                    <h:outputText value="#{jornada.idJornada}" />
+                                </p:column>
+                                <p:column headerText="Nombre:" filterBy="#{jornada.nombre}" filterMatchMode="contains">
+                                    <h:outputText value="#{jornada.nombre}" />
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton update=":formUpdate" oncomplete="PF('dialogjornadaupdate').show()" icon="ui-icon-search" title="Modificar">
+                                        <f:setPropertyActionListener value="#{jornada}" target="#{jornadaBean.selectedJornada}" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>   
+                        <h:form id="formUpdate"> 
+
+                            <p:dialog header="Modificar Jornada" widgetVar="dialogjornadaupdate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgJornadaUpdate">
+
+                                <h:panelGrid id="display" columns="2"  columnClasses="label,value">
+
+                                    <h:outputText class="mj_blue_text" value="Nombre" />
+                                    <p:inputText value="#{jornadaBean.selectedJornada.nombre}" required="true" />
+
+                                    <f:facet name="footer">
+
+                                        <p:commandButton id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogjornadaupdate').hide()" actionListener="#{jornadaBean.btnUpdateJornada(actionEvent)}" icon="ui-icon-save" title="Guardar" value="Guardar"/>
+                                        <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogjornadaupdate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+
+                            </p:dialog>
+                        </h:form>
+                        <h:form id="formCreate"> 
+                            <p:dialog header="Crear Jornada" widgetVar="dialogjornadacreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgJornadaCreate">
+
+                                <h:panelGrid  id="display" columns="2"  columnClasses="label,value">
+
+                                    <h:outputText class="mj_blue_text" value="Nombre" />
+                                    <p:inputText value="#{jornadaBean.createdJornada.nombre}" required="true" />
+
+                                    <f:facet name="footer">
+                                        <p:commandButton id="btnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogjornadacreate').hide()" actionListener="#{jornadaBean.btnCreateJornada(actionEvent)}" icon="ui-icon-save" title="Guardar" value="Guardar"/>   
+                                        <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogjornadacreate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+
+                            </p:dialog>
+                        </h:form>
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function () {
+
+                        document.getElementById("liAdminJornada").className = "active";
+                    });
+                </script>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
