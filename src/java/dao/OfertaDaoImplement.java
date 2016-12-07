@@ -151,11 +151,15 @@ public class OfertaDaoImplement implements OfertaDao {
         List<Oferta> lista = null;
         String sql = "FROM Oferta o INNER JOIN FETCH o.jornada as j INNER JOIN FETCH o.usuario as u INNER JOIN FETCH u.ubicacion as ub INNER JOIN FETCH o.trabajo as t INNER JOIN FETCH o.trabajo.categoria as c INNER JOIN FETCH o.trabajo.medicionTrabajo as m where u.idUsuario = '" + idUsuario + "'" + "order by o.fechaCreacion asc";
         try {
-            session.beginTransaction();
-            lista = session.createQuery(sql).list();
-            session.getTransaction().commit();
+            if (session != null) {
+                session.beginTransaction();
+                lista = session.createQuery(sql).list();
+                session.getTransaction().commit();
+            }
         } catch (HibernateException e) {
-            session.getTransaction().rollback();
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
             System.out.println(e.getMessage());
         }
         return lista;
@@ -168,9 +172,9 @@ public class OfertaDaoImplement implements OfertaDao {
         //Se crea un try catch para hacer la consulta
         String sql = "Select o From Oferta o LEFT JOIN FETCH o.trabajo as tra  LEFT JOIN FETCH tra.categoria as cat "
                 + "LEFT JOIN cat.etiquetas as e "
-                + "WHERE tra.titulo LIKE '%" +query+ "%' OR e.nombre "
-                + "LIKE '%" +query+ "%' OR cat.nombre  "
-                + "LIKE '%" +query+ "%' OR tra.descripcion  LIKE '%" +query+ "%'";
+                + "WHERE tra.titulo LIKE '%" + query + "%' OR e.nombre "
+                + "LIKE '%" + query + "%' OR cat.nombre  "
+                + "LIKE '%" + query + "%' OR tra.descripcion  LIKE '%" + query + "%'";
 
         try {
             //Se recupera la session actual

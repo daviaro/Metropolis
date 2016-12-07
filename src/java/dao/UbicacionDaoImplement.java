@@ -9,8 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import model.Ubicacion;
 import model.Usuario;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -23,29 +21,18 @@ import util.HibernateUtil;
  */
 public class UbicacionDaoImplement implements UbicacionDao {
 
-    
-     private Logger logger = LogManager.getLogger(UbicacionDaoImplement.class);
-    
     @Override
     public List<Ubicacion> mostrarUbicaciones() {
-        logger.info("Ingresando a la operacione mostrarUbicaciones");
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         List<Ubicacion> lista = null;
         String sql = "FROM Ubicacion";
-        logger.info("Script de consulta HQL: ["+sql+"]");
         try {
             session.beginTransaction();
             lista = session.createQuery(sql).list();
-            logger.info("Total registros: [{}]",lista.size());
-            
-            for(Ubicacion ubc:lista){
-                logger.debug("Objeto {} - {} ",ubc.getIdUbicacion().intValue(),ubc.getBarrio());
-            }
-            
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
-            logger.error("Error. mostrarUbicaciones:[{}]",e.getMessage());
+            System.out.println(e.getMessage());
         }
         return lista;
     }
