@@ -76,7 +76,7 @@ public class LoginBean implements Serializable {
      * Creates a new instance of loginBean
      */
     public LoginBean() throws FileNotFoundException {
-        
+
         logger.info("Constructor LoginBean");
 
         this.usuarioDao = new UsuarioDaoImplement();
@@ -93,17 +93,13 @@ public class LoginBean implements Serializable {
             this.empleadoReg.setUbicacion(new Ubicacion());
             this.empleadoReg.setFoto("Sin Foto");
         }
-
-        
-
     }
-    
+
     @PostConstruct
-    void init(){
+    void init() {
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getCurrentInstance().getExternalContext().getContext();
         this.pathImages = servletContext.getRealPath(this.destination);
-        
-        logger.info("Se obtiene la ruta donde se van a despositar y leer imagenes {} ",this.pathImages);
+        logger.info("Se obtiene la ruta donde se van a despositar y leer imagenes {} ", this.pathImages);
     }
 
     public UploadedFile getUploadedFile() {
@@ -200,7 +196,6 @@ public class LoginBean implements Serializable {
                 Rol rol = (Rol) iterator1.next();
                 session.setAttribute(rol.getNombre(), rol.getIdRol());
             }
-
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido ", this.usuarioLog.getNombres());
             ruta = "/Front/index.xhtml";
             this.usuarioModificar = this.usuarioLog;
@@ -212,9 +207,9 @@ public class LoginBean implements Serializable {
             }
         }
         FacesContext.getCurrentInstance().addMessage(null, message);
-        context.addCallbackParam("loggedIn", loggedIn);
-        context.addCallbackParam("ruta", ruta);
-        
+        //context.addCallbackParam("loggedIn", loggedIn);
+        //context.addCallbackParam("ruta", ruta);
+
         return "index";
     }
 
