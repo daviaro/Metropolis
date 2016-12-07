@@ -297,7 +297,7 @@ a:hover, a:focus{
 	cursor:pointer;
 }
 .mj_navmenu .navbar-right {
-	margin-right: -160px;
+	margin-right: -100px;
 }
 .mj_navmenu ul li a:hover {
 	background: transparent;

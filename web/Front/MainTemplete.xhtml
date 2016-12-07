@@ -85,7 +85,12 @@
                                                 <div class="input-group">
                                                     <div class="input-group-addon"><i class="fa fa-search"></i>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Buscar"></input>
+                                                    <p:autoComplete id="acGral" value="#{ofertaBean.ofertaSearchString}" 
+                                                                    completeMethod="#{ofertaBean.buscarOferta}" 
+                                                                    minQueryLength="3" size="55" effect="blind" styleClass="form-control">
+                                                        <p:ajax event="itemSelect"
+                                                                listener="#{ofertaBean.verOferta()}" />
+                                                    </p:autoComplete> 
                                                 </div>
                                             </div>
                                         </form>
