@@ -3,7 +3,7 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 4/07/2016 02:03:25 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="model.Portafolio" table="portafolio" catalog="contrataciondb" optimistic-lock="version">
+    <class name="model.Portafolio" table="portafolio" catalog="metropol_contrataciondb" optimistic-lock="version">
         <id name="idPortafolio" type="java.lang.Integer">
             <column name="idPortafolio" />
             <generator class="identity" />
