@@ -9,11 +9,17 @@
     <property name="hibernate.connection.username">root</property>
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
     <property name="hibernate.connection.username">root</property>
 =======
+=======
+>>>>>>> origin/master
     <property name="hibernate.connection.username">metropol_connMtr</property>
     <property name="hibernate.connection.password">a%F2fVFs=CIZ</property>
 >>>>>>> origin/master
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.format_sql">true</property>

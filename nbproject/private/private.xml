@@ -3,12 +3,36 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/css/customize.css</file>
+=======
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/WEB-INF/log4j2.xml</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/css/main.css</file>
+>>>>>>> origin/master
             <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/Front/Ofertar.xhtml</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/css/fonts.css</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/src/java/model/Categoria.hbm.xml</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/src/java/bean/OfertaBean.java</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/src/java/bean/UbicacionBean.java</file>
             <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/Front/Signup.xhtml</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/src/java/util/hibernate.cfg.xml</file>
             <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/Front/MainTemplete.xhtml</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/src/java/dao/UbicacionDaoImplement.java</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/src/java/dao/CategoriaDaoImplement.java</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/js/custom.js</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/src/java/util/HibernateUtil.java</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/src/java/model/Acceso.hbm.xml</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/css/customize.css</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/Front/PruebasCategorias.xhtml</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/Front/administrarTrabajos.xhtml</file>
             <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/Front/MainTemplete_Logeado.xhtml</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/Front/Crear_Cuenta.html</file>
             <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/web/css/style.css</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/src/java/util/hibernate.reveng.xml</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/src/java/dao/CategoriaDao.java</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/src/java/model/Ubicacion.java</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/src/java/bean/LoginBean.java</file>
+            <file>file:/C:/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/src/java/model/Categoria.java</file>
         </group>
     </open-files>
 </project-private>
