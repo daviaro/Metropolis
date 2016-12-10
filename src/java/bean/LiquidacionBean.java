@@ -23,6 +23,7 @@ import javax.faces.view.ViewScoped;
 import model.Contrato;
 import model.Ubicacion;
 import model.Usuario;
+import org.primefaces.model.DualListModel;
 
 /**
  *
@@ -37,27 +38,36 @@ public class LiquidacionBean implements Serializable {
     private List<String> selectedContratos;
     private List<String> contratos;
     private List<String> selectedOptions;
+
+    private DualListModel<Contrato> contratosDL;
+    private List<Contrato> contratosAliquidar;
+    private List<Contrato> contratosPendientes;
+
     /**
      * Creates a new instance of LiquidacionBean
      */
     @PostConstruct
     public void init() {
         empleadoO = new Usuario();
+        contratosPendientes = getContratosPendientes();
+        contratosAliquidar = new ArrayList<Contrato>();
+        contratosDL = new DualListModel<Contrato>(contratosPendientes,contratosAliquidar);
     }
+
     public LiquidacionBean() {
-        
+
     }
-    
+
     public List<String> buscarEmpleado(String query) {
         UsuarioDao uLink = new UsuarioDaoImplement();
         List<Usuario> usuarios = new LinkedList<>();
         usuarios = uLink.buscarUsuariobyNombre(query);
-        
+
         List<String> results = new ArrayList<String>();
-        for(int i = 0; i < usuarios.size(); i++) {
-            results.add(usuarios.get(i).getNombres()+" "+usuarios.get(i).getApellidos() +" "+usuarios.get(i).getDocumentoIdentidad());
+        for (int i = 0; i < usuarios.size(); i++) {
+            results.add(usuarios.get(i).getNombres() + " " + usuarios.get(i).getApellidos() + " " + usuarios.get(i).getDocumentoIdentidad());
         }
-         
+
         return results;
     }
 
@@ -88,36 +98,65 @@ public class LiquidacionBean implements Serializable {
     public List<String> getContratos() {
         ContratoDao contratoLink = new ContratoDaoImplement();
         List<Contrato> contratosO = contratoLink.findAllContratos(empleadoO);
-        for(int i = 0;i < contratosO.size();i++){
-            contratos.add(contratosO.get(i).getIdContrato()+" / "+contratosO.get(i).getValorTotal());
-        }            
+        for (int i = 0; i < contratosO.size(); i++) {
+            contratos.add(contratosO.get(i).getIdContrato() + " / " + contratosO.get(i).getValorTotal());
+        }
         return contratos;
     }
 
     public void setContratos(List<String> contratos) {
         this.contratos = contratos;
     }
-    
-    
-    public void verContratos(){
+
+    public void verContratos() {
         String[] dividido = empleado.split(" ");
-        String cedula = dividido[dividido.length-1];
+        String cedula = dividido[dividido.length - 1];
         UsuarioDao uLink = new UsuarioDaoImplement();
         empleadoO = uLink.buscarUsuariobyCedula(cedula);
-                
-    }
-    
-    public void mostrarContratos(){
-        System.out.println("mostrarContratos: "+selectedContratos.size());
+
     }
 
-    
+    public void mostrarContratos() {
+        System.out.println("mostrarContratos: " + selectedContratos.size());
+    }
+
     public List<String> getSelectedOptions() {
         return selectedOptions;
     }
- 
+
     public void setSelectedOptions(List<String> selectedOptions) {
         this.selectedOptions = selectedOptions;
     }
-    
+
+    public DualListModel<Contrato> getContratosDL() {
+        if(contratosDL == null){
+            contratosDL = new DualListModel<>(contratosPendientes,contratosAliquidar);
+        }
+        return contratosDL;
+    }
+
+    public void setContratosDL(DualListModel<Contrato> contratosDL) {
+        this.contratosDL = contratosDL;
+    }
+
+    public List<Contrato> getContratosAliquidar() {
+        return contratosAliquidar;
+    }
+
+    public void setContratosAliquidar(List<Contrato> contratosAliquidar) {
+        this.contratosAliquidar = contratosAliquidar;
+    }
+
+    public List<Contrato> getContratosPendientes() {
+        if (contratosDL == null) {
+            ContratoDaoImplement cd = new ContratoDaoImplement();
+            contratosPendientes = cd.findVigentes();
+        }
+        return contratosPendientes;
+    }
+
+    public void setContratosPendientes(List<Contrato> contratosPendientes) {
+        this.contratosPendientes = contratosPendientes;
+    }
+
 }

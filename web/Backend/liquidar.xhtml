@@ -6,58 +6,15 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <body>
-        <ui:composition template="./../../backend/Usuario/TemplateA.xhtml">
+        <ui:composition template="./MainTemplete_Logeado.xhtml">
             <ui:define name="title">
                 Liquidacion
             </ui:define>
             <ui:define name="contenido">
-                <h:form id="formBuscarEmpleado">
-                    <p:growl id="msgs" showDetail="true" globalOnly="true" />
-
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <p:outputLabel value="Empleado:" for="acEmpleado" />
-                        <p:autoComplete id="acEmpleado" value="#{liquidacionBean.empleado}" 
-                                        completeMethod="#{liquidacionBean.buscarEmpleado}" 
-                                        minQueryLength="3"  />
-
-                    </h:panelGrid>
-                    <p:commandButton value="Submit" icon="ui-icon-check" update="msgs :formMostrarContratos:basic" actionListener="#{liquidacionBean.verContratos()}" />
-                </h:form>
-                
-                <h:form id="formMostrarContratos">
-                    <p:panel id="basic" header="Empleado" footer="Detalle de Usuario" style="margin-bottom:20px">
-                    <h:panelGrid columns="2" cellpadding="10">                                
-                        <h:outputText
-                            value="#{liquidacionBean.empleadoO.nombres}" />
-                        <h:outputText
-                            value="#{liquidacionBean.empleadoO.apellidos}" />
-                        <h:outputText
-                            value="#{liquidacionBean.empleadoO.documentoIdentidad}" />
-                        <h:outputText
-                            value="#{liquidacionBean.empleadoO.email}" />
-                    </h:panelGrid>
-                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="10" columnClasses="label, value">
-                        <p:outputLabel for="advanced" value="Advanced:" />
-                        <p:selectManyMenu id="advanced" value="#{liquidacionBean.selectedContratos}" >
-                            <f:selectItems value="#{liquidacionBean.contratos}" var="contra" itemLabel="#{contra}" itemValue="#{contra}" />
-                            
-                        </p:selectManyMenu>
-                    </h:panelGrid>
-                    <p:separator />
-
-                    <p:commandButton value="Submit" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-check" />
-
-                    <p:dialog header="Selected Values" modal="true" showEffect="fade" widgetVar="dlg" resizable="false">
-                        <p:panelGrid columns="2" id="display" columnClasses="label,output">
-
-                            <h:outputText value="Advanced: " />
-                            <p:dataList value="#{liquidacionBean.selectedContratos}" var="t">
-                                <h:outputText value="#{t}" />
-                            </p:dataList>
-                        </p:panelGrid>
-                    </p:dialog>
-
-                </p:panel>
+                <h:form id="forma">
+                    <p:pickList id="picklst" value="#{liquidacionBean.contratosDL}" var="empleados" converter="ContratoConverter" itemLabel="#{empleados}" itemValue="#{empleados}" >
+                        <f:converter converterId="converters.CategoriaConverter"></f:converter>
+                    </p:pickList>
                 </h:form>
             </ui:define>
         </ui:composition>
