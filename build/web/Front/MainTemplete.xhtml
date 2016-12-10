@@ -17,12 +17,13 @@
         <link href="/Metropolis2/css/main.css" rel="stylesheet" type="text/css" />
         <ui:insert name="head"></ui:insert>
         <link rel="shortcut icon" type="image/png" href="/Metropolis2/images/favicon.png" />
+       
     </h:head>
 
     <h:body>
 
         <!--Loader Start -->
-        <div class="mj_preloaded">
+        <!--<div class="mj_preloaded">
             <div class="mj_preloader">
                 <div class="lines">
                     <div class="line line-1"></div>
@@ -32,7 +33,7 @@
 
                 <div class="loading-text">CARGANDO</div>
             </div>
-        </div>
+        </div>-->
         <!--Loader End -->
         <div class="mj_header">
             <div class="container">
@@ -229,8 +230,13 @@
         </div>
 
         <!-- Script Start -->
-        <script src="/Metropolis2/js/jquery-1.11.3.min.js" type="text/javascript"></script>
-        <script src="/Metropolis2/js/jquery-migrate-1.4.1.js" type="text/javascript"></script>
+        <!--<script src="/Metropolis2/js/jquery-ui-1.12.1/external/jquery/jquery.js" type="text/javascript"></script>
+        <script src="/Metropolis2/js/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>-->
+        
+        <!--<script src="/Metropolis2/js/jquery-1.11.3.min.js" type="text/javascript"></script>-->
+        <h:outputScript library="default" name="js/jquery-ui-1.12.1/external/jquery/jquery.js"  />
+        <h:outputScript library="default" name="js/jquery-ui-1.12.1/jquery-ui.min.js"  />
+        <h:outputScript library="default" name="js/jquery-migrate-1.4.1.js"  />
         <script src="/Metropolis2/js/bootstrap.js" type="text/javascript"></script>
         <script src="/Metropolis2/js/modernizr.custom.js" type="text/javascript"></script>
         <script src="/Metropolis2/js/plugins/rsslider/jquery.themepunch.tools.min.js" type="text/javascript"></script>
@@ -245,11 +251,13 @@
         <script src="/Metropolis2/js/plugins/fancybox/jquery.fancybox.js" type="text/javascript"></script>
         <script src="/Metropolis2/js/plugins/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
         <script src="/Metropolis2/js/jquery.mixitup.js" type="text/javascript"></script>
-        <script src="/Metropolis2/js/plugins/jquery-ui/jquery-ui.js"></script>
+        <!--<script src="/Metropolis2/js/plugins/jquery-ui/jquery-ui.js"></script>-->
         <script src="/Metropolis2/js/plugins/isotop/isotope.pkgd.js"></script>
         <script src="/Metropolis2/js/plugins/ckeditor/ckeditor.js"></script>
         <script src="/Metropolis2/js/plugins/ckeditor/adapters/jquery.js"></script>
         <script src="/Metropolis2/js/custom.js" type="text/javascript"></script>
+       
+        
 
     </h:body>
 
