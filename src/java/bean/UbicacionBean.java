@@ -67,6 +67,9 @@ public class UbicacionBean implements Serializable{
         
         UbicacionDao ubicacionDao = new UbicacionDaoImplement();
         this.ubicaciones = ubicacionDao.mostrarUbicaciones();
+        
+        logger.debug("Tamaño de la lista de ubicaciones {} ",this.ubicaciones.size());
+        
         return ubicaciones;
     }
 

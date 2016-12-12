@@ -7,6 +7,8 @@ package dao;
 
 import java.util.List;
 import model.Usuario;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -19,6 +21,7 @@ import util.HibernateUtil;
  */
 public class UsuarioDaoImplement implements UsuarioDao {
 
+    private Logger logger = LogManager.getLogger(UsuarioDaoImplement.class);
     List<Usuario> usuarios;
     Integer usuariosCount;
 
@@ -46,7 +49,7 @@ public class UsuarioDaoImplement implements UsuarioDao {
         try {
             trans = session.beginTransaction();
             session.save(usuario);
-            session.getTransaction().commit();
+            trans.commit();
             flag = true;
         } catch (RuntimeException e) {
             if (trans != null) {
@@ -106,22 +109,40 @@ public class UsuarioDaoImplement implements UsuarioDao {
     public Usuario buscarUsuario(Usuario usuario) {
         Usuario user = null;
         Session session = null;
+        Transaction trans = null;
         //Se crea un try catch para hacer la consulta
         String sql = "From Usuario u LEFT JOIN FETCH u.ubicacion as ubi LEFT JOIN FETCH u.rols as r  LEFT JOIN FETCH u.ofertas as o WHERE email = '" + usuario.getEmail() + "'";
 
         try {
+
+            logger.info("Se ingresa a buscarUsuario");
             //Se recupera la session actual
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             //inicializo transaccion
-            session.beginTransaction();
+            trans = session.beginTransaction();
             Query query = session.createQuery(sql);
-            query.setMaxResults(1);
-            //uniqueResult() para que sea solo un solo resultado
-            user = (Usuario) query.uniqueResult();
-            session.getTransaction().commit();
+
+            List results = query.list();
+            
+            if(!results.isEmpty()){
+                user = (Usuario) query.list().get(0);
+            }else{
+               user = usuario; 
+            }
+           
+            
+            trans.commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
-            session.getTransaction().rollback();
+            if (trans != null) {
+                trans.rollback();
+            }
+            logger.error("Error buscarUsuario [{}] ", e.getMessage());
+
+        }catch (Exception e) {
+            
+            logger.error("Error buscarUsuario [{}] ", e.getMessage());
+
         }
         return user;
     }
@@ -238,7 +259,7 @@ public class UsuarioDaoImplement implements UsuarioDao {
         Usuario user = null;
         Session session = null;
         //Se crea un try catch para hacer la consulta
-        String sql = "From Usuario u WHERE email = '" + usuarioRecuperar.getEmail() + "' AND documentoIdentidad = '"+ usuarioRecuperar.getDocumentoIdentidad()+ "'";
+        String sql = "From Usuario u WHERE email = '" + usuarioRecuperar.getEmail() + "' AND documentoIdentidad = '" + usuarioRecuperar.getDocumentoIdentidad() + "'";
 
         try {
             //Se recupera la session actual
@@ -263,8 +284,8 @@ public class UsuarioDaoImplement implements UsuarioDao {
         Session session = null;
         //Se crea un try catch para hacer la consulta
         String sql = "from Usuario where idUsuario = '" + ID + "'";
-        try {            
-            session = HibernateUtil.getSessionFactory().getCurrentSession();            
+        try {
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
             Query query = session.createQuery(sql);
             query.setMaxResults(1);
@@ -275,6 +296,7 @@ public class UsuarioDaoImplement implements UsuarioDao {
         }
         return usuario;
     }
+
     @Override
     public int insertarUsuario2(Usuario usuario) {
         int usuarioID = -1;
@@ -284,7 +306,7 @@ public class UsuarioDaoImplement implements UsuarioDao {
             trans = session.beginTransaction();
             session.save(usuario);
             usuarioID = usuario.getIdUsuario();
-            session.getTransaction().commit();
+            trans.commit();
         } catch (RuntimeException e) {
             if (trans != null) {
                 trans.rollback();

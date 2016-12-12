@@ -8,7 +8,8 @@ package dao;
 import java.util.Iterator;
 import java.util.List;
 import model.Ubicacion;
-import model.Usuario;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -21,18 +22,27 @@ import util.HibernateUtil;
  */
 public class UbicacionDaoImplement implements UbicacionDao {
 
+    private Logger logger = LogManager.getLogger(UbicacionDaoImplement.class);
+
     @Override
     public List<Ubicacion> mostrarUbicaciones() {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        logger.info("Ingreso al metodo mostrar ubicaciones");
+        Session session = null;
         List<Ubicacion> lista = null;
+        Transaction transaction = null;
         String sql = "FROM Ubicacion";
         try {
-            session.beginTransaction();
+            logger.debug("obtener la transaccion");
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            transaction = session.beginTransaction();
             lista = session.createQuery(sql).list();
-            session.getTransaction().commit();
+            transaction.commit();
+            logger.debug("Terminar la transaccion");
         } catch (HibernateException e) {
-            session.getTransaction().rollback();
-            System.out.println(e.getMessage());
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            logger.debug("Error mostrarUbicaciones [{}]",e.getMessage());
         }
         return lista;
     }
@@ -133,7 +143,7 @@ public class UbicacionDaoImplement implements UbicacionDao {
             Query query = session.createQuery(sql);
             query.setMaxResults(1);
             //uniqueResult() para que sea solo un solo resultado
-            ubicacion = (Ubicacion) query.uniqueResult();
+            ubicacion = (Ubicacion) query.list().get(0);
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
@@ -141,5 +151,5 @@ public class UbicacionDaoImplement implements UbicacionDao {
         }
         return ubicacion;
     }
-    
+
 }

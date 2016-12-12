@@ -31,7 +31,7 @@ public class RolDaoImplement  implements RolDao{
             Query query = session.createQuery(sql);
             query.setMaxResults(1);
             //uniqueResult() para que sea solo un solo resultado
-            rol = (Rol) query.uniqueResult();
+            rol = (Rol) query.list().get(0);
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback

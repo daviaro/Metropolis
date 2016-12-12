@@ -24,8 +24,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -37,6 +35,7 @@ import model.Rol;
 import model.Ubicacion;
 import model.Usuario;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -51,7 +50,7 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 public class LoginBean implements Serializable {
 
-    private org.apache.logging.log4j.Logger logger = LogManager.getLogger(LoginBean.class);
+    private Logger logger = LogManager.getLogger(LoginBean.class);
 
     private Usuario usuarioLog;
     private Usuario usuarioReg;
@@ -301,7 +300,10 @@ public class LoginBean implements Serializable {
         this.clientImage = null;
     }
 
-    public void registrarEmpleado() throws IOException {
+    public void registrarEmpleado() {
+
+        logger.info("Ingresar el metodo registrarEmpleado");
+
         //Id del usuario a guardar
         int idGenerado = 0;
         /**
@@ -310,61 +312,78 @@ public class LoginBean implements Serializable {
         String sinFoto = "perfil-sinfoto.png";
         empleadoReg.setFoto(sinFoto);
 
-        //Set fecha de creacion
-        this.empleadoReg.setFechaCreacion(new Date());
-        //busqueda de ubicacion seleccionada
-        UbicacionDao ubdao = new UbicacionDaoImplement();
-        Ubicacion ubicacionTemp = ubdao.buscarUbicacionById(this.empleadoReg.getUbicacion().getIdUbicacion());
-        this.empleadoReg.setUbicacion(ubicacionTemp);
-        this.empleadoReg.setEstado(Boolean.TRUE);
+        try {
+            //Set fecha de creacion
+            this.empleadoReg.setFechaCreacion(new Date());
+            //busqueda de ubicacion seleccionada
 
-        //Setear Roles
-        RolDao roldaoLink = new RolDaoImplement();
-        Rol rolUsuario = roldaoLink.buscarRolByName("Empleado");
-        Set<Rol> rols = new HashSet<Rol>();
-        rols.add(rolUsuario);
-        this.empleadoReg.setRols(rols);
+            logger.info("Obtener la ubicacion ");
+            UbicacionDao ubdao = new UbicacionDaoImplement();
+            Ubicacion ubicacionTemp = ubdao.buscarUbicacionById(this.empleadoReg.getUbicacion().getIdUbicacion());
+            this.empleadoReg.setUbicacion(ubicacionTemp);
+            this.empleadoReg.setEstado(Boolean.TRUE);
 
-        idGenerado = usuarioDao.insertarUsuario2(empleadoReg);
-        /**
-         * Insertado correctamente.
-         */
-        if (idGenerado > 0) {
-            /**
-             * Si ingresa foto
-             */
-            if (uploadedFile2 != null) {
-                //Actualizar nombre de foto en bd y subir foto
-                String nombre = uploadedFile2.getFileName();
-                String extencion = nombre.substring(nombre.indexOf(".") + 1);
-                String nombreFoto = "perfil-" + idGenerado + "." + extencion;
-                empleadoReg.setFoto(nombreFoto);
+            //Setear Roles
+            logger.info("Cargar roles");
+            RolDao roldaoLink = new RolDaoImplement();
+            Rol rolUsuario = roldaoLink.buscarRolByName("Empleado");
+            Set<Rol> rols = new HashSet<Rol>();
+            rols.add(rolUsuario);
+            this.empleadoReg.setRols(rols);
 
+            logger.info("Buscar empleados para verificar si existe");
+            empleadoReg = usuarioDao.buscarUsuario(empleadoReg);
+            
+            if (empleadoReg.getIdUsuario() <= 0) {
+
+                idGenerado = usuarioDao.insertarUsuario2(empleadoReg);
                 /**
-                 * Subir archivo a server y modificar nombre en bd
+                 * Insertado correctamente.
                  */
-                try {
-                    TransferFile2(nombreFoto, getUploadedFile2().getInputstream());
-                    usuarioDao.modificarUsuario(empleadoReg);
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    context.addMessage(null, new FacesMessage("Bien!", "Se subio correctamente la foto"));
-                } catch (IOException ex) {
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    context.addMessage(null, new FacesMessage("Error", "Error subiendo la foto"));
+                if (idGenerado > 0) {
+                    /**
+                     * Si ingresa foto
+                     */
+                    if (uploadedFile2 != null) {
+                        //Actualizar nombre de foto en bd y subir foto
+                        String nombre = uploadedFile2.getFileName();
+                        String extencion = nombre.substring(nombre.indexOf(".") + 1);
+                        String nombreFoto = "perfil-" + idGenerado + "." + extencion;
+                        empleadoReg.setFoto(nombreFoto);
+
+                        /**
+                         * Subir archivo a server y modificar nombre en bd
+                         */
+                        try {
+                            TransferFile2(nombreFoto, getUploadedFile2().getInputstream());
+                            usuarioDao.modificarUsuario(empleadoReg);
+                            FacesContext context = FacesContext.getCurrentInstance();
+                            context.addMessage(null, new FacesMessage("Bien!", "Se subio correctamente la foto"));
+                        } catch (Exception e) {
+                            logger.error("Error Subiendo foto [{}]",e.getMessage());
+                            throw new Exception("Error Cargando foto [" + e.getMessage() + "]");
+                        }
+
+                    }
+                    ubicacionTemp = new Ubicacion();
+                    this.uploadedFile2 = null;
+                    this.empleadoReg = new Usuario();
+                    this.empleadoReg.setUbicacion(new Ubicacion());
+                    this.empleadoReg.setFoto("perfil-sinfoto.png");
+                    this.clientImage2 = null;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Completo", "Registrado exitosamente!"));
+                } else {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se registro el usuario correctamente!"));
                 }
-
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Informacion", "El usuario que intenta registrar ya existe"));
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Completo", "Registrado exitosamente!"));
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se registro el usuario correctamente!"));
-        }
 
-        ubicacionTemp = new Ubicacion();
-        this.uploadedFile2 = null;
-        this.empleadoReg = new Usuario();
-        this.empleadoReg.setUbicacion(new Ubicacion());
-        this.empleadoReg.setFoto("perfil-sinfoto.png");
-        this.clientImage2 = null;
+        } catch (Exception ex) {
+            logger.error("Error registrarEmpleado [{}] ", ex.getMessage());
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Error", "Se presento un error creando el usuario"));
+        }
 
     }
 
@@ -406,7 +425,7 @@ public class LoginBean implements Serializable {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("cuentaUsuario.xhtml");
             } catch (IOException ex) {
-                Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+                logger.error("Error [{}]", ex.getMessage());
             }
 
         } else {
@@ -446,19 +465,23 @@ public class LoginBean implements Serializable {
         }
     }
 
-    public void TransferFile2(String fileName, InputStream in) {
-        try {
-            OutputStream out = new FileOutputStream(new File(this.pathImages + fileName));
+    public void TransferFile2(String fileName, InputStream in) throws Exception {
+        logger.info("Metodo trasnferFile2");
+        try (OutputStream out = new FileOutputStream(new File(this.pathImages + fileName))) {
+
             int reader = 0;
             byte[] bytes = new byte[(int) getUploadedFile2().getSize()];
             while ((reader = in.read(bytes)) != -1) {
                 out.write(bytes, 0, reader);
             }
-            in.close();
-            out.flush();
-            out.close();
+
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            logger.error("Error TransferFile [{}]", e);
+            throw new Exception("Error TransferFile "+e.getMessage());
+        } finally {
+            if (in != null) {
+                in.close();
+            }
         }
     }
 }
