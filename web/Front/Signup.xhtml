@@ -73,7 +73,7 @@
                                                     <f:validateLength minimum="2" maximum="45" />
                                                     <p:clientValidator />
                                                 </p:inputText>
-                                               <!-- <p:watermark for="ur_nombre" value="Nombres" />-->
+                                                <!-- <p:watermark for="ur_nombre" value="Nombres" />-->
                                                 <p:message for="ur_nombre" />
                                             </div>
                                             <div class="form-group">
@@ -100,7 +100,7 @@
                                                     <f:validateLength minimum="8" maximum="11" />
                                                     <p:clientValidator event="keyup" />
                                                 </p:inputText>
-                                               <!-- <p:watermark for="ur_DI" value="Documento de identidad" />-->
+                                                <!-- <p:watermark for="ur_DI" value="Documento de identidad" />-->
                                                 <p:message for="ur_DI" />
                                             </div>
                                             <div class="form-group">
@@ -114,7 +114,7 @@
                                                     <f:validateLength minimum="4" maximum="45" />
                                                     <p:clientValidator />
                                                 </p:inputText>
-                                               <!-- <p:watermark for="ur_tel" value="Telefono" />-->
+                                                <!-- <p:watermark for="ur_tel" value="Telefono" />-->
                                                 <p:message for="ur_tel" />
                                             </div>
                                             <div class="form-group">
@@ -174,7 +174,7 @@
                                                     <f:validateLength minimum="8" maximum="45" ></f:validateLength>
                                                 </p:password>                                                        
 
-                                               <!-- <p:watermark for="ur_pw2" value="Confirma tu Contraseña" />-->
+                                                <!-- <p:watermark for="ur_pw2" value="Confirma tu Contraseña" />-->
                                                 <p:message for="ur_pw2" />
                                             </div>
 
@@ -193,7 +193,7 @@
                                                     <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)?" />
                                                     <p:clientValidator />
                                                 </p:inputText>
-                                               <!-- <p:watermark for="ur_em2" value="Direccion de correo Alternativo" />-->
+                                                <!-- <p:watermark for="ur_em2" value="Direccion de correo Alternativo" />-->
                                                 <p:message for="ur_em2" />
                                             </div>
 
@@ -410,10 +410,24 @@
 
                                                 <p:message for="ue_em2" />
                                             </div>
+                                            <div class="form-group">
+                                                <p:outputLabel for="ur_foto2"  styleClass="mj_blue_text" value="Foto:" />
+                                                <p:fileUpload id="ur_foto2" value="#{loginBean.uploadedFile2}" mode="advanced"
+                                                              fileUploadListener="#{loginBean.uploadFoto2}" 
+                                                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                                              multiple="false" auto="true" update="formSignUpEmpleado:image2" process="@this">
+                                                </p:fileUpload>
+                                                <p:message for="ur_foto2" />
+
+                                            </div>
+
+
+                                            <p:graphicImage styleClass="mj_profileimg" id="image2" 
+                                                            cache="false" width="50" 
+                                                            value="#{loginBean.clientImage2 != null ? loginBean.clientImage2 : '/images/perfil-sinfoto.png'}"/>
 
 
 
-                                            
 
                                         </div>
                                         <div class="mj_pricing_footer">

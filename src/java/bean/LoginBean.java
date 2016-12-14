@@ -313,6 +313,8 @@ public class LoginBean implements Serializable {
         empleadoReg.setFoto(sinFoto);
 
         try {
+            
+            this.empleadoReg.setIdUsuario(null);
             //Set fecha de creacion
             this.empleadoReg.setFechaCreacion(new Date());
             //busqueda de ubicacion seleccionada
@@ -334,9 +336,12 @@ public class LoginBean implements Serializable {
             logger.info("Buscar empleados para verificar si existe");
             empleadoReg = usuarioDao.buscarUsuario(empleadoReg);
             
-            if (empleadoReg.getIdUsuario() <= 0) {
-
+            logger.info("Termino de buscar empleado ");
+            logger.debug("Id de usuario [{}] ",empleadoReg.getIdUsuario());
+            if (empleadoReg.getIdUsuario()== null || empleadoReg.getIdUsuario() <= 0) {
+                logger.debug("Usuario no existe, se inicia la creacion ");
                 idGenerado = usuarioDao.insertarUsuario2(empleadoReg);
+                logger.debug("Usuario Creado  con id [{}]",idGenerado );
                 /**
                  * Insertado correctamente.
                  */
@@ -344,19 +349,26 @@ public class LoginBean implements Serializable {
                     /**
                      * Si ingresa foto
                      */
+                    
+                    logger.debug("Se inicia carga de foto " );
                     if (uploadedFile2 != null) {
                         //Actualizar nombre de foto en bd y subir foto
                         String nombre = uploadedFile2.getFileName();
+                        logger.debug("Nombre de la archivo [{}]",nombre);
                         String extencion = nombre.substring(nombre.indexOf(".") + 1);
                         String nombreFoto = "perfil-" + idGenerado + "." + extencion;
+                        logger.debug("Nombre de la foto [{}]",nombreFoto);
                         empleadoReg.setFoto(nombreFoto);
 
                         /**
                          * Subir archivo a server y modificar nombre en bd
                          */
                         try {
+                            logger.debug("Se hace transfer al archivo ");
                             TransferFile2(nombreFoto, getUploadedFile2().getInputstream());
+                            logger.debug("Se va  a modificar el usuario ");
                             usuarioDao.modificarUsuario(empleadoReg);
+                            logger.debug("el usuario se acaba de modificar. ");
                             FacesContext context = FacesContext.getCurrentInstance();
                             context.addMessage(null, new FacesMessage("Bien!", "Se subio correctamente la foto"));
                         } catch (Exception e) {
@@ -364,6 +376,9 @@ public class LoginBean implements Serializable {
                             throw new Exception("Error Cargando foto [" + e.getMessage() + "]");
                         }
 
+                    }else{
+                        
+                          logger.debug("No hay carga de foto"); 
                     }
                     ubicacionTemp = new Ubicacion();
                     this.uploadedFile2 = null;

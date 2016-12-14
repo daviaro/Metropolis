@@ -346,6 +346,11 @@ public class Usuario  implements java.io.Serializable {
         this.liquidacions = liquidacions;
     }
 
+    @Override
+    public String toString() {
+        return "Usuario{" + "idUsuario=" + idUsuario + ", ubicacion=" + ubicacion + ", email=" + email + ", emailAlterno=" + emailAlterno + ", emailAlterno2=" + emailAlterno2 + ", contrasena=" + contrasena + ", nombres=" + nombres + ", apellidos=" + apellidos + ", documentoIdentidad=" + documentoIdentidad + ", telefono=" + telefono + ", direccion=" + direccion + ", foto=" + foto + ", perfil=" + perfil + ", experiencia=" + experiencia + ", profesion=" + profesion + ", fechaCreacion=" + fechaCreacion + ", fechaActualizacion=" + fechaActualizacion + ", estado=" + estado + ", contratos=" + contratos + ", rols=" + rols + ", ofertas=" + ofertas + ", accesos=" + accesos + ", busquedas=" + busquedas + ", cotizacions=" + cotizacions + ", liquidacions=" + liquidacions + '}';
+    }
+
 
 
 

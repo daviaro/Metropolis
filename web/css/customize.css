@@ -51,3 +51,9 @@ and open the template in the editor.
 .modal-backdrop{
     z-index: 899;
 }
+
+
+.ui-fileupload-buttonbar .ui-fileupload-choose input {
+        height: 120px;
+    
+}

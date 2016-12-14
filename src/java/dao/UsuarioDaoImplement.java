@@ -66,23 +66,36 @@ public class UsuarioDaoImplement implements UsuarioDao {
 
     @Override
     public boolean modificarUsuario(Usuario usuario) {
-        boolean flag;
+        boolean flag = false;
         Transaction trans = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = null;
+
+        logger.info("Se ingresa al metodo modificarUsuario");
         try {
+            logger.info("Se obtiene la session");
+            session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
+            logger.debug("se va actualizar usuario [{}]", usuario.getIdUsuario());
             session.update(usuario);
-            session.getTransaction().commit();
+
+            trans.commit();
+            logger.debug("Usuario actualizado");
             flag = true;
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             if (trans != null) {
                 trans.rollback();
             }
-            e.printStackTrace();
-            flag = false;
+
+            logger.error("Se encuentra un error modificando el usuario [{}]. Error [{}] ", usuario.getIdUsuario(), e.getMessage());
+
         } finally {
-            session.flush();
-            session.close();
+            if (session != null) {
+
+                logger.debug("Cerrando session");
+                session.flush();
+                session.close();
+            }
+
         }
         return flag;
     }
@@ -117,20 +130,28 @@ public class UsuarioDaoImplement implements UsuarioDao {
 
             logger.info("Se ingresa a buscarUsuario");
             //Se recupera la session actual
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            logger.debug("Se obtiene session");
+            session = HibernateUtil.getSessionFactory().openSession();
+
             //inicializo transaccion
             trans = session.beginTransaction();
-            Query query = session.createQuery(sql);
 
+            logger.debug("Se inicia ejecucion del query [{}]", sql);
+            Query query = session.createQuery(sql);
+            logger.debug("Query ejecutado", sql);
             List results = query.list();
-            
-            if(!results.isEmpty()){
+
+            logger.debug("Cantidad de resultados [{}]", results.size());
+            if (!results.isEmpty()) {
+                
                 user = (Usuario) query.list().get(0);
-            }else{
-               user = usuario; 
+                logger.debug("se encontro un resultado [{}] ",user.toString());
+                
+            } else {
+                user = usuario;
+                logger.debug("se encontro un resultado [{}] ",user.getNombres());
             }
-           
-            
+
             trans.commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
@@ -139,10 +160,15 @@ public class UsuarioDaoImplement implements UsuarioDao {
             }
             logger.error("Error buscarUsuario [{}] ", e.getMessage());
 
-        }catch (Exception e) {
-            
-            logger.error("Error buscarUsuario [{}] ", e.getMessage());
+        } catch (Exception e) {
 
+            logger.error("Error buscarUsuario [{}] ", e.getMessage());
+        } finally {
+            if (session != null) {
+                session.flush();
+                session.close();
+                logger.debug("Se cierra la session");
+            }
         }
         return user;
     }
@@ -301,8 +327,9 @@ public class UsuarioDaoImplement implements UsuarioDao {
     public int insertarUsuario2(Usuario usuario) {
         int usuarioID = -1;
         Transaction trans = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = null;
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             trans = session.beginTransaction();
             session.save(usuario);
             usuarioID = usuario.getIdUsuario();
@@ -313,8 +340,10 @@ public class UsuarioDaoImplement implements UsuarioDao {
             }
             e.printStackTrace();
         } finally {
-            session.flush();
-            session.close();
+            if (session != null) {
+                session.flush();
+                session.close();
+            }
         }
         return usuarioID;
     }
