@@ -112,7 +112,8 @@
                                                      value="#{loginBean.usuarioLog.email}" 
                                                      required="true" onkeydown="setaFoco(this)"
                                                      requiredMessage="Cual es su email?"
-                                                     validatorMessage="Formato de correo incorrecto">
+                                                     validatorMessage="Formato de correo incorrecto"
+                                                     placeholder="Email">
                                             <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                                             <p:clientValidator />
                                         </p:inputText>
@@ -126,7 +127,8 @@
                                                     required="true" 
                                                     requiredMessage="Por favor ingrese su contraseña"
                                                     validatorMessage="Contraseña incorrecta o sin coincidencia. Ingrese una contraseña de minimo 8 caracteres."
-                                                    onkeydown="setaFoco(this)">
+                                                    onkeydown="setaFoco(this)"
+                                                    placeholder="Contraseña">
                                             <f:validateLength minimum="8" maximum="45" ></f:validateLength>
                                             <p:clientValidator />
                                         </p:password>

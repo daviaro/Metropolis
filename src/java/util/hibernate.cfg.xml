@@ -1,52 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/metropol_contrataciondb?zeroDateTimeBehavior=convertToNull</property>
-        <property name="hibernate.current_session_context_class">thread</property>      
-        <property name="hibernate.connection.username">metropol_connMtr</property>
-        <property name="hibernate.connection.password">a%F2fVFs=CIZ</property>        
-        <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.format_sql">true</property>    
-        <property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
-        <property name="connection.autoReconnect">true</property>
-        <property name="connection.autoReconnectForPools">true</property>
-        <property name="connection.is-connection-validation-required">true</property>        
-        <property name="hibernate.c3p0.acquire_increment">1</property>
-        <property name="hibernate.c3p0.idle_test_period">3000</property>
-        <property name="hibernate.c3p0.min_size">5</property>
-        <property name="hibernate.c3p0.max_size">100</property>
-        <property name="hibernate.c3p0.timeout">300</property>
-        <property name="hibernate.c3p0.timeout">0</property>
-        <property name="hibernate.c3p0.acquireRetryAttempts">1</property>
-        <property name="hibernate.c3p0.acquireRetryDelay">250</property>
-        
-
-        <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.use_sql_comments">true</property>
-
-        <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
-            
-        <mapping resource="model/Usuario.hbm.xml"/>
-        <mapping resource="model/Comision.hbm.xml"/>
-        <mapping resource="model/Busqueda.hbm.xml"/>
-        <mapping resource="model/Oferta.hbm.xml"/>
-        <mapping resource="model/Contrato.hbm.xml"/>
-        <mapping resource="model/Pago.hbm.xml"/>
-        <mapping resource="model/Jornada.hbm.xml"/>
-        <mapping resource="model/Etiqueta.hbm.xml"/>
-        <mapping resource="model/Imagenes.hbm.xml"/>
-        <mapping resource="model/MedicionTrabajo.hbm.xml"/>
-        <mapping resource="model/Trabajo.hbm.xml"/>
-        <mapping resource="model/Acceso.hbm.xml"/>
-        <mapping resource="model/TipoPago.hbm.xml"/>
-        <mapping resource="model/Rol.hbm.xml"/>
-        <mapping resource="model/Liquidacion.hbm.xml"/>
-        <mapping resource="model/Categoria.hbm.xml"/>
-        <mapping resource="model/Portafolio.hbm.xml"/>
-        <mapping resource="model/Cotizacion.hbm.xml"/>
-        <mapping resource="model/Ubicacion.hbm.xml"/>
-    </session-factory>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/metropol_contrataciondb?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.format_sql">true</property>
+    <property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+    <property name="connection.autoReconnect">true</property>
+    <property name="connection.autoReconnectForPools">true</property>
+    <property name="connection.is-connection-validation-required">true</property>
+    <property name="hibernate.c3p0.acquire_increment">1</property>
+    <property name="hibernate.c3p0.idle_test_period">3000</property>
+    <property name="hibernate.c3p0.min_size">5</property>
+    <property name="hibernate.c3p0.max_size">100</property>
+    <property name="hibernate.c3p0.timeout">300</property>
+    <property name="hibernate.c3p0.timeout">0</property>
+    <property name="hibernate.c3p0.acquireRetryAttempts">1</property>
+    <property name="hibernate.c3p0.acquireRetryDelay">250</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.use_sql_comments">true</property>
+    <property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+    <mapping resource="model/Usuario.hbm.xml"/>
+    <mapping resource="model/Comision.hbm.xml"/>
+    <mapping resource="model/Busqueda.hbm.xml"/>
+    <mapping resource="model/Oferta.hbm.xml"/>
+    <mapping resource="model/Contrato.hbm.xml"/>
+    <mapping resource="model/Pago.hbm.xml"/>
+    <mapping resource="model/Jornada.hbm.xml"/>
+    <mapping resource="model/Etiqueta.hbm.xml"/>
+    <mapping resource="model/Imagenes.hbm.xml"/>
+    <mapping resource="model/MedicionTrabajo.hbm.xml"/>
+    <mapping resource="model/Trabajo.hbm.xml"/>
+    <mapping resource="model/Acceso.hbm.xml"/>
+    <mapping resource="model/TipoPago.hbm.xml"/>
+    <mapping resource="model/Rol.hbm.xml"/>
+    <mapping resource="model/Liquidacion.hbm.xml"/>
+    <mapping resource="model/Categoria.hbm.xml"/>
+    <mapping resource="model/Portafolio.hbm.xml"/>
+    <mapping resource="model/Cotizacion.hbm.xml"/>
+    <mapping resource="model/Ubicacion.hbm.xml"/>
+  </session-factory>
 </hibernate-configuration>
