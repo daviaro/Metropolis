@@ -1,22 +1,55 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <body>
-        <ui:composition template="./MainTemplete_Logeado.xhtml">
-            <ui:define name="title">
-                Liquidacion
-            </ui:define>
-            <ui:define name="contenido">
-                <h:form id="forma">
-                    <p:pickList id="picklst" value="#{liquidacionBean.contratosDL}" var="empleados" converter="ContratoConverter" itemLabel="#{empleados}" itemValue="#{empleados}" >
-                        <f:converter converterId="converters.CategoriaConverter"></f:converter>
-                    </p:pickList>
-                </h:form>
-            </ui:define>
-        </ui:composition>
-    </body>
-</html>
+
+<ui:composition template="./MainTemplete_Logeado.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:define name="contenido">
+
+        <div class="mj_lightgraytbg mj_resumepreview mj_toppadder80 mj_bottompadder80">
+            <div class="container">
+                <div class="row">
+
+
+                    <h:form id="forma">
+
+                        <p:dataTable id="checkboxDT" var="contrato" value="#{liquidacionBean.contratosPendientes}" selection="#{liquidacionBean.contratosAliquidar}" rowKey="#{contrato.idContrato}" style="margin-bottom:0">
+                            <f:facet name="header">
+                                Liquidaciones Pendientes
+                            </f:facet>
+                            <p:column selectionMode="multiple" style="width:55px;text-align:center"/>
+                            <p:column headerText="Id" style="text-align:center">
+                                <h:outputText value="#{contrato.idContrato}" />
+                            </p:column>
+                            <p:column headerText="Nombres" style="text-align:center">
+                                <h:outputText value="#{liquidacionBean.getNombres(contrato)}" />
+                            </p:column>
+                            <p:column headerText="Fecha" style="text-align:center">
+                                <h:outputText value="#{contrato.fecha}" />
+                            </p:column>
+                            <p:column headerText="Total" style="text-align:center">
+                                <h:outputText value="#{contrato.valorTotal}" />
+                            </p:column>
+                            <f:facet name="footer">
+                                <p:growl id="message" showDetail="true" />
+                                <p:commandButton value="Liquidar" actionListener="#{liquidacionBean.liquidar()}" update="message">
+                                    <p:confirm header="Confirmation" message="Desea liquidar los contratos seleccionados?" icon="ui-icon-alert" />
+                                </p:commandButton>
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </p:confirmDialog>
+                            </f:facet>
+                        </p:dataTable>
+
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+

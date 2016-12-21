@@ -5,6 +5,7 @@
  */
 package bean;
 
+import converters.CategoriaConverter;
 import dao.ContratoDao;
 import dao.ContratoDaoImplement;
 import dao.UbicacionDao;
@@ -16,8 +17,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import model.Contrato;
@@ -39,9 +42,10 @@ public class LiquidacionBean implements Serializable {
     private List<String> contratos;
     private List<String> selectedOptions;
 
-    private DualListModel<Contrato> contratosDL;
+    
     private List<Contrato> contratosAliquidar;
     private List<Contrato> contratosPendientes;
+    converters.CategoriaConverter cvn = new CategoriaConverter();
 
     /**
      * Creates a new instance of LiquidacionBean
@@ -51,7 +55,7 @@ public class LiquidacionBean implements Serializable {
         empleadoO = new Usuario();
         contratosPendientes = getContratosPendientes();
         contratosAliquidar = new ArrayList<Contrato>();
-        contratosDL = new DualListModel<Contrato>(contratosPendientes,contratosAliquidar);
+        
     }
 
     public LiquidacionBean() {
@@ -127,18 +131,7 @@ public class LiquidacionBean implements Serializable {
     public void setSelectedOptions(List<String> selectedOptions) {
         this.selectedOptions = selectedOptions;
     }
-
-    public DualListModel<Contrato> getContratosDL() {
-        if(contratosDL == null){
-            contratosDL = new DualListModel<>(contratosPendientes,contratosAliquidar);
-        }
-        return contratosDL;
-    }
-
-    public void setContratosDL(DualListModel<Contrato> contratosDL) {
-        this.contratosDL = contratosDL;
-    }
-
+    
     public List<Contrato> getContratosAliquidar() {
         return contratosAliquidar;
     }
@@ -148,15 +141,41 @@ public class LiquidacionBean implements Serializable {
     }
 
     public List<Contrato> getContratosPendientes() {
-        if (contratosDL == null) {
+        if (contratosPendientes == null) {
             ContratoDaoImplement cd = new ContratoDaoImplement();
             contratosPendientes = cd.findVigentes();
+            
         }
         return contratosPendientes;
     }
 
+    public void liquidar(){
+        
+        
+        
+        addMessage("Liquidación finalizada", "Terminado correctamente. Total contratos:" + contratosAliquidar.size());
+    }
     public void setContratosPendientes(List<Contrato> contratosPendientes) {
         this.contratosPendientes = contratosPendientes;
+    }
+
+    public CategoriaConverter getCvn() {
+        return cvn;
+    }
+
+    public void setCvn(CategoriaConverter cvn) {
+        this.cvn = cvn;
+    }
+    public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
+    public String getNombres(Contrato contrat){
+        UsuarioDaoImplement udi = new UsuarioDaoImplement();
+        Usuario usr = udi.buscarUsuariobyID(contrat.getCotizacion().getUsuario().getIdUsuario().toString());
+        String valor = usr.getNombres() + "  " + usr.getApellidos();
+        return valor;
     }
 
 }
