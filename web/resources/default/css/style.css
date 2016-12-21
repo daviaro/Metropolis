@@ -2869,8 +2869,7 @@ ul.mj_joblist li a:hover, ul.mj_joblist.nav-tabs > li.active > a, ul.mj_joblist.
     margin: 0px;
     padding: 0px 20px;
     float: left;
-    width: 100%;
-    height: 525px;
+    width: 100%;    
     overflow: hidden;
 }
 .widget_posts ul li {
@@ -5041,9 +5040,9 @@ ul.mj_selected_content li a {
 .mj_commentdata span ul li:first-child{
     padding-left: 0px;
 }
-.widget_posts ul {
+/*.widget_posts ul {
     height: 570px;
-}
+}*/
 .mj_contact_detail {
     width: 74%;
 }
@@ -5225,9 +5224,9 @@ ul.mj_right_menu.mj_login_menu li:last-child a {
     width: 22%;
     margin-right: 100px;
 }
-.widget_posts ul {
+/*.widget_posts ul {
     height: 575px;
-}
+}*/
 .mj_commentdata {
     width: 87%;
 }
