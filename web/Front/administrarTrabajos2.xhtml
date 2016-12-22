@@ -160,15 +160,199 @@
                             </div>
                         </div>
                         <!-- Empleado End -->
-
+                        <!-- Usuario Begin -->
                         <div class="row">
                             <div class="mj_postdiv mj_shadow_blue mj_postpage">
-                                <div class="mj_mainheading " >
+                                <div class="mj_mainheading" >
                                     <h2><span>Usuario</span></h2>
                                 </div>
+
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs mj_joblist" role="tablist">
+                                    <li role="presentation" class="active"><a href="#cotizacionesRealizadas" aria-controls="cotizacionesRealizadas" role="tab" data-toggle="tab">Cotizaciones Realizadas</a>
+                                    </li>
+                                    <li role="presentation"><a href="#cotizacionesAceptadas" aria-controls="cotizacionesAceptadas" role="tab" data-toggle="tab">Cotizaciones Aceptadas</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="cotizacionesRealizadas">
+                                        <div style="padding:20px;">
+
+                                            <h:form id="formMostrarCotizacionesRealizadas" >
+                                                <p:dataTable emptyMessage="Actualmente no tiene cotizaciones realizadas" styleClass="table table-striped" var="cotizacionP" value="#{cotizacionBean.cotizacionesRealizadas}"
+                                                             rows="10"
+                                                             paginator="true"
+                                                             paginatorPosition="bottom"
+                                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                             paginatorAlwaysVisible="false">
+
+                                                    <p:column headerText="Descripcion">
+                                                        <h:outputText value="#{cotizacionP.descripcion}" />
+                                                    </p:column>
+
+                                                    <p:column headerText="Fecha Trabajo">
+                                                        <h:outputText value="#{cotizacionP.fechaTrabajo}" />
+                                                    </p:column>
+                                                    <p:column headerText="Oferta">
+                                                        <h:outputText value="#{cotizacionP.oferta.trabajo.titulo}" />
+                                                    </p:column>
+                                                    <p:column headerText="Respuesta">
+                                                        <h:outputText value="#{cotizacionP.respuesta}" />
+                                                    </p:column>
+                                                    <p:column headerText="Detalles">
+                                                        <p:commandButton update=":formCotizacionRealizada" oncomplete="PF('dialogCotizacionRealizada').show()" icon="ui-icon-search" title="Ver Detalles">
+                                                            <f:setPropertyActionListener value="#{cotizacionP}" target="#{cotizacionBean.cotizacion}" />
+                                                        </p:commandButton>
+                                                    </p:column>
+
+                                                </p:dataTable>
+                                            </h:form>
+
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="cotizacionesAceptadas">
+                                        <div style="padding: 20px;">
+                                            <h:form id="formMostrarCotizacionesAceptadas" >
+                                                <p:dataTable emptyMessage="Actualmente no tiene cotizaciones realizadas" styleClass="table table-striped" var="cotizacionA" value="#{cotizacionBean.cotizacionesAceptadas}"
+                                                             rows="10"
+                                                             paginator="true"
+                                                             paginatorPosition="bottom"
+                                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                             paginatorAlwaysVisible="false">
+
+                                                    <p:column headerText="Descripcion">
+                                                        <h:outputText value="#{cotizacionA.descripcion}" />
+                                                    </p:column>
+
+                                                    <p:column headerText="Fecha Trabajo">
+                                                        <h:outputText value="#{cotizacionA.fechaTrabajo}" />
+                                                    </p:column>
+                                                    <p:column headerText="Oferta">
+                                                        <h:outputText value="#{cotizacionA.oferta.trabajo.titulo}" />
+                                                    </p:column>
+                                                    <p:column headerText="Respuesta">
+                                                        <h:outputText value="#{cotizacionA.respuesta}" />
+                                                    </p:column>
+                                                    <p:column headerText="Pagar">
+                                                        <!--<p:commandButton action="Resumendepagos.xhtml" icon="ui-icon-search" title="Ver Detalles">
+                                                            <f:setPropertyActionListener value="#{cotizacionA}" target="#{pagosBean.cotizacionPagar}" />
+                                                        </p:commandButton>-->
+                                                        <p:commandButton update=":formCotizacionRealizada" oncomplete="PF('dialogCotizacionRealizada').show()" icon="ui-icon-search" title="Ver Detalles">
+                                                            <f:setPropertyActionListener value="#{cotizacionA}" target="#{cotizacionBean.cotizacion}" />
+                                                        </p:commandButton>
+                                                    </p:column>
+
+                                                </p:dataTable>
+                                            </h:form>
+
+                                        </div>
+                                    </div>    
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mj_bottompadder30">
+                                    <div class="mj_divider"></div>
+                                </div>
+
+
                             </div>  
 
                         </div>
+                        <div class="row" style="background-color:#FFFFFF;">
+                            <div >
+                                <div class="mj_mainheading" >
+                                    <h2><span>Contra Ofertas</span></h2>
+                                </div>
+                            </div>
+                            <ul class="nav nav-tabs mj_joblist" role="tablist">
+                                <li role="presentation" class="active"></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="contraCotiRealizadas" >
+                                    <div style="padding:20px;">
+                                        <h:form id="formMostrarContraofertas" >
+                                            <p:dataTable emptyMessage="Actualmente no tiene Contraofertas" styleClass="table table-striped" var="cotizacionA" value="#{cotizacionBean.cotizacionesContraofertas}"
+                                                         rows="10"
+                                                         paginator="true"
+                                                         paginatorPosition="bottom"
+                                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                         paginatorAlwaysVisible="false">
+
+                                                <p:column headerText="Descripcion">
+                                                    <h:outputText value="#{cotizacionA.descripcion}" />
+                                                </p:column>
+
+                                                <p:column headerText="Fecha Trabajo">
+                                                    <h:outputText value="#{cotizacionA.fechaTrabajo}" />
+                                                </p:column>
+                                                <p:column headerText="Oferta">
+                                                    <h:outputText value="#{cotizacionA.oferta.trabajo.titulo}" />
+                                                </p:column>
+                                                <p:column headerText="Respuesta">
+                                                    <h:outputText value="#{cotizacionA.respuesta}" />
+                                                </p:column>
+
+                                                <p:column headerText="Contratar (TODO)">                                                                        
+                                                    <p:commandButton  icon="icon-info-circled" title="Contratar">
+                                                    </p:commandButton>
+                                                </p:column>
+
+                                            </p:dataTable>
+                                        </h:form>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mj_bottompadder30">
+                                <div class="mj_divider"></div>
+                            </div>
+                        </div>
+                        <div class="row" style="background-color:#FFFFFF;">
+                            <div >
+                                <div class="mj_mainheading" >
+                                    <h2><span>Trabajos Contratados</span></h2>
+                                </div>
+                            </div>
+                            <ul class="nav nav-tabs mj_joblist" role="tablist">
+                                <li role="presentation" class="active"></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="contraCotiRealizadas" >
+                                    <div style="padding:20px;">
+                                        <h:form id="formMostrarTrabajosContratados" >
+                                            <p:dataTable emptyMessage="Actualmente no tiene Trabajos contratados" styleClass="table table-striped" var="contrato" value="#{cotizacionBean.trabajosContratados}"
+                                                         rows="10"
+                                                         paginator="true"
+                                                         paginatorPosition="bottom"
+                                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                         paginatorAlwaysVisible="false">
+
+                                                <p:column headerText="Fecha">
+                                                    <h:outputText value="#{contrato.fecha}" />
+                                                </p:column>
+
+                                                <p:column headerText="Direccion">
+                                                    <h:outputText value="#{contrato.direccion}" />
+                                                </p:column>
+                                                <p:column headerText="Valor Total">
+                                                    <h:outputText value="#{contrato.valorTotal}" />
+                                                </p:column>
+                                                <p:column headerText="Empleado">
+                                                    <h:outputText value="#{contrato.cotizacion.oferta.usuario.nombres} #{contrato.cotizacion.oferta.usuario.apellidos}" />
+                                                </p:column>
+
+
+                                            </p:dataTable>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mj_showmore mj_toppadder30">
+                                <a href="#" class="mj_showmorebtn mj_bigbtn mj_bluebtn">Ver Perfil <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>    
+
+                        <!-- Usuario End --> 
                     </div>
                 </div>
             </div>
@@ -262,6 +446,59 @@
                 </h:panelGrid>
             </p:dialog>
         </h:form> 
+        <h:form id="formCotizacionRealizada">
+            <p:dialog header="Detalle Cotizacion para #{cotizacionBean.cotizacion.oferta.trabajo.titulo}" widgetVar="dialogCotizacionRealizada" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgCotizacionRealizadaUpdate">
+
+                <h:panelGrid id="display" columns="2"  columnClasses="label,value">
+
+                    <h:outputText styleClass="mj_blue_text" value="Descripcion:" />
+                    <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.descripcion}" />
+
+
+                    <h:outputText styleClass="mj_blue_text" value="Fecha del Trabajo:" />
+                    <p:calendar styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.fechaTrabajo}" mode="inline" readonlyInput="true"/>
+
+                    <h:outputText styleClass="mj_blue_text" value="Presupuesto" />
+                    <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.valorPresupuesto}" />
+
+                    <h:outputText styleClass="mj_blue_text" value="Unidades de trabajo" />
+                    <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.unidadesTrabajo} (#{cotizacionBean.cotizacion.oferta.trabajo.medicionTrabajo.nombre})" />
+
+                </h:panelGrid>
+            </p:dialog>
+        </h:form> 
+        <h:form id="formCotizacionAceptada">
+            <p:dialog header="Detalle Cotizacion para #{cotizacionBean.cotizacion.oferta.trabajo.titulo}" widgetVar="dialogCotizacionRealizada" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgCotizacionRealizadaUpdate">
+
+                <h:panelGrid id="display" columns="2"  columnClasses="label,value">
+
+                    <input name="merchantId"    type="hidden"  value="508029"   />
+                    <input name="accountId"     type="hidden"  value="512321" />
+                    <input name="description"   type="hidden"  value="Test PAYU"  />
+                    <input name="referenceCode" type="hidden"  value="TestPayU" />
+                    <input name="amount"        type="hidden"  value="3"   />
+                    <input name="tax"           type="hidden"  value="0"  />
+                    <input name="taxReturnBase" type="hidden"  value="0" />
+                    <input name="currency"      type="hidden"  value="USD" />
+                    <input name="signature"     type="hidden"  value="ba9ffa71559580175585e45ce70b6c37"  />
+                    <input name="test"          type="hidden"  value="1" />
+                    <input name="buyerFullName"    type="hidden"  value="Jorge Mario Serrate" />
+                    <input name="buyerEmail"    type="hidden"  value="jotamarios@gmail.com" />
+                    <input name="responseUrl"    type="hidden"  value="http://www.test.com/response" />
+                    <input name="confirmationUrl"    type="hidden"  value="http://www.test.com/confirmation" />
+
+                    <h:outputText value="Será redirigido a PayU para realizar su pago."></h:outputText>
+                    <br /><br />
+                    <h:outputLabel for="name" value="Servicio contratado: #{cotizacionA.descripcion}" />
+                    <br />
+                    <h:outputLabel for="surname" value="Valor: #{cotizacionA.valorContrapropuesta}" />                                                                                
+                    <br /><br />
+                    <p:commandButton value="Pagar" action="https://sandbox.gateway.payulatam.com/ppp-web-gateway/">
+                    </p:commandButton>
+
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
     </ui:define>
 
 </ui:composition>
