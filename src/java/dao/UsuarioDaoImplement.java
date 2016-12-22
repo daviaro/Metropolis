@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.io.Serializable;
 import java.util.List;
 import model.Usuario;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +20,7 @@ import util.HibernateUtil;
  *
  * @author anfevari
  */
-public class UsuarioDaoImplement implements UsuarioDao {
+public class UsuarioDaoImplement implements UsuarioDao,Serializable {
 
     private Logger logger = LogManager.getLogger(UsuarioDaoImplement.class);
     List<Usuario> usuarios;

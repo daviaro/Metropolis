@@ -222,20 +222,20 @@ public class LoginBean implements Serializable {
     }
 
     //Metodo para eliminar la session creada
-    public void logout() {
+    public String logout() {
         //Rura de redirecciÃ³n
         String ruta = "/Front/index.xhtml";
         //Instancia actual
-        RequestContext context = RequestContext.getCurrentInstance();
+        //RequestContext context = RequestContext.getCurrentInstance();
         FacesContext facesContext = FacesContext.getCurrentInstance();
 
         //Eliminar la sesion
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         session.invalidate();
         //Enviar la variable ruta 
-        context.addCallbackParam("loggedOut", true);
-        context.addCallbackParam("ruta", ruta);
-
+        //context.addCallbackParam("loggedOut", true);
+        //context.addCallbackParam("ruta", ruta);
+        return "index?faces-redirect=true";
     }
 
     public void registrarCliente() throws IOException {
