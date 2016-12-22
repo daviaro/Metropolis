@@ -499,6 +499,23 @@
                 </h:panelGrid>
             </p:dialog>
         </h:form>
+           <script type="text/javascript">
+            $(document).ready(function () {
+                if (#{loginBean.esRol("Empleado")} || #{loginBean.esRol("Administrador")}) {
+                    var rolEmpleado = "block";
+                } else {
+                    var rolEmpleado = "none";
+                }
+                if (#{loginBean.esRol("Usuario")} || #{loginBean.esRol("Administrador")}) {
+                    var rolUsuario = "block";
+                } else {
+                    var rolUsuario = "none";
+                }
+                document.getElementById("divPerfilEmpleado").style = "display: " + rolEmpleado;
+                document.getElementById("divPerfilUsuario").style = "display: " + rolUsuario;
+            });
+        </script>
+
     </ui:define>
 
 </ui:composition>
