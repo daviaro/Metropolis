@@ -750,7 +750,7 @@ public class OfertaBean implements Serializable {
         System.out.println("Oferta seleccionada: " + ofertaSelected);
         System.out.println("Oferta string: " + ofertaSearchString);
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("detalleOferta.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("Detalle_Trabajador.xhtml");
         } catch (IOException ex) {
             //   Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
         }
