@@ -42,7 +42,9 @@ public class OfertaDaoImplement implements OfertaDao {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
-            session.getTransaction().rollback();
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
         }
         return ofertas;
     }
