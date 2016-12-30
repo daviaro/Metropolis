@@ -17,19 +17,21 @@ import util.HibernateUtil;
  *
  * @author chris
  */
-public class CategoriaDaoImplement implements CategoriaDao{
+public class CategoriaDaoImplement implements CategoriaDao {
 
     @Override
     public List<Categoria> mostrarCategorias() {
-        Session session= HibernateUtil.getSessionFactory().getCurrentSession();
-        List<Categoria> lista=null;
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        List<Categoria> lista = null;
         String sql = "FROM Categoria";
-        try{
+        try {
             session.beginTransaction();
             lista = session.createQuery(sql).list();
             session.getTransaction().commit();
-        }catch(HibernateException e){
-            session.getTransaction().rollback();            
+        } catch (HibernateException e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
             System.out.println(e.getMessage());
         }
         return lista;
@@ -38,21 +40,21 @@ public class CategoriaDaoImplement implements CategoriaDao{
     @Override
     public boolean insertarCategoria(Categoria categoria) {
         boolean flag;
-        Transaction trans=null;
+        Transaction trans = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
-        try{
+        try {
             trans = session.beginTransaction();
             session.save(categoria);
             session.getTransaction().commit();
-            flag=true;
-        }catch(RuntimeException e){
-            if(trans!=null){
+            flag = true;
+        } catch (RuntimeException e) {
+            if (trans != null) {
                 trans.rollback();
-        
+
             }
             e.printStackTrace();
-            flag=false;
-        }finally{
+            flag = false;
+        } finally {
             session.flush();
             session.close();
         }
@@ -64,18 +66,18 @@ public class CategoriaDaoImplement implements CategoriaDao{
         boolean flag;
         Transaction trans = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
-        try{
+        try {
             trans = session.beginTransaction();
             session.update(categoria);
             session.getTransaction().commit();
             flag = true;
-        }catch(RuntimeException e){
+        } catch (RuntimeException e) {
             if (trans != null) {
                 trans.rollback();
             }
             e.printStackTrace();
             flag = false;
-        }finally {
+        } finally {
             session.flush();
             session.close();
         }
@@ -84,36 +86,40 @@ public class CategoriaDaoImplement implements CategoriaDao{
 
     @Override
     public boolean eliminarCategoria(Integer idcategoria) {
-       boolean flag;
+        boolean flag;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        try{
+        try {
             session.beginTransaction();
             Categoria categoria = (Categoria) session.load(Categoria.class, idcategoria);
             session.delete(categoria);
             session.getTransaction().commit();
-            flag=true;
-        }catch(HibernateException e){
-            flag=false;
-            session.getTransaction().rollback();
+            flag = true;
+        } catch (HibernateException e) {
+            flag = false;
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
         }
         return flag;
     }
 
     @Override
     public Categoria buscarCategoria(Categoria categoria) {
-        Categoria model=null;
+        Categoria model = null;
         Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
-        String sql = "FROM Categoria WHERE nombre ='"+categoria.getNombre()+"'";
-        try{
+        String sql = "FROM Categoria WHERE nombre ='" + categoria.getNombre() + "'";
+        try {
             sesion.beginTransaction();
             model = (Categoria) sesion.createQuery(sql).uniqueResult();
             sesion.beginTransaction().commit();
-        }catch(Exception e){
-            sesion.beginTransaction().rollback();
+        } catch (Exception e) {
+            if (sesion != null) {
+                sesion.beginTransaction().rollback();
+            }
         }
         return model;
     }
-    
+
     @Override
     public List<Categoria> mostrarCategoriasPrincipales() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -124,12 +130,14 @@ public class CategoriaDaoImplement implements CategoriaDao{
             lista = session.createQuery(sql).list();
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            session.getTransaction().rollback();
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
             System.out.println(e.getMessage());
         }
         return lista;
     }
-    
+
     @Override
     public List<Categoria> mostrarSubCategorias() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -140,7 +148,9 @@ public class CategoriaDaoImplement implements CategoriaDao{
             lista = session.createQuery(sql).list();
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            session.getTransaction().rollback();
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
             System.out.println(e.getMessage());
         }
         return lista;
@@ -151,7 +161,7 @@ public class CategoriaDaoImplement implements CategoriaDao{
         List<Categoria> categorias = null;
         Session session = null;
         //Se crea un try catch para hacer la consulta
-        String sql = "from Categoria where categoria='" + idCategoria+ "'";
+        String sql = "from Categoria where categoria='" + idCategoria + "'";
         try {
             //Se recupera la session actual
             session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -162,16 +172,18 @@ public class CategoriaDaoImplement implements CategoriaDao{
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
-            session.getTransaction().rollback();
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
         }
         return categorias;
     }
 
     @Override
     public Categoria buscarbyId(int idCat) {
-        Categoria model=null;
+        Categoria model = null;
         Session session = null;
-        String sql = "FROM Categoria WHERE idCategoria ='"+idCat+"'";
+        String sql = "FROM Categoria WHERE idCategoria ='" + idCat + "'";
         try {
             //Se recupera la session actual
             session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -187,7 +199,9 @@ public class CategoriaDaoImplement implements CategoriaDao{
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
-            session.getTransaction().rollback();
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
         }
         return model;
     }
