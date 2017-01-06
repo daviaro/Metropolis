@@ -28,6 +28,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -500,6 +501,18 @@ public class LoginBean implements Serializable {
             if (in != null) {
                 in.close();
             }
+        }
+    }
+    public void Autorizar() {
+        if (!isLogged()) {
+            try {
+                /*ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+                context.redirect(context.getRequestContextPath() + "/index.xhtml");*/
+                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+            } catch (Exception e) {
+
+            }
+
         }
     }
 }

@@ -2035,12 +2035,14 @@ ul.mj_joblist li a:hover, ul.mj_joblist.nav-tabs > li.active > a, ul.mj_joblist.
 	color: #ffffff;
     font-size: 60px;
     padding-top: 10px;
+    padding-left: 55px;
     position: relative;
 }
 .mj_pageheading ul {
     float: left;
     width: 100%;
     padding: 0px;
+    padding-left: 55px;
     margin: 0px;
 }
 .mj_pageheading ul li {

@@ -151,7 +151,7 @@ public class UsuarioBean implements Serializable {
          * Si no hay foto Si hay foto se modifica adelante.
          */
 
-        String sinFoto = "perfil-sinfoto.png";
+        String sinFoto = "/images/perfil-sinfoto.png";
         createUsuario.setFoto(sinFoto);
         //Actualizar fecha
         createUsuario.setFechaCreacion(new java.util.Date());
@@ -191,7 +191,7 @@ public class UsuarioBean implements Serializable {
         }
         this.createUsuario = new Usuario();
         createUsuario.setUbicacion(new Ubicacion());        
-        this.createUsuario.setFoto("perfil-sinfoto.png");
+        this.createUsuario.setFoto("/images/perfil-sinfoto.png");
         this.uploadedFile = null;
         this.clientImage = null;
 

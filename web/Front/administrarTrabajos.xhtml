@@ -8,6 +8,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="contenido">
+        <f:event type="preRenderView" listener="#{loginBean.Autorizar()}"></f:event>
         <div class="mj_lightgraytbg mj_blogsidebar mj_bottompadder80 mj_toppadder80">
             <div class="container">
 
