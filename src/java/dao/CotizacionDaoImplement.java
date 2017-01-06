@@ -161,7 +161,9 @@ public class CotizacionDaoImplement implements CotizacionDao {
             lista = session.createQuery(sql).list();
             session.getTransaction().commit();
         } catch (HibernateException e) {
-            session.getTransaction().rollback();
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
             System.out.println(e.getMessage());
         }
         return lista;

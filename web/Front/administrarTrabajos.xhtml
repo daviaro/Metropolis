@@ -234,12 +234,12 @@
                                                         <h:outputText value="#{cotizacionA.respuesta}" />
                                                     </p:column>
                                                     <p:column headerText="Pagar">
-                                                        <!--<p:commandButton action="Resumendepagos.xhtml" icon="ui-icon-search" title="Ver Detalles">
+                                                        <p:commandButton action="Resumendepagos.xhtml" icon="ui-icon-search" title="Ver Detalles">
                                                             <f:setPropertyActionListener value="#{cotizacionA}" target="#{pagosBean.cotizacionPagar}" />
-                                                        </p:commandButton>-->
-                                                        <p:commandButton update=":formCotizacionRealizada" oncomplete="PF('dialogCotizacionRealizada').show()" icon="ui-icon-search" title="Ver Detalles">
-                                                            <f:setPropertyActionListener value="#{cotizacionA}" target="#{cotizacionBean.cotizacion}" />
                                                         </p:commandButton>
+                                                        <!--<p:commandButton update=":formCotizacionRealizada" oncomplete="PF('dialogCotizacionRealizada').show()" icon="ui-icon-search" title="Ver Detalles">
+                                                            <f:setPropertyActionListener value="#{cotizacionA}" target="#{cotizacionBean.cotizacion}" />
+                                                        </p:commandButton>-->
                                                     </p:column>
 
                                                 </p:dataTable>
@@ -463,7 +463,9 @@
 
                     <h:outputText styleClass="mj_blue_text" value="Unidades de trabajo" />
                     <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.unidadesTrabajo} (#{cotizacionBean.cotizacion.oferta.trabajo.medicionTrabajo.nombre})" />
-
+                    <p:commandButton action="Resumendepagos.xhtml" icon="ui-icon-search" title="Ver Detalles">
+                        <f:setPropertyActionListener value="#{cotizacionA}" target="#{pagosBean.cotizacionPagar}" />
+                    </p:commandButton>
                 </h:panelGrid>
             </p:dialog>
         </h:form> 
