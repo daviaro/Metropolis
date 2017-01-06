@@ -508,7 +508,7 @@ public class LoginBean implements Serializable {
             try {
                 /*ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
                 context.redirect(context.getRequestContextPath() + "/index.xhtml");*/
-                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("Login.xhtml");
             } catch (Exception e) {
 
             }
