@@ -417,6 +417,16 @@ public class LoginBean implements Serializable {
 
     }
 
+    public boolean isAdmin() {
+        for (Iterator iterator1 = usuarioLog.getRols().iterator(); iterator1.hasNext();) {
+            Rol rol = (Rol) iterator1.next();
+            if ("Administrador".equals(rol.getNombre())) {
+                return true;
+            }
+        }
+        return false;
+
+    }
     public Boolean esRol(String rol) {
         for (Iterator iterator1 = usuarioLog.getRols().iterator(); iterator1.hasNext();) {
             Rol rolU = (Rol) iterator1.next();
