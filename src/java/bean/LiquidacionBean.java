@@ -151,7 +151,7 @@ public class LiquidacionBean implements Serializable {
 
     public void liquidar(){
         
-        
+        //CREAR OBJETO LIQUIDACION E INSERTAR ID EN CONTRATO
         
         addMessage("Liquidación finalizada", "Terminado correctamente. Total contratos:" + contratosAliquidar.size());
     }
@@ -173,8 +173,14 @@ public class LiquidacionBean implements Serializable {
     
     public String getNombres(Contrato contrat){
         UsuarioDaoImplement udi = new UsuarioDaoImplement();
-        Usuario usr = udi.buscarUsuariobyID(contrat.getCotizacion().getUsuario().getIdUsuario().toString());
+        Usuario usr = udi.buscarUsuariobyID(contrat.getCotizacion().getOferta().getUsuario().getIdUsuario().toString());
         String valor = usr.getNombres() + "  " + usr.getApellidos();
+        return valor;
+    }
+    public String getCedula(Contrato contrat){
+        UsuarioDaoImplement udi = new UsuarioDaoImplement();
+        Usuario usr = udi.buscarUsuariobyID(contrat.getCotizacion().getOferta().getUsuario().getIdUsuario().toString());
+        String valor = String.valueOf(usr.getDocumentoIdentidad());
         return valor;
     }
 

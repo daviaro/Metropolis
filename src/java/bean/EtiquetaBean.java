@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -24,7 +25,7 @@ import model.Etiqueta;
  *
  * @author andre
  */
-@Named(value = "etiquetaBean")
+@ManagedBean(name = "etiquetaBean")
 @ViewScoped
 public class EtiquetaBean implements Serializable{
     private List<Etiqueta> etiquetas;

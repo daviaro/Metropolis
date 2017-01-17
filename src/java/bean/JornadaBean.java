@@ -13,6 +13,7 @@ import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import model.Jornada;
 
@@ -20,7 +21,7 @@ import model.Jornada;
  *
  * @author chris
  */
-@Named(value = "jornadaBean")
+@ManagedBean(name = "jornadaBean")
 @RequestScoped
 public class JornadaBean {
 

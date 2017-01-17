@@ -13,7 +13,11 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import model.Contrato;
 import model.Cotizacion;
 import model.Pago;
@@ -48,6 +52,12 @@ public class PagoUtil {
         Pago pago = new Pago(contrato, tp, fecha, valor, numeroAutorizacion, respuestaDelServicioWeb, fechaCreacion);
         pdi.insertarPago(pago);
         
+        Set pagos = new HashSet();
+        
+        //List<Pago> pagos = new ArrayList<Pago>();
+        pagos.add(pago);
+        contrato.setPagos(pagos);
+        cdi.modificarContrato(contrato);
     }
     
     public String getMD5(String referencia, int Total) {

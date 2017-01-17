@@ -26,6 +26,9 @@
                                 <h:outputText value="#{contrato.idContrato}" />
                             </p:column>
                             <p:column headerText="Nombres" style="text-align:center">
+                                <h:outputText value="#{liquidacionBean.getCedula(contrato)}" />
+                            </p:column>
+                            <p:column headerText="Nombres" style="text-align:center">
                                 <h:outputText value="#{liquidacionBean.getNombres(contrato)}" />
                             </p:column>
                             <p:column headerText="Fecha" style="text-align:center">

@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -23,7 +24,7 @@ import model.Categoria;
  *
  * @author chris
  */
-@Named(value = "categoriaBean")
+@ManagedBean(name = "categoriaBean")
 @SessionScoped
 public class CategoriaBean implements Serializable {
 

@@ -41,6 +41,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -50,7 +51,7 @@ import org.primefaces.model.StreamedContent;
  *
  * @author anfevari
  */
-@Named(value = "usuarioBean")
+@ManagedBean(name = "usuarioBean")
 @SessionScoped
 public class UsuarioBean implements Serializable {
 
