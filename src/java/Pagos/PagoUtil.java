@@ -50,14 +50,7 @@ public class PagoUtil {
         
         PagoDaoImplement pdi = new PagoDaoImplement();
         Pago pago = new Pago(contrato, tp, fecha, valor, numeroAutorizacion, respuestaDelServicioWeb, fechaCreacion);
-        pdi.insertarPago(pago);
-        
-        Set pagos = new HashSet();
-        
-        //List<Pago> pagos = new ArrayList<Pago>();
-        pagos.add(pago);
-        contrato.setPagos(pagos);
-        cdi.modificarContrato(contrato);
+        pdi.insertarPago(pago); 
     }
     
     public String getMD5(String referencia, int Total) {
