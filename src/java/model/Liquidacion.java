@@ -125,7 +125,7 @@ public class Liquidacion  implements java.io.Serializable {
     }
 
     @Temporal(TemporalType.DATE)
-    @Column(name="fecha_pago", nullable=false, length=10)
+    @Column(name="fecha_pago", nullable=true, length=10)
     public Date getFechaPago() {
         return this.fechaPago;
     }

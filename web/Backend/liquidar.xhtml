@@ -34,8 +34,20 @@
                             <p:column headerText="Fecha" style="text-align:center">
                                 <h:outputText value="#{contrato.fecha}" />
                             </p:column>
+                            <p:column headerText="A pagar" style="text-align:center">
+                                <h:outputText value="#{liquidacionBean.getSubtotal(contrato)}" >
+                                    <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="0"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Comision" style="text-align:center">
+                                <h:outputText value="#{liquidacionBean.getComision(contrato)}" >
+                                    <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="0"/>
+                                </h:outputText>
+                            </p:column>
                             <p:column headerText="Total" style="text-align:center">
-                                <h:outputText value="#{contrato.valorTotal}" />
+                                <h:outputText value="#{contrato.valorTotal}" >
+                                    <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="0" />
+                                </h:outputText>
                             </p:column>
                             <f:facet name="footer">
                                 <p:growl id="message" showDetail="true" />

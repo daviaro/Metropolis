@@ -7,6 +7,7 @@
 package dao;
 
 import model.Comision;
+import model.Cotizacion;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import util.HibernateUtil;
@@ -25,6 +26,26 @@ public class ComisionDaoImplement implements ComisionDao{
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         
         String sql = "FROM Comision c  where  fechaCreacion = (Select MAX(fechaCreacion) FROM Comision co)";
+        try {
+            session.beginTransaction();
+            comision = (Comision)session.createQuery(sql).uniqueResult();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        }        
+        
+        return comision;
+        
+    }
+    
+    public Comision getComisionCotizacion(Cotizacion cotizacion){
+        Comision comision = null;
+        int idComision = cotizacion.getComision().getIdcomision();
+        
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        
+        String sql = "FROM Comision c  where  id="+idComision;
         try {
             session.beginTransaction();
             comision = (Comision)session.createQuery(sql).uniqueResult();

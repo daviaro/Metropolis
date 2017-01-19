@@ -181,6 +181,16 @@ public class LoginBean implements Serializable {
     public void setAceptaPoliticas(boolean aceptaPoliticas) {
         this.aceptaPoliticas = aceptaPoliticas;
     }
+    
+    public Usuario getUsuarioLogeado(){
+        Usuario usr;
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        String mail = String.valueOf(session.getAttribute("email"));
+        usr = this.usuarioDao.buscarUsuariobyEmail(mail);
+        
+        return usr;
+        
+    }
 
     public String login(ActionEvent event) {
         RequestContext context = RequestContext.getCurrentInstance();

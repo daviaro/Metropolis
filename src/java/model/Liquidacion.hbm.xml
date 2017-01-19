@@ -24,7 +24,7 @@
             <column name="pago" not-null="true" />
         </property>
         <property name="fechaPago" type="date">
-            <column name="fecha_pago" length="10" not-null="true" />
+            <column name="fecha_pago" length="10" not-null="false" />
         </property>
         <property name="fechaLiquidacion" type="date">
             <column name="fecha_liquidacion" length="10" not-null="true" />

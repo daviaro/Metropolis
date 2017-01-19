@@ -47,7 +47,7 @@
                                                 <span>#{ofertaBean.ofertaSelected.usuario.nombres} #{ofertaBean.ofertaSelected.usuario.apellidos}, #{ofertaBean.ofertaSelected.trabajo.titulo} </span>
                                                 <blockquote class="mj_blueblockquote">                                            
                                                     <p>Descripcion: #{ofertaBean.ofertaSelected.trabajo.descripcion}</p>
-                                                    <p>Costo: #{ofertaBean.ofertaSelected.costo} / #{ofertaBean.ofertaSelected.trabajo.medicionTrabajo.nombre} </p>
+                                                    <p>Costo: <h:outputLabel value="#{ofertaBean.ofertaSelected.costo}"><f:convertNumber type="currency"  currencySymbol="$" maxFractionDigits="0" /> </h:outputLabel> / #{ofertaBean.ofertaSelected.trabajo.medicionTrabajo.nombre} </p>
                                                     <p>Jornada: #{ofertaBean.ofertaSelected.jornada.nombre} </p>
                                                     <p>Fecha limite #{ofertaBean.ofertaSelected.fechaLimite} </p>
                                                 </blockquote>

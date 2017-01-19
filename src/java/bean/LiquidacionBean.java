@@ -5,17 +5,26 @@
  */
 package bean;
 
+import Pagos.EstructuraLiquidacion;
 import converters.CategoriaConverter;
+import dao.ComisionDaoImplement;
 import dao.ContratoDao;
 import dao.ContratoDaoImplement;
+import dao.LiquidacionDaoImplement;
 import dao.UbicacionDao;
 import dao.UbicacionDaoImplement;
 import dao.UsuarioDao;
 import dao.UsuarioDaoImplement;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -24,6 +33,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import model.Contrato;
+import model.Liquidacion;
 import model.Ubicacion;
 import model.Usuario;
 import org.primefaces.model.DualListModel;
@@ -42,7 +52,6 @@ public class LiquidacionBean implements Serializable {
     private List<String> contratos;
     private List<String> selectedOptions;
 
-    
     private List<Contrato> contratosAliquidar;
     private List<Contrato> contratosPendientes;
     converters.CategoriaConverter cvn = new CategoriaConverter();
@@ -55,7 +64,7 @@ public class LiquidacionBean implements Serializable {
         empleadoO = new Usuario();
         contratosPendientes = getContratosPendientes();
         contratosAliquidar = new ArrayList<Contrato>();
-        
+
     }
 
     public LiquidacionBean() {
@@ -131,7 +140,7 @@ public class LiquidacionBean implements Serializable {
     public void setSelectedOptions(List<String> selectedOptions) {
         this.selectedOptions = selectedOptions;
     }
-    
+
     public List<Contrato> getContratosAliquidar() {
         return contratosAliquidar;
     }
@@ -144,17 +153,83 @@ public class LiquidacionBean implements Serializable {
         if (contratosPendientes == null) {
             ContratoDaoImplement cd = new ContratoDaoImplement();
             contratosPendientes = cd.findVigentes();
-            
+
         }
         return contratosPendientes;
     }
 
-    public void liquidar(){
-        
+    public void liquidar() {
+
         //CREAR OBJETO LIQUIDACION E INSERTAR ID EN CONTRATO
-        
         addMessage("Liquidación finalizada", "Terminado correctamente. Total contratos:" + contratosAliquidar.size());
+        Usuario usr = null;
+        try {
+            LoginBean lb = new LoginBean();
+            usr = lb.getUsuarioLogeado();
+        } catch (Exception e) {
+        }
+        if (usr != null) {
+            List<EstructuraLiquidacion> liquidaciones = new ArrayList<>();
+            for (int i = 0; i < contratosAliquidar.size(); i++) {
+                Set<Contrato> pivote = new HashSet<Contrato>();
+                pivote.add(contratosAliquidar.get(i));
+                EstructuraLiquidacion comparar = new EstructuraLiquidacion(pivote, contratosAliquidar.get(i).getCotizacion().getOferta().getUsuario());
+                if (liquidaciones.contains(comparar)) {
+                    liquidaciones = agregarContrato(liquidaciones, contratosAliquidar.get(i));
+                } else {
+                    Set<Contrato> contratosNew = new HashSet<>();
+                    contratosNew.add(contratosAliquidar.get(i));
+                    liquidaciones.add(new EstructuraLiquidacion(contratosNew, contratosAliquidar.get(i).getCotizacion().getOferta().getUsuario()));
+                }
+            }
+            LiquidacionDaoImplement ldi = new LiquidacionDaoImplement();
+            ContratoDaoImplement cdi = new ContratoDaoImplement();
+            for (int i = 0; i < liquidaciones.size(); i++) {
+                EstructuraLiquidacion strliq = liquidaciones.get(i);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+                String date = sdf.format(new Date());
+                Date fecha = new Date(date);
+                int comision = strliq.getComision();
+                int total = strliq.getTotal();
+                int subtotal = total - comision;
+                Liquidacion liq = new Liquidacion(strliq.getEmpleado(), comision, subtotal, total, false, null, fecha, strliq.getContratos());
+                ldi.crearLiquidacion(liq);
+                for (Iterator<Contrato> it = strliq.getContratos().iterator(); it.hasNext();) {
+                    Contrato contrat = it.next();
+                    contrat.setLiquidacion(liq);
+                    cdi.modificarContrato(contrat);
+                }
+            }
+
+            //Liquidacion liquidacion = new Liquidacion(usr, 0, 0, 0, true, fechaPago, fechaLiquidacion, contratos)
+        }
+
     }
+
+    public List<EstructuraLiquidacion> agregarContrato(List<EstructuraLiquidacion> LstEstrliq, Contrato contrato) {
+        for (int i = 0; i <= LstEstrliq.size(); i++) {
+            if (LstEstrliq.get(i).getEmpleado().getIdUsuario().equals(contrato.getCotizacion().getOferta().getUsuario().getIdUsuario())) {
+                Set contratosD = LstEstrliq.get(i).getContratos();
+                contratosD.add(contrato);
+                LstEstrliq.get(i).setContratos(contratosD);
+                return LstEstrliq;
+            }
+        }
+        return LstEstrliq;
+    }
+    
+    public int getSubtotal(Contrato contrato){
+        int subtotal=0;
+        subtotal = contrato.getValorTotal()-getComision(contrato);
+        return subtotal;
+    }
+    public int getComision(Contrato contrato){
+        int comision = 0;
+        ComisionDaoImplement cdi = new ComisionDaoImplement();
+        comision = (int) (contrato.getValorTotal() * cdi.getComisionCotizacion(contrato.getCotizacion()).getValor().floatValue());
+        return comision;
+    }
+
     public void setContratosPendientes(List<Contrato> contratosPendientes) {
         this.contratosPendientes = contratosPendientes;
     }
@@ -166,18 +241,20 @@ public class LiquidacionBean implements Serializable {
     public void setCvn(CategoriaConverter cvn) {
         this.cvn = cvn;
     }
+
     public void addMessage(String summary, String detail) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-    
-    public String getNombres(Contrato contrat){
+
+    public String getNombres(Contrato contrat) {
         UsuarioDaoImplement udi = new UsuarioDaoImplement();
         Usuario usr = udi.buscarUsuariobyID(contrat.getCotizacion().getOferta().getUsuario().getIdUsuario().toString());
         String valor = usr.getNombres() + "  " + usr.getApellidos();
         return valor;
     }
-    public String getCedula(Contrato contrat){
+
+    public String getCedula(Contrato contrat) {
         UsuarioDaoImplement udi = new UsuarioDaoImplement();
         Usuario usr = udi.buscarUsuariobyID(contrat.getCotizacion().getOferta().getUsuario().getIdUsuario().toString());
         String valor = String.valueOf(usr.getDocumentoIdentidad());

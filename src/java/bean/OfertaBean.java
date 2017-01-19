@@ -130,7 +130,7 @@ public class OfertaBean implements Serializable {
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getCurrentInstance().getExternalContext().getContext();
         this.pathImages = servletContext.getRealPath(this.destination);
 
-        logger.info("Se obtiene la ruta donde se van a despositar y leer imagenes {} ", this.pathImages);
+        //logger.info("Se obtiene la ruta donde se van a despositar y leer imagenes {} ", this.pathImages);
     }
 
     /**
@@ -165,11 +165,11 @@ public class OfertaBean implements Serializable {
 
     public List<Oferta> getOfertasbyRecientes() {
 
-        logger.info("Informacion de ofertas recientes");
+        //logger.info("Informacion de ofertas recientes");
 
         OfertaDao linkDao = new OfertaDaoImplement();
         ofertas = linkDao.findAllbyRecientes();
-        logger.debug("Se listan {}  ofertas ", ofertas.size());
+        //logger.debug("Se listan {}  ofertas ", ofertas.size());
         //limitTable(ofertas, 10);
         return ofertas;
     }

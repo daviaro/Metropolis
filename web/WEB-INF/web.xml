@@ -18,9 +18,9 @@
             30
         </session-timeout>
     </session-config>
-   <!-- <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
-    </welcome-file-list>-->
+   <welcome-file-list>
+        <welcome-file>faces/Front/index.xhtml</welcome-file>
+    </welcome-file-list>
      <welcome-file-list>
         <welcome-file>views/front-end/NoUsuario/index.xhtml</welcome-file>
     </welcome-file-list>
