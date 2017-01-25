@@ -17,47 +17,39 @@
 
                     <h:form id="forma">
 
-                        <p:dataTable id="checkboxDT" var="contrato" value="#{liquidacionBean.contratosPendientes}" selection="#{liquidacionBean.contratosAliquidar}" rowKey="#{contrato.idContrato}" style="margin-bottom:0">
+                        <p:dataTable id="checkboxDT" var="liquidacion" value="#{liquidacionBean.liquidaciones}" rowKey="#{contrato.idContrato}" style="margin-bottom:0">
                             <f:facet name="header">
-                                Liquidaciones Pendientes
-                            </f:facet>
-                            <p:column selectionMode="multiple" style="width:55px;text-align:center"/>
+                                Resultado liquidación
+                            </f:facet>                            
                             <p:column headerText="Id" style="text-align:center">
-                                <h:outputText value="#{contrato.idContrato}" />
+                                <h:outputText value="#{liquidacion.idliquidacion}" />
                             </p:column>
-                            <p:column headerText="Nombres" style="text-align:center">
-                                <h:outputText value="#{liquidacionBean.getCedula(contrato)}" />
+                            <p:column headerText="Cédula" style="text-align:center">
+                                <h:outputText value="#{liquidacionBean.getCedulaUsr(liquidacion.usuario)}" />
                             </p:column>
-                            <p:column headerText="Nombres" style="text-align:center">
-                                <h:outputText value="#{liquidacionBean.getNombres(contrato)}" />
-                            </p:column>
+                            <p:column headerText="Nombre" style="text-align:center">
+                                <h:outputText value="#{liquidacionBean.getNombresUsr(liquidacion.usuario)}" />
+                            </p:column>                            
                             <p:column headerText="Fecha" style="text-align:center">
-                                <h:outputText value="#{contrato.fecha}" />
+                                <h:outputText value="#{liquidacion.fechaLiquidacion}" />
                             </p:column>
                             <p:column headerText="A pagar" style="text-align:center">
-                                <h:outputText value="#{liquidacionBean.getSubtotal(contrato)}" >
+                                <h:outputText value="#{liquidacion.subtotal}" >
                                     <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="0"/>
                                 </h:outputText>
                             </p:column>
                             <p:column headerText="Comision" style="text-align:center">
-                                <h:outputText value="#{liquidacionBean.getComision(contrato)}" >
+                                <h:outputText value="#{liquidacion.comision}" >
                                     <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="0"/>
                                 </h:outputText>
                             </p:column>
                             <p:column headerText="Total" style="text-align:center">
-                                <h:outputText value="#{contrato.valorTotal}" >
+                                <h:outputText value="#{liquidacion.total}" >
                                     <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="0" />
                                 </h:outputText>
                             </p:column>
                             <f:facet name="footer">
-                                <p:growl id="message" showDetail="true" />
-                                <p:commandButton value="Liquidar" actionListener="#{liquidacionBean.liquidar()}" update="message">
-                                    <p:confirm header="Confirmation" message="Desea liquidar los contratos seleccionados?" icon="ui-icon-alert" />
-                                </p:commandButton>
-                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                                </p:confirmDialog>
+                                <input type="button" onclick="window.print()" value="Imprimir"></input>
                             </f:facet>
                         </p:dataTable>
 

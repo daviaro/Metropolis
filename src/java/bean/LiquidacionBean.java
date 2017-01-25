@@ -15,6 +15,7 @@ import dao.UbicacionDao;
 import dao.UbicacionDaoImplement;
 import dao.UsuarioDao;
 import dao.UsuarioDaoImplement;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.AbstractList;
@@ -29,9 +30,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.servlet.http.HttpServletRequest;
 import model.Contrato;
 import model.Liquidacion;
 import model.Ubicacion;
@@ -43,7 +46,7 @@ import org.primefaces.model.DualListModel;
  * @author andre
  */
 @ManagedBean(name = "liquidacionBean")
-@ViewScoped
+@SessionScoped
 public class LiquidacionBean implements Serializable {
 
     private String empleado;
@@ -54,6 +57,8 @@ public class LiquidacionBean implements Serializable {
 
     private List<Contrato> contratosAliquidar;
     private List<Contrato> contratosPendientes;
+    private List<Liquidacion> liquidaciones;
+
     converters.CategoriaConverter cvn = new CategoriaConverter();
 
     /**
@@ -64,6 +69,7 @@ public class LiquidacionBean implements Serializable {
         empleadoO = new Usuario();
         contratosPendientes = getContratosPendientes();
         contratosAliquidar = new ArrayList<Contrato>();
+        liquidaciones = new ArrayList<>();
 
     }
 
@@ -193,15 +199,26 @@ public class LiquidacionBean implements Serializable {
                 int total = strliq.getTotal();
                 int subtotal = total - comision;
                 Liquidacion liq = new Liquidacion(strliq.getEmpleado(), comision, subtotal, total, false, null, fecha, strliq.getContratos());
+
                 ldi.crearLiquidacion(liq);
                 for (Iterator<Contrato> it = strliq.getContratos().iterator(); it.hasNext();) {
                     Contrato contrat = it.next();
                     contrat.setLiquidacion(liq);
                     cdi.modificarContrato(contrat);
                 }
+                this.liquidaciones.add(liq);
+
             }
 
-            //Liquidacion liquidacion = new Liquidacion(usr, 0, 0, 0, true, fechaPago, fechaLiquidacion, contratos)
+            FacesContext ctx = FacesContext.getCurrentInstance();
+            ExternalContext extContext = ctx.getExternalContext();
+            String urlRedirect = extContext.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/Backend/liquidado.xhtml"));
+            HttpServletRequest origRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            try {
+                extContext.redirect(urlRedirect);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -217,13 +234,14 @@ public class LiquidacionBean implements Serializable {
         }
         return LstEstrliq;
     }
-    
-    public int getSubtotal(Contrato contrato){
-        int subtotal=0;
-        subtotal = contrato.getValorTotal()-getComision(contrato);
+
+    public int getSubtotal(Contrato contrato) {
+        int subtotal = 0;
+        subtotal = contrato.getValorTotal() - getComision(contrato);
         return subtotal;
     }
-    public int getComision(Contrato contrato){
+
+    public int getComision(Contrato contrato) {
         int comision = 0;
         ComisionDaoImplement cdi = new ComisionDaoImplement();
         comision = (int) (contrato.getValorTotal() * cdi.getComisionCotizacion(contrato.getCotizacion()).getValor().floatValue());
@@ -254,11 +272,33 @@ public class LiquidacionBean implements Serializable {
         return valor;
     }
 
+    public String getNombresUsr(Usuario usuario) {
+        UsuarioDaoImplement udi = new UsuarioDaoImplement();
+        Usuario usr = udi.buscarUsuariobyID(usuario.getIdUsuario().toString());
+        String valor = usr.getNombres() + "  " + usr.getApellidos();
+        return valor;
+    }
+
     public String getCedula(Contrato contrat) {
         UsuarioDaoImplement udi = new UsuarioDaoImplement();
         Usuario usr = udi.buscarUsuariobyID(contrat.getCotizacion().getOferta().getUsuario().getIdUsuario().toString());
         String valor = String.valueOf(usr.getDocumentoIdentidad());
         return valor;
+    }
+
+    public String getCedulaUsr(Usuario usuario) {
+        UsuarioDaoImplement udi = new UsuarioDaoImplement();
+        Usuario usr = udi.buscarUsuariobyID(usuario.getIdUsuario().toString());
+        String valor = String.valueOf(usr.getDocumentoIdentidad());
+        return valor;
+    }
+
+    public List<Liquidacion> getLiquidaciones() {
+        return liquidaciones;
+    }
+
+    public void setLiquidaciones(List<Liquidacion> liquidaciones) {
+        this.liquidaciones = liquidaciones;
     }
 
 }

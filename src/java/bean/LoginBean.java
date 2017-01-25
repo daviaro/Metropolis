@@ -535,4 +535,16 @@ public class LoginBean implements Serializable {
 
         }
     }
+    public void AutorizarAdmin(){
+        if (!isAdmin()) {
+            try {
+                /*ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+                context.redirect(context.getRequestContextPath() + "/index.xhtml");*/
+                FacesContext.getCurrentInstance().getExternalContext().redirect("Login.xhtml");
+            } catch (Exception e) {
+
+            }
+
+        }
+    }
 }

@@ -20,6 +20,7 @@
             </ui:define>
 
             <ui:define name="contenido">
+                <f:event type="preRenderView" listener="#{loginBean.autorizarAdmin()}"></f:event>
                 <div class="mj_lightgraytbg mj_toppadder80 mj_bottompadder80">
                     <div class="container">
                         <p:growl id="msgs" globalOnly="true"/> 
