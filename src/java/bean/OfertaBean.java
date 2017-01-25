@@ -5,6 +5,8 @@
  */
 package bean;
 
+import dao.BuscarDao;
+import dao.BuscarDaoImplement;
 import dao.CategoriaDao;
 import dao.CategoriaDaoImplement;
 import dao.ComisionDaoImplement;
@@ -730,10 +732,16 @@ public class OfertaBean implements Serializable {
 
     //Busqueda General
     public List<String> buscarOferta(String query) {
+        
+        BuscarDao bdo = new BuscarDaoImplement();
+        bdo.almacenarBusqueda(query, usuarioRegistrado);
+        
         OfertaDao oLink = new OfertaDaoImplement();
         List<Oferta> ofertas = new LinkedList<>();
         ofertas = oLink.buscarOfertabyNombre(query);
 
+        
+        
         List<String> results = new ArrayList<String>();
         for (int i = 0; i < ofertas.size(); i++) {
             results.add(ofertas.get(i).getIdOferta() + " " + ofertas.get(i).getTrabajo().getTitulo() + " " + ofertas.get(i).getTrabajo().getCategoria().getNombre() + " " + ofertas.get(i).getTrabajo().getDescripcion());

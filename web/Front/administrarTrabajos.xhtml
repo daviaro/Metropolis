@@ -336,7 +336,9 @@
                                                     <h:outputText value="#{contrato.direccion}" />
                                                 </p:column>
                                                 <p:column headerText="Valor Total">
-                                                    <h:outputText value="#{contrato.valorTotal}" />
+                                                    <h:outputText value="#{contrato.valorTotal}" >
+                                                        <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="0"/>
+                                                    </h:outputText>
                                                 </p:column>
                                                 <p:column headerText="Empleado">
                                                     <h:outputText value="#{contrato.cotizacion.oferta.usuario.nombres} #{contrato.cotizacion.oferta.usuario.apellidos}" />
