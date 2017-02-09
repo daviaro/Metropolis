@@ -249,8 +249,8 @@ public class UsuarioBean implements Serializable {
             //enviar email con contraseña
             //Ejemplo tomado de http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
             //Correo y contraseña del servidor
-            final String username = "modificarcorreo@gmail.com";
-            final String password = "modificarcontraseña";
+            final String username = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("MAILFROM");
+            final String password = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("MAILPASS");
 
             Properties props = new Properties();
             props.put("mail.smtp.auth", "true");

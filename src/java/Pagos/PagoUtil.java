@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.faces.context.FacesContext;
 import model.Contrato;
 import model.Cotizacion;
 import model.Pago;
@@ -56,7 +57,7 @@ public class PagoUtil {
     public String getMD5(String referencia, int Total) {
 
         //Buscar valores fijos en web.xml /APIKEY, merchandId, currency
-        String ApiKey = "4Vj8eK4rloUd272L48hsrarnUA";
+        String ApiKey = getApiKey();
         String merchandId = getMerchandID();
         String currency = "COP";
         String separador = "~";
@@ -82,7 +83,7 @@ public class PagoUtil {
     public String getMD5Respuesta(String referencia, String MerchandID, String respuesta, String total) {
 
         //Buscar valores fijos en web.xml /APIKEY, merchandId, currency
-        String ApiKey = "4Vj8eK4rloUd272L48hsrarnUA";
+        String ApiKey = getApiKey();
         String merchandId = MerchandID;
         String currency = "COP";
         String separador = "~";
@@ -108,10 +109,21 @@ public class PagoUtil {
     
     
     public String getMerchandID(){
-        return "508029";
+        return FacesContext.getCurrentInstance().getExternalContext().getInitParameter("MERCHANDID");
     }
     
     public String getAccountID(){
-        return "512326";
+        return FacesContext.getCurrentInstance().getExternalContext().getInitParameter("ACCOUNTID");
+    }
+    
+    public String getApiKey(){
+        return FacesContext.getCurrentInstance().getExternalContext().getInitParameter("APIKEY");
+    }
+    
+    public String getURLPayU(){
+        return FacesContext.getCurrentInstance().getExternalContext().getInitParameter("URLPAYU");
+    }
+    public String getURLRetorno(){
+        return FacesContext.getCurrentInstance().getExternalContext().getInitParameter("URLRETORNO");
     }
 }

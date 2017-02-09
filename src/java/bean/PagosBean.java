@@ -111,7 +111,6 @@ public class PagosBean {
         String retorno = pu.getMD5(this.cotizacionPagar.getIdCotizacion().toString(), getValorTotal());
         return retorno;
     }
-    
 
     public String getMerchandID() {
         PagoUtil pu = new PagoUtil();
@@ -121,6 +120,11 @@ public class PagosBean {
     public String getAccountID() {
         PagoUtil pu = new PagoUtil();
         return pu.getAccountID();
+    }
+
+    public String getURLRetorno() {
+        PagoUtil pu = new PagoUtil();
+        return pu.getURLRetorno();
     }
 
     public String getMailCliente() {
@@ -141,8 +145,7 @@ public class PagosBean {
         String nombres = usr.getNombres() + " " + usr.getApellidos();
         return nombres;
     }
-    
-    
+
     public String getNombresTrabajador() {
         UsuarioDaoImplement udi = new UsuarioDaoImplement();
 
@@ -152,8 +155,11 @@ public class PagosBean {
         String nombres = usr.getNombres() + " " + usr.getApellidos();
         return nombres;
     }
-    
-    
+
+    public String getURLPayU() {
+        PagoUtil p = new PagoUtil();
+        return p.getURLPayU();
+    }
 
     public void cargarDatos() {
         String estado = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("transactionState");
@@ -167,20 +173,17 @@ public class PagosBean {
         String merchantId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("merchantId");
         String total = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("TX_VALUE");
 
-        
         DecimalFormat df = new DecimalFormat("0.0");
         Double totalD = Double.valueOf(total);
         String totalUnDecimal = df.format(totalD);
-        
+
         BigDecimal bg = new BigDecimal(total).setScale(1, RoundingMode.HALF_EVEN);
         String otro = bg.toPlainString();
-        
-        
+
         PagoUtil pu = new PagoUtil();
-               
-        
-        String firmaRetorno = pu.getMD5Respuesta(codigoReferencia,merchantId,estado,otro);
-        
+
+        String firmaRetorno = pu.getMD5Respuesta(codigoReferencia, merchantId, estado, otro);
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
         String date = sdf.format(new Date());
 

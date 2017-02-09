@@ -12,6 +12,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import java.util.Properties;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -24,8 +26,8 @@ import javax.mail.internet.MimeMessage;
  *
  * @author andre
  */
-@Named(value = "contactoBean")
-@ViewScoped
+@ManagedBean(name = "contactoBean")
+@SessionScoped
 public class ContactoBean implements Serializable {
 
     private String nombres;
@@ -88,23 +90,22 @@ public class ContactoBean implements Serializable {
     public void enviarMensaje() {
         //Ejemplo tomado de http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
         //Correo y contraseña del servidor
-        final String username = "correo@gmail.com";
-        final String password = "contraseña";
-
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
+        final String username = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("MAILFROM");
+        final String password = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("MAILPASS");
 
         try {
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            });
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(email));

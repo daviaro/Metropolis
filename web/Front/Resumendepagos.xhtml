@@ -57,7 +57,7 @@
                         </div>
                         <div class="mj_showmore">
                             
-                            <form method="post" action="https://sandbox.gateway.payulatam.com/ppp-web-gateway/">
+                            <form method="post" action="#{pagosBean.URLPayU}">
                                 <input name="merchantId"    type="hidden"  value="#{pagosBean.merchandID}"   />
                                 <input name="accountId"     type="hidden"  value="#{pagosBean.accountID}" />
                                 <input name="description"   type="hidden"  value="Pago de servicios Metropolis"  />
@@ -70,8 +70,8 @@
                                 <input name="test"          type="hidden"  value="1" />
                                 <input name="buyerFullName"    type="hidden"  value="#{pagosBean.nombresCliente}" />
                                 <input name="buyerEmail"    type="hidden"  value="#{pagosBean.mailCliente}" />
-                                <input name="responseUrl"    type="hidden"  value="http://localhost:8080/Metropolis/Front/Payu_landing.xhtml" />
-                                <input name="confirmationUrl"    type="hidden"  value="http://localhost:8080/Metropolis/Front/Payu_landing.xhtml" />
+                                <input name="responseUrl"    type="hidden"  value="#{pagosBean.URLRetorno}" />
+                                <input name="confirmationUrl"    type="hidden"  value="#{pagosBean.URLRetorno}" />
                                 <input name="Submit"  class="mj_showmorebtn mj_bigbtn mj_greenbtn" type="submit"  value="Pagar" />
                            </form>
                             

@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./MainTemplete.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Recuperar Cuenta
+    </ui:define>
+
+
+
+    <ui:define name="contenido">
+        <div class="mj_lightgraytbg mj_bottompadder80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2 col-sm-offset-0 col-xs-offset-0">
+                        <div class="mj_mainheading mj_toppadder10 mj_bottompadder10">
+                            <p>R<span>ecuperación</span>D<span>e </span>L<span>a </span> C<span>uenta</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-lg-offset-3 col-md-offset-3 col-sm-12 col-xs-12">
+                        <div class="mj_pricingtable mj_greentable mj_login_form_wrapper">
+                            <h:form id="formRecuperarCuenta">
+                                <p:growl id="growl" showDetail="true" globalOnly="true" />
+                                <div class="mj_login_form">
+                                    <div class="form-group">
+                                        <p:inputText id="email" styleClass="form-control" 
+                                                     value="#{usuarioBean.usuarioRecuperar.email}" 
+                                                     required="true" 
+                                                     requiredMessage="Cual es su email?" placeholder="email"
+                                                     validatorMessage="Formato de correo incorrecto">
+                                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                            <p:clientValidator />
+                                        </p:inputText>
+                                        <p:message for="email" ></p:message>
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        <p:outputLabel for="ur_DI" value="Documento Identidad: " style="display: none " /> 
+                                        <p:inputText id="ur_DI" styleClass="form-control"
+                                                     value="#{usuarioBean.usuarioRecuperar.documentoIdentidad}" 
+                                                     required="true"
+                                                     requiredMessage="Cual es su documento de identidad?" placeholder="Documento de identidad"
+                                                     validatorMessage="Documento de Identidad incorrecto.">
+                                            <f:validateLength minimum="2" maximum="11" />
+                                            <p:clientValidator event="keyup" />
+                                        </p:inputText>
+                                        
+                                        <p:message for="ur_DI" />
+                                    </div>
+                                </div>
+                                <div class="mj_pricing_footer">
+                                    <p:commandLink id="loginLink" validateClient="true" value="Recuperar Cuenta" 
+                                                   update="growl formRecuperarCuenta" actionListener="#{usuarioBean.recuperarUsuario()}" oncomplete="actualizardoc()" >
+                                        <h:outputText styleClass="mj_showmorebtn mj_greenbtn" value="Recuperar Cuenta" />
+                                    </p:commandLink>             
+                                </div>
+                            </h:form>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                //Limpiar value Documento Identidad Cliente
+                document.getElementById("formRecuperarCuenta:ur_DI").value = "";
+            });
+            
+            function actualizardoc(){
+                document.getElementById("formRecuperarCuenta:ur_DI").value = "";
+            }
+
+        </script>
+    </ui:define>
+</ui:composition>

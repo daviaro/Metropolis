@@ -60,6 +60,34 @@
         <param-name>primefaces.UPLOADER</param-name>
         <param-value>commons</param-value>
     </context-param>    
+    <context-param>
+        <param-name>MAILFROM</param-name>
+        <param-value>jotamarios@gmail.com</param-value>
+    </context-param>
+    <context-param>
+        <param-name>MAILPASS</param-name>
+        <param-value>12345</param-value>
+    </context-param>
     
+    <context-param>
+        <param-name>APIKEY</param-name>
+        <param-value>4Vj8eK4rloUd272L48hsrarnUA</param-value>
+    </context-param>
+    <context-param>
+        <param-name>MERCHANDID</param-name>
+        <param-value>508029</param-value>
+    </context-param>
+    <context-param>
+        <param-name>ACCOUNTID</param-name>
+        <param-value>512326</param-value>
+    </context-param>
+    <context-param>
+        <param-name>URLPAYU</param-name>
+        <param-value>https://sandbox.gateway.payulatam.com/ppp-web-gateway/</param-value>
+    </context-param>
+    <context-param>
+        <param-name>URLRETORNO</param-name>
+        <param-value>http://localhost:8080/Metropolis/Front/Payu_landing.xhtml"</param-value>
+    </context-param>
     <!--End Config UploadFile -->
 </web-app>

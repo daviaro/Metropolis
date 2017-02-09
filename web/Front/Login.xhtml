@@ -2,7 +2,7 @@
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./MainTemplete_Logeado.xhtml"
+                template="#{loginBean.isLogged()? './MainTemplete_Logeado.xhtml':'./MainTemplete.xhtml'}"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-lg-offset-3 col-md-offset-3 col-sm-12 col-xs-12">
                         <div class="mj_pricingtable mj_greentable mj_login_form_wrapper">
-                            <h:form id="formLogin">
+                            <h:form id="formLoginn">
                                 <div class="mj_login_form">
                                     <p:growl id="growl" sticky="true" showDetail="true" life="3000" globalOnly="true" />
                                     <div class="form-group">
@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="mj_pricing_footer">
                                     <p:commandLink id="loginLink" validateClient="true" styleClass="mj_showmorebtn mj_greenbtn" value="Iniciar Sesion" 
-                                                   update="growl formLogin" action="#{loginBean.login(event)}" 
+                                                   update="growl formLoginn" action="#{loginBean.login(event)}" 
                                                    oncomplete="handleLoginRequest(xhr, status, args)" >
                                         <h:outputText styleClass="mj_showmorebtn mj_greenbtn" value="Iniciar Sesión" />
 
@@ -84,7 +84,7 @@
                 function handleLoginRequest(xhr, status, args) {
                     if (args.validationFailed || !args.loggedIn) {
                         //cambio
-                        jQuery('#formLogin').effect("shake", {times: 5}, 100);
+                        jQuery('#formLoginn').effect("shake", {times: 5}, 100);
                     } else {
                         //cambio: ruta enviada desde el bean.
                         location.href = args.ruta;
@@ -94,7 +94,7 @@
                 function setaFoco(elemento) {
                     var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
                     if (keyCode == 13) {
-                        jQuery('#formLogin\\:loginLink').click();
+                        jQuery('#formLoginn\\:loginLink').click();
                     }
                 }
             </script>

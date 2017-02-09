@@ -2,7 +2,7 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./MainTemplete_Logeado.xhtml"
+                template="#{loginBean.isLogged()? './MainTemplete_Logeado.xhtml':'./MainTemplete.xhtml'}"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
@@ -68,26 +68,81 @@
                                     <p>Recuerda que para nosotros es de suma importacia cualquier duda o sugrencia que tengas frenete a servcio, sientete a gusto de comunicarte y cualquiera de nuestros agentes resolvera tu inquietud.</p>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-1">
-                                <div class="row">
-                                    <form class="mj_bottompadder80">
+                            <h:form id="formContacto" class="mj_bottompadder80">
+                                <p:growl id="msgs" globalOnly="true" showDetail="true" />
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10 col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-1">
+                                    <div class="row">
+
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Nombre"></input>
+                                            
+                                            <p:inputText id="ur_nombre" styleClass="form-control"  
+                                                         value="#{contactoBean.nombres}" 
+                                                         required="true" 
+                                                         requiredMessage="Como te llamas?"
+                                                         validatorMessage="Por favor ingrese nombres correctos." placeholder="Nombres">
+                                                <f:validateLength minimum="2" maximum="45" />
+                                                <p:clientValidator />
+                                            </p:inputText>
+                                            
+                                            <p:message for="ur_nombre" />
                                         </div>
                                         <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Email"></input>
+                                            
+                                            <p:inputText id="ur_apellidos" styleClass="form-control" 
+                                                         value="#{contactoBean.apellidos}" 
+                                                         required="true" 
+                                                         requiredMessage="Cual es tu apellido?"
+                                                         validatorMessage="Por favor ingrese apellidos correctos." placeholder="Apellidos">
+                                                <f:validateLength minimum="2" maximum="45" />
+                                                <p:clientValidator />
+                                            </p:inputText>
+                                           
+                                            <p:message for="ur_apellidos" />
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Telefono"></input>
-                                        </div>
+                                            <p:inputText id="ur_em" styleClass="form-control"  
+                                                         value="#{contactoBean.email}" required="true"
+                                                         size="40" requiredMessage="Cual es su direccion de correo?" placeholder="Correo electrónico"
+                                                         validatorMessage="Formato de correo incorrecto">
+                                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                                <p:clientValidator />
+                                            </p:inputText>
+                                           
+                                            <p:message for="ur_em" />
+                                        </div>                                        
                                         <div class="form-group">
-                                            <textarea placeholder="Mensaje" class="form-control tr_textarea" id="msg" rows="7"></textarea>
+                                            
+                                            <p:inputText id="ur_asunto" styleClass="form-control"  
+                                                         value="#{contactoBean.asunto}" 
+                                                         required="true" 
+                                                         requiredMessage="Cual es su asunto?"
+                                                         validatorMessage="Ingrese un asunto entre 2 y 255 caracteres" placeholder="Asunto">
+                                                <f:validateLength minimum="2" maximum="255" />
+                                                <p:clientValidator />
+                                            </p:inputText>
+                                            
+                                            <p:message for="ur_asunto" />
                                         </div>
-                                    </form>
+                                        <div class="form-group" >
+                                            <p:outputLabel for="ue_mensaje" value="Mensaje" />
+
+                                            <p:inputTextarea id="ue_mensaje" rows="5" cols="30" counter="displayMensaje" maxlength="300" counterTemplate="{0} caracteres restantes." autoResize="false"
+                                                             placeholder="EScriba su mensaje" value="#{contactoBean.mensaje}"
+                                                             required="true" styleClass="form-control"/>
+                                            <h:outputText id="displayMensaje" />
+                                            <h:messages for="ue_mensaje" />
+                                        </div>
+
+                                    </div>
+                                </div>                                
+                                <div class="mj_showmore">
+                                    <p:commandLink id="contactoLink" validateClient="true" styleClass="mj_showmorebtn mj_bluebtn" value="Enviar" 
+                                                   update="formContacto msgs" actionListener="#{contactoBean.enviarMensaje()}" >
+                                        <h:outputText styleClass="mj_showmorebtn mj_bluebtn" value="Enviar!" />
+                                    </p:commandLink>                             
                                 </div>
-                            </div>
-                            <div class="mj_showmore"><a href="#" class="mj_showmorebtn mj_bluebtn">enviar</a>
-                            </div>
+                            </h:form>
+                            
                         </div>
                     </div>
                 </div>
