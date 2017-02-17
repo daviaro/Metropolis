@@ -35,22 +35,22 @@
                          paginator="true"
                          paginatorPosition="bottom"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"> 
-                                <p:column headerText="Id:" filterBy="#{ubicacion.idUbicacion}" filterMatchMode="contains" >
+                                <p:column headerText="No. Item" filterBy="#{ubicacion.idUbicacion}" filterMatchMode="contains" >
                                     <h:outputText value="#{ubicacion.idUbicacion}" />
                                 </p:column>
                                 <p:column headerText="Barrio:" filterBy="#{ubicacion.barrio}" filterMatchMode="contains">
                                     <h:outputText value="#{ubicacion.barrio}" />
                                 </p:column>
-                                <p:column>
+                                <p:column headerText="Latitud">
                                     <h:outputText value="#{ubicacion.latitud}" />
                                 </p:column>
-                                <p:column>
+                                <p:column headerText="Longitud">
                                     <h:outputText value="#{ubicacion.longitud}" />
                                 </p:column>
-                                <p:column>
-                                    <h:outputText value="#{ubicacion.estado}" />
+                                <p:column headerText="Activo?">
+                                    <h:outputText value="#{ubicacion.estado?'Si':'No'}" />
                                 </p:column>
-                                <p:column>
+                                <p:column headerText="Editar">
                                     <p:commandButton update=":formUpdate" oncomplete="PF('dialogubicacionupdate').show()" icon="ui-icon-search" title="Modificar">
                                         <f:setPropertyActionListener value="#{ubicacion}" target="#{ubicacionBean.selectedUbicacion}" />
                                     </p:commandButton>

@@ -39,13 +39,13 @@
                                 <p:column filterBy="#{categoria.nombre}" filterMatchMode="contains" headerText="Nombre">
                                     <h:outputText value="#{categoria.nombre}" />
                                 </p:column>
-                                <p:column headerText="Estado">
-                                    <h:outputText value="#{categoria.estado}" />
+                                <p:column headerText="Activo?">
+                                    <h:outputText value="#{categoria.estado?'Si':'No'}" style="align-self: center" />
                                 </p:column>
-                                <p:column headerText="id Subcategoria">                                   
+                                <p:column headerText="Categoria Padre">                                   
                                     <h:outputText value="#{categoria.categoria.nombre}" />
                                 </p:column>
-                                <p:column>
+                                <p:column headerText="Editar">
                                     <p:commandButton update=":formUpdate" oncomplete="PF('dialogcategoriaupdate').show()" icon="ui-icon-search" title="Modificar">
                                         <f:setPropertyActionListener value="#{categoria}" target="#{categoriaBean.selectedCategoria}" />
                                     </p:commandButton>

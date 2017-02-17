@@ -2,11 +2,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./MainTemplete.xhtml"
+                template="#{loginBean.isLogged()? './MainTemplete_Logeado.xhtml':'./MainTemplete.xhtml'}"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="contenido">
 
+   
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2 col-sm-offset-0 col-xs-offset-0">
@@ -24,8 +25,8 @@
                                 <h4>Como buscar trabajo</h4>
                             </div>
                             <div class="mj_workit_info">
-                                <img src="../images/COMOTRABAJO.png" alt="" height="264" class="img-responsive"></img>
-                                    <p class="mj_toppadder50">En metrópolis tienes la oportunidad de encontrar propuestas de trabajo posteadas por potenciales empleadores en busca de la persona indicada para llevar a cabo esa tarea específica. </p>
+                                <img src="../images/COMOTRABAJO.png" alt="" height="264" class="img-responsive" />
+                                <p class="mj_toppadder50">En metrópolis tienes la oportunidad de encontrar propuestas de trabajo posteadas por potenciales empleadores en busca de la persona indicada para llevar a cabo esa tarea específica. </p>
                             </div>
                             <div class="mj_workit_innerfooter">
                                 <a href="#">leer mas...</a>
@@ -35,14 +36,14 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="mj_recent_workit text-center">
                             <div class="mj_workit_innerheader">
-                                <h4>Como encuentro un trabajo</h4>
+                              <h4>Como contratar</h4>
                             </div>
                             <div class="mj_workit_info">
-                                <img src="../images/COMOCONTRATAR.png" class="img-responsive" alt=""></img>
-                                    <p class="mj_toppadder50">En metrópolis contratar a un independiente o una Mipyme es muy fácil no importa que tan grande o pequeño sea el trabajo aquí encontraras el indicado para realizarlo.</p>
+                                <img src="../images/COMOCONTRATAR.png" class="img-responsive" alt="" />
+                                <p class="mj_toppadder50">En metrópolis contratar a un independiente o una Mipyme es muy fácil no importa que tan grande o pequeño sea el trabajo aquí encontraras el indicado para realizarlo.</p>
                             </div>
                             <div class="mj_workit_innerfooter">
-                                <a href="Como_Contratar.xhtml">leer mas...</a>
+                                <a href="#">leer mas...</a>
                             </div>
                         </div>
                     </div>
@@ -52,8 +53,8 @@
                                 <h4>como finalizar trabajo</h4>
                             </div>
                             <div class="mj_workit_info">
-                                <img src="../images/FINALIZARTRABAJO.png" class="img-responsive" alt=""></img>
-                                    <p class="mj_toppadder50">Recuerda siempre dejar un trabajo bien terminado y en los terminados con el cliente en la cotizacion, ingresa a la plataforma y finaliza en el boton indicado.</p>
+                                <img src="../images/FINALIZARTRABAJO.png" class="img-responsive" alt="" />
+                                <p class="mj_toppadder50">Recuerda siempre dejar un trabajo bien terminado y en los terminados con el cliente en la cotizacion, ingresa a la plataforma y finaliza en el boton indicado.</p>
                             </div>
                             <div class="mj_workit_innerfooter">
                                 <a href="#">leer mas...</a>
@@ -66,8 +67,8 @@
                                 <h4>como funcionan los pagos</h4>
                             </div>
                             <div class="mj_workit_info">
-                                <img src="../images/PAGOS.png" class="img-responsive" alt=""></img>
-                                    <p class="mj_toppadder50">Nuestra plataforma de pagos funciona por ciclos de facturacion, de esta manera estas seguro de que en una fecha estara el dinero de los trabajos realizados.</p>
+                                <img src="../images/PAGOS.png" class="img-responsive" alt="" />
+                                <p class="mj_toppadder50">Nuestra plataforma de pagos funciona por ciclos de facturacion, de esta manera estas seguro de que en una fecha estara el dinero de los trabajos realizados.</p>
                             </div>
                             <div class="mj_workit_innerfooter">
                                 <a href="#">Leer mas...</a>
@@ -82,10 +83,10 @@
                             <div class="mj_workit_info">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-center">
-                                        <img src="../images/PROTEGIDO.png" alt="" width="461" class="img-responsive"></img>
+                                        <img src="../images/PROTEGIDO.png" alt="" width="461" class="img-responsive" />
                                     </div>
                                     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                                        <p class="mj_toppadder40">Nuestra plataforma de pagos esta integrada bajo la proteccion de datos de PAY U LATAM con lo cual nos aseguramos de que los datos de tu tarjetas de credit/debito no van a ser vulnerados e caer en delitos virtuales, por otro lado esta plataforma nos permite ser muy versatiles en los pagos de los trabajos que quieres contratar ya que lo puedes hacer por otro medios de pago, asi que pertenceer a esta ciudad llena de oportunidades no presenta ningun limite...</p>
+                                      <p class="mj_toppadder40">Nuestra plataforma de pagos esta integrada bajo la proteccion de datos de PAY U LATAM con lo cual nos aseguramos de que los datos de tu tarjetas de credit/debito no van a ser vulnerados e caer en delitos virtuales, por otro lado esta plataforma nos permite ser muy versatiles en los pagos de los trabajos que quieres contratar ya que lo puedes hacer por otro medios de pago, asi que pertenceer a esta ciudad llena de oportunidades no presenta ningun limite...</p>
                                     </div>
                                 </div>
                             </div>
@@ -97,6 +98,7 @@
                 </div>
             </div>
         </div>
+    
     </ui:define>
-
 </ui:composition>
+    

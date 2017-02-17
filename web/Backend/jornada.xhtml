@@ -34,13 +34,13 @@
                                          paginator="true"
                                          paginatorPosition="bottom"
                                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-                                <p:column headerText="Id:" filterBy="#{jornada.idJornada}" filterMatchMode="contains"> 
+                                <p:column headerText="No. Item" filterBy="#{jornada.idJornada}" filterMatchMode="contains"> 
                                     <h:outputText value="#{jornada.idJornada}" />
                                 </p:column>
                                 <p:column headerText="Nombre:" filterBy="#{jornada.nombre}" filterMatchMode="contains">
                                     <h:outputText value="#{jornada.nombre}" />
                                 </p:column>
-                                <p:column>
+                                <p:column headerText="Editar">
                                     <p:commandButton update=":formUpdate" oncomplete="PF('dialogjornadaupdate').show()" icon="ui-icon-search" title="Modificar">
                                         <f:setPropertyActionListener value="#{jornada}" target="#{jornadaBean.selectedJornada}" />
                                     </p:commandButton>

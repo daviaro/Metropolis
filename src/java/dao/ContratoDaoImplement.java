@@ -13,6 +13,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
+import Pagos.EstructuraVentas;
 
 /**
  *
@@ -113,6 +114,21 @@ public class ContratoDaoImplement implements ContratoDao {
                 c.getCotizacion().getUsuario().getNombres();
                 c.getCotizacion().getOferta().getUsuario().getNombres();
             }
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return lista;
+    }
+    public List<EstructuraVentas> getContratosXmes() {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        List<EstructuraVentas> lista = null;
+        String sql = "MONTH(fecha), COUNT(*) From Contrato GROUP BY MONTH(fecha)";
+        try {
+            session.beginTransaction();
+            lista = session.createQuery(sql).list();
+            
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();

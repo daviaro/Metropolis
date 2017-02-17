@@ -17,7 +17,7 @@
 
                     <h:form id="forma">
 
-                        <p:dataTable id="checkboxDT" var="contrato" value="#{liquidacionBean.contratosPendientes}" selection="#{liquidacionBean.contratosAliquidar}" rowKey="#{contrato.idContrato}" style="margin-bottom:0">
+                        <p:dataTable id="checkboxDT" emptyMessage="No hay registros pendientes" var="contrato" value="#{liquidacionBean.contratosPendientes}" selection="#{liquidacionBean.contratosAliquidar}" rowKey="#{contrato.idContrato}" style="margin-bottom:0">
                             <f:facet name="header">
                                 Liquidaciones Pendientes
                             </f:facet>
@@ -29,7 +29,7 @@
                                 <h:outputText value="#{contrato.calificacion}" />
                             </p:column>
                             
-                            <p:column headerText="Nombres" style="text-align:center">
+                            <p:column headerText="Cédula" style="text-align:center">
                                 <h:outputText value="#{liquidacionBean.getCedula(contrato)}" />
                             </p:column>
                             <p:column headerText="Nombres" style="text-align:center">

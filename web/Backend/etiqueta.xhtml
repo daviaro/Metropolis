@@ -34,7 +34,7 @@
                                          var="etiqueta" value="#{etiquetaBean.etiquetas}"  rows="10"
                                          paginator="true" paginatorPosition="bottom"
                                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-                                <p:column headerText="Id Etiqueta" filterBy="#{etiqueta.idEtiqueta}" filterMatchMode="contains">
+                                <p:column headerText="No. Item" filterBy="#{etiqueta.idEtiqueta}" filterMatchMode="contains">
                                     <h:outputText value="#{etiqueta.idEtiqueta}" />
                                 </p:column>
                                 <p:column headerText="Nombre" filterBy="#{etiqueta.nombre}" filterMatchMode="contains">
@@ -43,11 +43,11 @@
                                 <p:column headerText="Nombre Categoria" filterBy="#{etiqueta.categoria.nombre}" filterMatchMode="contains">
                                     <h:outputText value="#{etiqueta.categoria.nombre}" />
                                 </p:column>
-                                <p:column headerText="Estado" filterBy="#{etiqueta.estado}" filterMatchMode="contains">
-                                    <h:outputText value="#{etiqueta.estado}" />
+                                <p:column headerText="Activo" filterBy="#{etiqueta.estado}" filterMatchMode="contains">
+                                    <h:outputText value="#{etiqueta.estado?'Si':'No'}" />
                                 </p:column>
 
-                                <p:column headerText="Detalles">
+                                <p:column headerText="Editar">
                                     <p:commandButton update=":formUpdate" oncomplete="PF('dialogetiquetaupdate').show()" icon="ui-icon-search" title="Modificar">
                                         <f:setPropertyActionListener value="#{etiqueta}" target="#{etiquetaBean.selectedEtiqueta}" />
                                     </p:commandButton>

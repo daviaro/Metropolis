@@ -57,24 +57,7 @@
                                 <li><a href="../Front/Trabajador.xhtml">BUSCAR TRABAJO</a></li>
                                 <li><a href="../Front/Ofertar.xhtml">OFERTAR</a>
                                 </li>
-                                <li><a href="#">COMO FUNCIONA</a>
-                                    <ul class="sub_menu">
-                                        <li><a href="../Front/Como_Funciona.xhtml">COMO FUNCIONA</a>
-                                        </li>
-                                        <li><a href="../Front/Como_Trabajar.xhtml">COMO TRABAJAR</a>
-                                        </li>
-                                        <li><a href="#">COMO FUNCIONA PAGOS</a>
-                                        </li>
-                                        <li><a href="../Front/Como_Contratar.xhtml">COMO CONTRATAR</a>
-                                        </li>
-                                        <li><a href="#">COMO TERMINAR TRABAJO</a>
-                                        </li>                                        
-                                        <li><a href="../Front/Signup.xhtml">CREAR CUENTA</a>
-                                        </li>
-                                        <li><a href="../Front/login.xhtml">INICIAR SESION</a>
-                                        </li>
-                                    </ul>
-                                </li>
+
                                 <li style="display: #{loginBean.isAdmin() ? 'list-item' : 'none'};" ><a href="#">Administración</a>
                                     <ul class="sub_menu">
                                         <li><a href="../Backend/Miembro.xhtml">Miembros</a>
@@ -106,7 +89,7 @@
                                         </form>
                                     </div>
                                 </li>
-                               <li>
+                                <li>
                                     <p:outputLabel value="#{loginBean.usuarioLog.nombres} #{loginBean.usuarioLog.apellidos}" />
                                 </li>
                                 <li>
@@ -166,15 +149,15 @@
                         <div class="mj_weight mj_bottompadder20">
                             <div class="mj_sociallink">
                                 <ul>
-                                    <li><a href="#"><i class="fa fa-facebook"></i></a>
+                                    <li><a href="https://www.facebook.com/metropolis.com.co/"><i class="fa fa-facebook"></i></a>
                                     </li>
                                     <li><a href="#"><i class="fa fa-twitter"></i></a>
                                     </li>
+                                    <li><a href="#"><i class="fa fa-instagram"></i></a>
+                                    </li>
                                     <li><a href="#"><i class="fa fa-google-plus"></i></a>
                                     </li>
-                                    <li><a href="#"><i class="fa fa-behance"></i></a>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-dribbble"></i></a>
+                                    <li><a href="#"><i class="fa fa-linkedin"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -196,9 +179,9 @@
             </div>
         </div>
 
-       
-        
-         
+
+
+
         <!-- Script Start -->
 
 
@@ -222,7 +205,7 @@
         <h:outputScript library="default" name="js/plugins/bootstrap-slider/bootstrap-slider.js"  />  
         <h:outputScript library="default" name="js/plugins/fancybox/jquery.fancybox.js"  />  
         <h:outputScript library="default" name="js/plugins/fancybox/jquery.fancybox.pack.js"  />  
-        
+
         <h:outputScript library="default" name="js/jquery.mixitup.js"  />  
         <h:outputScript library="default" name="js/plugins/isotop/isotope.pkgd.js"  />  
         <h:outputScript library="default" name="js/plugins/ckeditor/ckeditor.js"  />  
