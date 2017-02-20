@@ -1,0 +1,21 @@
+
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./MainTemplete_grafico.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="contenido">
+        <f:event type="preRenderView" listener="#{loginBean.AutorizarAdmin}"></f:event>
+        <div class="clearfix"></div>
+        <div class="mj_lightgraytbg mj_toppadder80 mj_bottompadder80">
+            <div class="container">
+                <div class="row">
+
+                    <p:chart type="line" model="#{ventasBean.lcm}" style="height:300px;"></p:chart>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

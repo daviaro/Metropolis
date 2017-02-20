@@ -30,7 +30,7 @@
             <column name="apellidos" length="45" not-null="true" />
         </property>
         <property name="documentoIdentidad" type="int">
-            <column name="documento_identidad" not-null="true" />
+            <column name="documento_identidad" not-null="true" unique="true" />
         </property>
         <property name="telefono" type="string">
             <column name="telefono" length="45" not-null="true" />

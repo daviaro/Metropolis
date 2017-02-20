@@ -185,7 +185,7 @@ public class Usuario  implements java.io.Serializable {
     }
 
     
-    @Column(name="documento_identidad", nullable=false)
+    @Column(name="documento_identidad", nullable=false, unique = true)
     public int getDocumentoIdentidad() {
         return this.documentoIdentidad;
     }

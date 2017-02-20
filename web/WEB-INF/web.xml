@@ -62,11 +62,11 @@
     </context-param>    
     <context-param>
         <param-name>MAILFROM</param-name>
-        <param-value>jotamarios@gmail.com</param-value>
+        <param-value>info@metropolis.com.co</param-value>
     </context-param>
     <context-param>
         <param-name>MAILPASS</param-name>
-        <param-value>12345</param-value>
+        <param-value>informacion</param-value>
     </context-param>
     
     <context-param>

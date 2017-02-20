@@ -14,6 +14,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
 import Pagos.EstructuraVentas;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -121,20 +123,30 @@ public class ContratoDaoImplement implements ContratoDao {
         }
         return lista;
     }
+
     public List<EstructuraVentas> getContratosXmes() {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        List<EstructuraVentas> lista = null;
-        String sql = "MONTH(fecha), COUNT(*) From Contrato GROUP BY MONTH(fecha)";
+        List<Object> lista = null;
+        List<EstructuraVentas> listaes = new ArrayList<>();
+        String sql = "select CONCAT(YEAR(fecha), MONTH (fecha)), count(*) From Contrato GROUP BY CONCAT(YEAR(fecha), MONTH (fecha)) ORDER BY 1";
         try {
             session.beginTransaction();
             lista = session.createQuery(sql).list();
-            
+
+            Iterator itr = lista.iterator();
+            while (itr.hasNext()) {
+                Object[] obj = (Object[]) itr.next();
+                String mes = String.valueOf(obj[0]);
+                int cantidad = Integer.parseInt(String.valueOf(obj[1]));
+                listaes.add(new EstructuraVentas(mes, cantidad));
+            }
+
             session.getTransaction().commit();
         } catch (HibernateException e) {
             session.getTransaction().rollback();
             System.out.println(e.getMessage());
         }
-        return lista;
+        return listaes;
     }
 
     @Override
