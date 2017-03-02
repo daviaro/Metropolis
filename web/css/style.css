@@ -3325,15 +3325,21 @@ ol.comment li:after {
 .mj_workit_info{
 	float: left;
 	width: 100%;
-	padding: 50px;
+	padding-top: 24px;
+	padding-right: 24px;
+	padding-left: 24px;
+	padding-bottom: 24px;
 	-webkit-box-shadow: 0px 0px 6px -2px;
 	box-shadow: 0px 0px 6px -2px;
 }
 .mj_workit_info p{
-	float:left;
-	width:100%;
-	font-size:16px;
-	margin:0px;
+	float: left;
+	width: 100%;
+	font-size: 16px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-left: 0px;
+	margin-bottom: 0px;
 }
 .mj_workit_info img{
 	display: initial;
@@ -3341,8 +3347,11 @@ ol.comment li:after {
 .mj_workit_innerheader{
 	float: center;
 	width: 100%;
-	padding: 30px;
-	background-color: #fbfbfb;
+	padding-top: 13px;
+	padding-right: 13px;
+	padding-left: 13px;
+	padding-bottom: 13px;
+	background-color: #00A50C;
 	border-radius: 13px 13px 0px 0px;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
@@ -3350,17 +3359,16 @@ ol.comment li:after {
 	-o-transition: all 0.5s;
 	transition: all 0.5s;
 	-moz-box-shadow: inset 6px -2px 0px 0px #ebebeb;
-	-webkit-box-shadow: 0px -2px 6px 0px #B5B5B5;
-	box-shadow: 0px -2px 6px 0px #B5B5B5;
+	-webkit-box-shadow: 0px -2px 6px 0px #FFFFFF;
+	box-shadow: 0px -2px 6px 0px #FFFFFF;
 }
 .mj_workit_innerheader h4{
-	float:center;
-	width:100%;
-	text-transform:capitalize;
-	margin:0px;
-	font-size:24px;
-	color:#111111;
-	font-weight:400;
+	float: center;
+	width: 100%;
+	margin: 0px;
+	font-size: 24px;
+	color: #FFFFFF;
+	font-weight: 400;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
 	-ms-transition: all 0.5s;
@@ -3386,8 +3394,6 @@ ol.comment li:after {
 	-o-transition: all 0.5s;
 	transition: all 0.5s;
 	font-size: 24px;
-	text-align: center;
-	text-transform: none;
 }
 .mj_workit_innerfooter{
 	float:left;
@@ -3401,14 +3407,17 @@ ol.comment li:after {
 	transition: all 0.5s;
 }
 .mj_workit_innerfooter a{
-	float:left;
-	width:100%;
-	font-size:14px;
-	padding:25px;
-	text-transform:capitalize;
-	color:#ffffff;
-	text-decoration:none;
-	border-radius:0px 0px 13px 13px;
+	float: left;
+	width: 100%;
+	font-size: 14px;
+	padding-top: 8px;
+	padding-right: 8px;
+	padding-left: 8px;
+	padding-bottom: 8px;
+	text-transform: none;
+	color: #ffffff;
+	text-decoration: none;
+	border-radius: 0px 0px 13px 13px;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
 	-ms-transition: all 0.5s;
@@ -5245,12 +5254,7 @@ ul.mj_right_menu.mj_login_menu li:last-child a {
     padding-left: 10px;
     padding-right: 10px;
 }
-.mj_workit_innerheader {
-    padding: 30px 20px;
-}
-.mj_workit_innerheader h4{
-	font-size:22px;
-}
+
 .mj_filter {
     padding: 30px 10px;
 }

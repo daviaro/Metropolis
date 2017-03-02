@@ -80,15 +80,20 @@
                             <ul class="nav navbar-nav navbar-right mj_right_menu mj_withoutlogin_menu">
                                 <li class="mj_searchbtn"><a href="#"><i class="fa fa-search"></i></a>
                                     <div class="mj_search_option">
-                                        <form>
+                                        <h:form>
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <div class="input-group-addon"><i class="fa fa-search"></i>
                                                     </div>
-                                                    <input type="text" class="form-control" placeholder="Buscar"></input>
+                                                    <p:autoComplete id="acGral" value="#{ofertaBean.ofertaSearchString}" 
+                                                                    completeMethod="#{ofertaBean.buscarOferta}" 
+                                                                    minQueryLength="3" size="55" effect="blind" styleClass="form-control">
+                                                        <p:ajax event="itemSelect"
+                                                                listener="#{ofertaBean.verOferta()}" />
+                                                    </p:autoComplete> 
                                                 </div>
                                             </div>
-                                        </form>
+                                        </h:form>
                                     </div>
                                 </li>
                                 <li>
