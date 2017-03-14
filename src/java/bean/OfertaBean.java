@@ -124,6 +124,13 @@ public class OfertaBean implements Serializable {
     //Switch
     private boolean portafolioSwitch = false;
 
+    private int idOfertaSelected;
+
+    private String FitroTitulo = "";
+    private String FitroUbicacion = "";
+    private String FitroJornada = "";
+    private String FitroValor = "";
+
     @PostConstruct
     public void init() {
         cotizacionNueva = new Cotizacion();
@@ -141,7 +148,7 @@ public class OfertaBean implements Serializable {
     public OfertaBean() {
         this.trabajos = new ArrayList<>();
         this.categorias = new ArrayList<>();
-        
+
     }
 
     public List<UploadedFile> getUploadFiles() {
@@ -168,9 +175,11 @@ public class OfertaBean implements Serializable {
     public List<Oferta> getOfertasbyRecientes() {
 
         //logger.info("Informacion de ofertas recientes");
-
         OfertaDao linkDao = new OfertaDaoImplement();
-        ofertas = linkDao.findAllbyRecientes();
+        //ofertas = linkDao.findAllbyRecientes();
+
+        ofertas = linkDao.findAllbyRecientes(this.FitroTitulo, this.FitroUbicacion, this.FitroJornada, this.FitroValor);
+
         //logger.debug("Se listan {}  ofertas ", ofertas.size());
         //limitTable(ofertas, 10);
         return ofertas;
@@ -464,6 +473,24 @@ public class OfertaBean implements Serializable {
         }
     }
 
+    public void gotoTrabajo(Oferta idOferta) {
+        ofertaSelected = idOferta;
+        //Obetener url de redireccion
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        ExternalContext extContext = ctx.getExternalContext();
+        String urlRedirectNo = extContext.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/Front/Detalle_Trabajador.xhtml"));
+        String urlRedirectSi = extContext.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/Front/Detalle_Trabajador.xhtml"));
+        //Obtener url actual
+        HttpServletRequest origRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String urlActual = origRequest.getRequestURI();
+
+        try {
+            extContext.redirect(urlRedirectSi);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void toCotizar() {
         HttpServletRequest origRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String urlActual = origRequest.getRequestURI();
@@ -732,16 +759,14 @@ public class OfertaBean implements Serializable {
 
     //Busqueda General
     public List<String> buscarOferta(String query) {
-        
+
         BuscarDao bdo = new BuscarDaoImplement();
         bdo.almacenarBusqueda(query, usuarioRegistrado);
-        
+
         OfertaDao oLink = new OfertaDaoImplement();
         List<Oferta> ofertas = new LinkedList<>();
         ofertas = oLink.buscarOfertabyNombre(query);
 
-        
-        
         List<String> results = new ArrayList<String>();
         for (int i = 0; i < ofertas.size(); i++) {
             results.add(ofertas.get(i).getIdOferta() + " " + ofertas.get(i).getTrabajo().getTitulo() + " " + ofertas.get(i).getTrabajo().getCategoria().getNombre() + " " + ofertas.get(i).getTrabajo().getDescripcion());
@@ -894,5 +919,45 @@ public class OfertaBean implements Serializable {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public int getIdOfertaSelected() {
+        return idOfertaSelected;
+    }
+
+    public void setIdOfertaSelected(int idOfertaSelected) {
+        this.idOfertaSelected = idOfertaSelected;
+    }
+
+    public String getFitroTitulo() {
+        return FitroTitulo;
+    }
+
+    public void setFitroTitulo(String FitroTitulo) {
+        this.FitroTitulo = FitroTitulo;
+    }
+
+    public String getFitroUbicacion() {
+        return FitroUbicacion;
+    }
+
+    public void setFitroUbicacion(String FitroUbicacion) {
+        this.FitroUbicacion = FitroUbicacion;
+    }
+
+    public String getFitroJornada() {
+        return FitroJornada;
+    }
+
+    public void setFitroJornada(String FitroJornada) {
+        this.FitroJornada = FitroJornada;
+    }
+
+    public String getFitroValor() {
+        return FitroValor;
+    }
+
+    public void setFitroValor(String FitroValor) {
+        this.FitroValor = FitroValor;
     }
 }

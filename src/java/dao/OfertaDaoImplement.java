@@ -42,7 +42,7 @@ public class OfertaDaoImplement implements OfertaDao {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
-            if (session != null && session.getTransaction()!=null) {
+            if (session != null && session.getTransaction() != null) {
                 session.getTransaction().rollback();
             }
         }
@@ -190,6 +190,48 @@ public class OfertaDaoImplement implements OfertaDao {
             session.getTransaction().rollback();
         }
         return lista;
+    }
+
+    @Override
+    public List<Oferta> findAllbyRecientes(String filtroTitulo, String filtroUbicacion, String filtroJornada, String filtroValor) {
+        Session session = null;
+        ofertas = null;
+
+        String whereClausula = " where o.usuario = u.idUsuario ";
+
+        if (filtroTitulo != null && !filtroTitulo.equals("")) {
+            whereClausula += " and t.titulo like '%" + filtroTitulo + "%'";
+        }
+
+        if (filtroUbicacion != null && !filtroUbicacion.equals("")) {
+            whereClausula += " and o.usuario.ubicacion.barrio like '%" + filtroUbicacion + "%'";
+        }
+
+        if (filtroJornada != null && !filtroJornada.equals("")) {
+            whereClausula += " and j.nombre like '%" + filtroJornada + "%'";
+        }
+        
+        if (filtroValor != null && !filtroValor.equals("")) {
+            whereClausula += " and o.costo <= " + filtroValor;
+        }
+
+        String sql = "FROM Oferta o INNER JOIN FETCH o.jornada as j INNER JOIN FETCH o.trabajo as t INNER JOIN FETCH o.usuario as u INNER JOIN FETCH u.ubicacion as ub INNER JOIN FETCH o.trabajo.categoria as c INNER JOIN FETCH o.trabajo.medicionTrabajo as m " + whereClausula + "  order by o.fechaCreacion asc";
+
+        try {
+            //Se recupera la session actual
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            //inicializo transaccion
+            session.beginTransaction();
+            Query query = session.createQuery(sql);
+            ofertas = query.list();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            //si no se cumple se hace un rollback
+            if (session != null && session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+        }
+        return ofertas;
     }
 
 }

@@ -41,6 +41,8 @@ public class CotizacionBean implements Serializable {
     
     private Usuario usuarioRegistrado;
     private Cotizacion cotizacion;
+    private Contrato contrato;
+    private Integer ratingTrabajo;
     
     /**
      * Creates a new instance of CotizacionBean
@@ -79,7 +81,13 @@ public class CotizacionBean implements Serializable {
         }
         return this.cotizacionesPendientes;
     }
-
+    
+    public void ActualizarCalificacion(){
+        ContratoDaoImplement cdi = new ContratoDaoImplement();
+        contrato.setCalificacion(ratingTrabajo);
+        cdi.modificarContrato(contrato);
+    }
+    
     public void setCotizacionesPendientes(List<Cotizacion> cotizacionesPendientes) {
         this.cotizacionesPendientes = cotizacionesPendientes;
     }
@@ -270,6 +278,22 @@ public class CotizacionBean implements Serializable {
         this.cotizacionesRealizadas = new ArrayList<>();
         this.cotizacionesAceptadas = new ArrayList<>();
         this.cotizacionesContraofertas = new ArrayList<>();
+    }
+
+    public Contrato getContrato() {
+        return contrato;
+    }
+
+    public void setContrato(Contrato contrato) {
+        this.contrato = contrato;
+    }
+
+    public Integer getRatingTrabajo() {
+        return ratingTrabajo;
+    }
+
+    public void setRatingTrabajo(Integer ratingTrabajo) {
+        this.ratingTrabajo = ratingTrabajo;
     }
 
 }

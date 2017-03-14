@@ -343,8 +343,12 @@
                                                 <p:column headerText="Empleado">
                                                     <h:outputText value="#{contrato.cotizacion.oferta.usuario.nombres} #{contrato.cotizacion.oferta.usuario.apellidos}" />
                                                 </p:column>
-
-
+                                                <p:column headerText="Calificar">
+                                                    <p:commandButton update="formMostrarTrabajosContratados" disabled="#{contrato.calificacion!=null}" oncomplete="PF('dialogCalificarTrabajo').show()" icon="ui-icon-search" title="Ver Detalles">
+                                                        <f:setPropertyActionListener value="#{contrato}" target="#{cotizacionBean.contrato}" />
+                                                    </p:commandButton>
+                                                </p:column>
+                                                
                                             </p:dataTable>
                                         </h:form>
                                     </div>
@@ -388,6 +392,17 @@
                 </h:panelGrid>
             </p:dialog>
         </h:form> 
+        
+        <h:form id="formCalificarTrabajo">
+            <p:dialog header="Califica el trabajo #{cotizacionBean.contrato.cotizacion.descripcion}" focus="rating" widgetVar="dialogCalificarTrabajo" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgCalificarTrabajo">
+                <p:rating value="#{cotizacionBean.ratingTrabajo}" id="rating">
+                    <p:ajax event="rate" update=":formMostrarTrabajosContratados" onsuccess="PF('dialogCalificarTrabajo').hide()" listener="#{cotizacionBean.ActualizarCalificacion()}">
+                        
+                    </p:ajax>
+                </p:rating>
+            </p:dialog>
+        </h:form>
+        
         <h:form id="formCotizacionContratadas">
             <p:dialog header="Detalle Cotizacion para #{cotizacionBean.cotizacion.oferta.trabajo.titulo}" widgetVar="dialogCotizacionContratadas" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgCotizacionContratadasUpdate">
 

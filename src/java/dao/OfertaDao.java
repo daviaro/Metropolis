@@ -14,6 +14,7 @@ import model.Oferta;
  */
 public interface OfertaDao {
     public List<Oferta> findAllbyRecientes();
+    public List<Oferta> findAllbyRecientes(String filtroTitulo, String filtroUbicacion, String filtroJornada, String filtroValor);
     public List<Oferta> findAllbyCalificacion();
     public Integer countAll();
     public Boolean insertarOferta(Oferta oferta);

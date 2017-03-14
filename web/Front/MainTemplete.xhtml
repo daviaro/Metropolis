@@ -54,7 +54,7 @@
                             <ul class="nav navbar-nav">
                                 <li ><a href="index.xhtml">INICIO</a>
                                 </li>
-                                <li><a href="Trabajador.xhtml">BUSCAR TRABAJO</a></li>
+                                <li><a href="Trabajador.xhtml">BUSCAR SERVICIOS</a></li>
                                 <li><a href="Ofertar.xhtml">OFERTAR</a>
                                 </li>
                                 <li><a href="#">COMO FUNCIONA</a>
@@ -88,7 +88,7 @@
                                                     </div>
                                                     <p:autoComplete id="acGral" value="#{ofertaBean.ofertaSearchString}" 
                                                                     completeMethod="#{ofertaBean.buscarOferta}" 
-                                                                    minQueryLength="3" size="55" effect="blind" styleClass="form-control">
+                                                                    minQueryLength="3" size="55" effect="blind" >
                                                         <p:ajax event="itemSelect"
                                                                 listener="#{ofertaBean.verOferta()}" />
                                                     </p:autoComplete> 
