@@ -117,7 +117,7 @@
                                         <p:inputTextarea id="perfilUsuario" rows="5" cols="30" counter="display" maxlength="300" counterTemplate="{0} caracteres restantes." autoResize="false"
                                                          placeholder="Describa brevemente su perfil de trabajador" value="#{ofertaBean.perfil}"
                                                          styleClass="form-control" required="true" 
-                                                         requiredMessage="Cual es su perfil?" rendered="#{!ofertaBean.esEmpleado()}" >
+                                                         requiredMessage="Cual es su perfil?" ><!--rendered="#{!ofertaBean.esEmpleado()}" -->
                                             <f:validateRequired />
                                             <p:clientValidator />
                                         </p:inputTextarea>
@@ -130,7 +130,7 @@
                                         <p:inputTextarea id="experienciaUsuario" rows="5" cols="30" counter="display2" maxlength="300" counterTemplate="{0} caracteres restantes." autoResize="false"
                                                          placeholder="Describa brevemente su experiencia" value="#{ofertaBean.experiencia}"
                                                          styleClass="form-control" required="true" 
-                                                         requiredMessage="Cual es su perfil?" rendered="#{!ofertaBean.esEmpleado()}">
+                                                         requiredMessage="Cual es su perfil?"> <!--rendered="#{!ofertaBean.esEmpleado()}"> -->
                                             <f:validateRequired />
                                             <p:clientValidator />
                                         </p:inputTextarea>
@@ -144,7 +144,7 @@
                                         <p:inputTextarea id="profesionUsuario" rows="5" cols="30" counter="display3" maxlength="300" counterTemplate="{0} caracteres restantes." autoResize="false"
                                                          placeholder="Describa brevemente su experiencia" value="#{ofertaBean.profesion}"
                                                          styleClass="form-control" required="true" 
-                                                         requiredMessage="Cual es su profesion?" rendered="#{!ofertaBean.esEmpleado()}">
+                                                         requiredMessage="Cual es su profesion?"> <!--rendered="#{!ofertaBean.esEmpleado()}"> -->
                                             <f:validateRequired />
                                             <p:clientValidator />
                                         </p:inputTextarea>

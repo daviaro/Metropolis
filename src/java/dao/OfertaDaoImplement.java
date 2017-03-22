@@ -43,7 +43,10 @@ public class OfertaDaoImplement implements OfertaDao {
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
             if (session != null && session.getTransaction() != null) {
+                try{
                 session.getTransaction().rollback();
+                }
+                catch(Exception ex){}
             }
         }
         return ofertas;
@@ -69,7 +72,10 @@ public class OfertaDaoImplement implements OfertaDao {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
+            try{
             session.getTransaction().rollback();
+            }
+            catch(Exception ex){}
         }
         return ofertasCount;
     }
@@ -142,7 +148,10 @@ public class OfertaDaoImplement implements OfertaDao {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
+            try{
             session.getTransaction().rollback();
+            }
+            catch(Exception ex){}
         }
         return oferta;
     }
@@ -160,7 +169,10 @@ public class OfertaDaoImplement implements OfertaDao {
             }
         } catch (HibernateException e) {
             if (session != null) {
+                try{
                 session.getTransaction().rollback();
+                } 
+                catch(Exception ex){}
             }
             System.out.println(e.getMessage());
         }
@@ -187,7 +199,10 @@ public class OfertaDaoImplement implements OfertaDao {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
+            try{
             session.getTransaction().rollback();
+            }
+            catch(Exception ex){}
         }
         return lista;
     }
@@ -227,8 +242,13 @@ public class OfertaDaoImplement implements OfertaDao {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
+            try{
             if (session != null && session.getTransaction() != null) {
                 session.getTransaction().rollback();
+            }
+            }
+            catch(Exception ex){
+                
             }
         }
         return ofertas;
