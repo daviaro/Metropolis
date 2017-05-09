@@ -114,10 +114,10 @@
                                     </div>
                                 </li>
                                <li>
-                                    <p:outputLabel value="#{loginBean.usuarioLog.nombres} #{loginBean.usuarioLog.apellidos}" />
+                                   <p:outputLabel value="#{loginBean.usuarioLog.nombres.substring(0,8)}" />
                                 </li>
                                 <li>
-                                    <a class="mj_profileimg"> <h:graphicImage value="/images/accountIcon.png" alt="user" height="50" width="50" />
+                                    <a class="mj_profileimg"> <h:graphicImage value="/images/accountIcon.png" alt="user" height="30" width="30" />
                                         <i class="fa fa-angle-down"></i></a>
                                 </li>
                             </ul>

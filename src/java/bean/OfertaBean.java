@@ -67,6 +67,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.data.FilterEvent;
 import org.primefaces.model.UploadedFile;
+import util.MailUtil;
 
 /**
  *
@@ -185,6 +186,10 @@ public class OfertaBean implements Serializable {
         return ofertas;
     }
 
+    public void actualizarOferta(){
+        OfertaDao od = new OfertaDaoImplement();
+        od.actualizarOferta(ofertaSelected);
+    }
     public List<Oferta> getOfertasbyCalificcion() {
         OfertaDao linkDao = new OfertaDaoImplement();
         ofertas = linkDao.findAllbyCalificacion();
@@ -512,6 +517,28 @@ public class OfertaBean implements Serializable {
         } catch (IOException e) {
         }
     }
+    public void toCotizar(Oferta laoferta) {
+        ofertaSelected= laoferta;
+        HttpServletRequest origRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String urlActual = origRequest.getRequestURI();
+
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        ExternalContext extContext = ctx.getExternalContext();
+        String urlRedirectNo = extContext.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/Front/Cotizar.xhtml"));
+        String urlRedirectSi = extContext.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/Front/Cotizar.xhtml"));
+
+        //setear oferta a vista actual
+        /*for (Oferta oferta : ofertas) {
+            if (oferta.getIdOferta() == ofertaSelected.getIdOferta()) {
+                ofertaSelected = oferta;
+            }
+        }*/
+
+        try {
+            extContext.redirect(urlRedirectSi);
+        } catch (IOException e) {
+        }
+    }
 
     /**
      * Comprueba si la oferta es propia Si es mi oferta devuelve
@@ -577,6 +604,11 @@ public class OfertaBean implements Serializable {
         if (cotizacionDao.insertarCotizacion(cotizacionNueva)) {
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Excelente", "Cotizacion enviada!"));
+            /*MailUtil mi = new MailUtil();
+            mi.enviarMail(cotizacionNueva.getOferta().getUsuario().getEmail(), "Ha recibido una oferta de " + cotizacionNueva.getOferta().getUsuario().getNombres(), 
+                    "Recibió una oferta de " + cotizacionNueva.getOferta().getUsuario().getNombres() + " Para el trabajo de " + cotizacionNueva.getOferta().getTrabajo().getTitulo() + " para el día "
+            + cotizacionNueva.getOferta().getFechaCreacion() + " ingresa ya a la plataforma para aceptar o contraofertar!");*/
+            
             cotizacionNueva = new Cotizacion();
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Cotizacion no enviada!"));

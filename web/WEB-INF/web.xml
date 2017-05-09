@@ -87,7 +87,7 @@
     </context-param>
     <context-param>
         <param-name>URLRETORNO</param-name>
-        <param-value>http://localhost:8080/Metropolis/Front/Payu_landing.xhtml"</param-value>
+        <param-value>www.metropolis.com.co/Metropolis2/faces/Front/Payu_landing.xhtml</param-value>
     </context-param>
     <!--End Config UploadFile -->
 </web-app>

@@ -132,7 +132,7 @@
                                         <h:form id="formMostrarOfertas" >
                                             <p:dataTable emptyMessage="No se encontraron resultados" styleClass="table table-striped noHeader" var="oferta" value="#{ofertaBean.ofertasbyUsuario}"
                                                          selectionMode="single" selection="#{ofertaBean.ofertaSelected}" rowKey="#{oferta.idOferta}" >
-                                                <p:ajax event="rowSelect" listener="#{ofertaBean.onRowSelect}" />
+                                                <p:ajax event="rowSelect" oncomplete="PF('dialogoMisOfertas').show()" update="formMostrarOfertas" />
 
                                                 <p:column headerText="Descripcion">
                                                     <h:outputText value="#{oferta.trabajo.titulo}" />
@@ -153,6 +153,7 @@
 
                                             </p:dataTable>
                                         </h:form>
+
                                     </div>
                                 </div>
                             </div>
@@ -348,7 +349,7 @@
                                                         <f:setPropertyActionListener value="#{contrato}" target="#{cotizacionBean.contrato}" />
                                                     </p:commandButton>
                                                 </p:column>
-                                                
+
                                             </p:dataTable>
                                         </h:form>
                                     </div>
@@ -392,17 +393,33 @@
                 </h:panelGrid>
             </p:dialog>
         </h:form> 
-        
+
         <h:form id="formCalificarTrabajo">
             <p:dialog header="Califica el trabajo #{cotizacionBean.contrato.cotizacion.descripcion}" focus="rating" widgetVar="dialogCalificarTrabajo" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgCalificarTrabajo">
                 <p:rating value="#{cotizacionBean.ratingTrabajo}" id="rating">
                     <p:ajax event="rate" update=":formMostrarTrabajosContratados" onsuccess="PF('dialogCalificarTrabajo').hide()" listener="#{cotizacionBean.ActualizarCalificacion()}">
-                        
+
                     </p:ajax>
                 </p:rating>
             </p:dialog>
         </h:form>
+
         
+            <p:dialog header="Modificar Oferta" id="dialogoMisOfertas" widgetVar="dialogoMisOfertas" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <h:form id="UpdformMisOfertas">
+                <p:panelGrid columns="2">
+                    Título: <p:inputText value="#{ofertaBean.ofertaSelected.trabajo.titulo}"></p:inputText>
+                    Descripción: <p:inputText value="#{ofertaBean.ofertaSelected.trabajo.titulo}"></p:inputText>
+                                   
+                    Costo: <p:inputText value="#{ofertaBean.ofertaSelected.costo}"></p:inputText>
+                    
+                    Guardar: <p:commandButton actionListener="#{ofertaBean.actualizarOferta()}" icon="fa fa-fw fa-edit" ajax="true" oncomplete="PF('dialogoMisOfertas'.hide();)"></p:commandButton>
+                        
+                </p:panelGrid>
+                    </h:form>
+            </p:dialog>
+        
+
         <h:form id="formCotizacionContratadas">
             <p:dialog header="Detalle Cotizacion para #{cotizacionBean.cotizacion.oferta.trabajo.titulo}" widgetVar="dialogCotizacionContratadas" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgCotizacionContratadasUpdate">
 
@@ -519,7 +536,7 @@
                 </h:panelGrid>
             </p:dialog>
         </h:form>
-           <script type="text/javascript">
+        <script type="text/javascript">
             $(document).ready(function () {
                 if (#{loginBean.esRol("Empleado")} || #{loginBean.esRol("Administrador")}) {
                     var rolEmpleado = "block";

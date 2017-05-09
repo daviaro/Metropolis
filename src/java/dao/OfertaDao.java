@@ -18,6 +18,7 @@ public interface OfertaDao {
     public List<Oferta> findAllbyCalificacion();
     public Integer countAll();
     public Boolean insertarOferta(Oferta oferta);
+    public Boolean actualizarOferta(Oferta oferta);
     public Oferta buscarOfertabyId(Integer id);
 
     public List<Oferta> findAllbyIdUsuario(Integer idUsuario);

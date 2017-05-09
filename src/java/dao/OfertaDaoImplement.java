@@ -96,7 +96,9 @@ public class OfertaDaoImplement implements OfertaDao {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
+            try{
             session.getTransaction().rollback();
+            }catch(Exception ex){}
         }
         return ofertas;
     }
@@ -124,6 +126,31 @@ public class OfertaDaoImplement implements OfertaDao {
 
         return flag;
 
+    }
+    
+    @Override
+    public Boolean actualizarOferta(Oferta oferta){
+        boolean flag=false;
+        
+        Transaction trans = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trans = session.beginTransaction();
+            session.update(oferta);
+            session.getTransaction().commit();
+            flag = true;
+        } catch (RuntimeException e) {
+            if (trans != null) {
+                trans.rollback();
+            }
+            e.printStackTrace();
+            flag = false;
+        } finally {
+            session.flush();
+            session.close();
+        }
+        
+        return flag;
     }
 
     @Override

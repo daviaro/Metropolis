@@ -181,15 +181,15 @@ public class LoginBean implements Serializable {
     public void setAceptaPoliticas(boolean aceptaPoliticas) {
         this.aceptaPoliticas = aceptaPoliticas;
     }
-    
-    public Usuario getUsuarioLogeado(){
+
+    public Usuario getUsuarioLogeado() {
         Usuario usr;
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         String mail = String.valueOf(session.getAttribute("email"));
         usr = this.usuarioDao.buscarUsuariobyEmail(mail);
-        
+
         return usr;
-        
+
     }
 
     public String login(ActionEvent event) {
@@ -199,7 +199,7 @@ public class LoginBean implements Serializable {
         String viewId = "";
 
         this.usuarioLog = usuarioDao.login(usuarioLog);
-        if (usuarioLog != null) {
+        if (usuarioLog != null && usuarioLog.getIdUsuario() != null) {
             this.loggedIn = true;
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
             session.setAttribute("email", usuarioLog.getEmail());
@@ -437,6 +437,7 @@ public class LoginBean implements Serializable {
         return false;
 
     }
+
     public Boolean esRol(String rol) {
         for (Iterator iterator1 = usuarioLog.getRols().iterator(); iterator1.hasNext();) {
             Rol rolU = (Rol) iterator1.next();
@@ -523,6 +524,7 @@ public class LoginBean implements Serializable {
             }
         }
     }
+
     public void Autorizar() {
         if (!isLogged()) {
             try {
@@ -535,7 +537,8 @@ public class LoginBean implements Serializable {
 
         }
     }
-    public void AutorizarAdmin(){
+
+    public void AutorizarAdmin() {
         if (!isAdmin()) {
             try {
                 /*ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
