@@ -190,6 +190,11 @@ public class OfertaBean implements Serializable {
         OfertaDao od = new OfertaDaoImplement();
         od.actualizarOferta(ofertaSelected);
     }
+    public void eliminarOferta(){
+        OfertaDao od = new OfertaDaoImplement();
+        ofertaSelected.setEstado(false);
+        od.actualizarOferta(ofertaSelected);
+    }
     public List<Oferta> getOfertasbyCalificcion() {
         OfertaDao linkDao = new OfertaDaoImplement();
         ofertas = linkDao.findAllbyCalificacion();
@@ -604,10 +609,10 @@ public class OfertaBean implements Serializable {
         if (cotizacionDao.insertarCotizacion(cotizacionNueva)) {
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Excelente", "Cotizacion enviada!"));
-            /*MailUtil mi = new MailUtil();
+            MailUtil mi = new MailUtil();
             mi.enviarMail(cotizacionNueva.getOferta().getUsuario().getEmail(), "Ha recibido una oferta de " + cotizacionNueva.getOferta().getUsuario().getNombres(), 
-                    "Recibió una oferta de " + cotizacionNueva.getOferta().getUsuario().getNombres() + " Para el trabajo de " + cotizacionNueva.getOferta().getTrabajo().getTitulo() + " para el día "
-            + cotizacionNueva.getOferta().getFechaCreacion() + " ingresa ya a la plataforma para aceptar o contraofertar!");*/
+                    "Recibió una oferta de " + cotizacionNueva.getUsuario().getNombres() + " para el trabajo de " + cotizacionNueva.getOferta().getTrabajo().getTitulo() + " para el día "
+            + cotizacionNueva.getFechaTrabajo() + " ingresa ya a la plataforma para aceptar o contraofertar!");
             
             cotizacionNueva = new Cotizacion();
         } else {

@@ -97,7 +97,7 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <p:outputLabel value="#{loginBean.usuarioLog.nombres} #{loginBean.usuarioLog.apellidos}" />
+                                    <p:outputLabel value="#{loginBean.usuarioLog.nombres.length() > 7 ? loginBean.usuarioLog.nombres.substring(0,8):loginBean.usuarioLog.nombres}" />
                                 </li>
                                 <li>
                                     <a class="mj_profileimg"> <h:graphicImage value="/images/accountIcon.png" alt="user" height="50" width="50" />

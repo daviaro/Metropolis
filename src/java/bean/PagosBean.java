@@ -21,6 +21,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import model.Cotizacion;
 import model.Usuario;
+import util.MailUtil;
 
 /**
  *
@@ -39,7 +40,19 @@ public class PagosBean {
     }
 
     public Cotizacion getCotizacionPagar() {
-        return cotizacionPagar;
+        if (cotizacionPagar != null) {
+            return cotizacionPagar;
+        } else {
+            String codigoReferencia = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("referenceCode");
+            int codigoReferenciaInt = 0;
+            CotizacionDaoImplement cdi = new CotizacionDaoImplement();
+            try {
+                codigoReferenciaInt = Integer.parseInt(codigoReferencia);
+            } catch (NumberFormatException nfe) {
+
+            }
+            return cdi.buscarCotizacionById(codigoReferenciaInt);
+        }
     }
 
     public void setCotizacionPagar(Cotizacion cotizacion) {
@@ -191,7 +204,25 @@ public class PagosBean {
             //Estado aprobado
             if (estado != null && estado.equals("4")) {
                 //CAMBIAR CotizacionPagar para buscarla si no existe
+
+                if (cotizacionPagar == null) {
+                    int codigoReferenciaInt = 0;
+                    CotizacionDaoImplement cdi = new CotizacionDaoImplement();
+                    try {
+                        codigoReferenciaInt = Integer.parseInt(codigoReferencia);
+                    } catch (NumberFormatException nfe) {
+
+                    }
+                    cotizacionPagar = cdi.buscarCotizacionById(codigoReferenciaInt);
+                }
+
                 pu.almacenarPago(this.cotizacionPagar.getIdCotizacion().toString(), metodoPago, date, String.valueOf(this.getValorTotal()), codigoAutorizacion, estado + '-' + textoEstado);
+
+                MailUtil mi = new MailUtil();
+                mi.enviarMail(this.cotizacionPagar.getOferta().getUsuario().getEmail(), "Pago realizado por la oferta " + this.cotizacionPagar.getOferta().getIdOferta() + " de " + this.cotizacionPagar.getOferta().getUsuario().getNombres(),
+                        " La oferta de " + this.cotizacionPagar.getUsuario().getNombres() + " para el trabajo de " + this.cotizacionPagar.getOferta().getTrabajo().getTitulo() + " para el día "
+                        + this.cotizacionPagar.getFechaTrabajo() + " fue realizado. Recuerda acudir a la fecha acordada para tener una buena calificación.");
+
             }
         }
 

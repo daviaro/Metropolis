@@ -23,6 +23,7 @@ import model.Contrato;
 import model.Cotizacion;
 import model.Oferta;
 import model.Usuario;
+import util.MailUtil;
 
 /**
  *
@@ -86,6 +87,11 @@ public class CotizacionBean implements Serializable {
         ContratoDaoImplement cdi = new ContratoDaoImplement();
         contrato.setCalificacion(ratingTrabajo);
         cdi.modificarContrato(contrato);
+        
+        MailUtil mi = new MailUtil();
+            mi.enviarMail(this.cotizacion.getOferta().getUsuario().getEmail(), "Ha recibido una calificación para el proyecto de parte de " + this.cotizacion.getOferta().getUsuario().getNombres(), 
+                    "Recibió un calificación de la cotización de parte de " + this.cotizacion.getUsuario().getNombres() + " para el proyecto de " + this.cotizacion.getOferta().getTrabajo().getTitulo());
+        
     }
     
     public void setCotizacionesPendientes(List<Cotizacion> cotizacionesPendientes) {
@@ -182,6 +188,24 @@ public class CotizacionBean implements Serializable {
         return this.cotizacionesAceptadas;
     }
 
+    public List<Cotizacion> getCotizacionesAceptadasComoEmpleado() {
+        this.cotizacionesAceptadas = new ArrayList<>();
+        //Obtener Bean login y acceder al usuarioRegistrado logeado
+        FacesContext context = javax.faces.context.FacesContext.getCurrentInstance();
+        Object loginBean = context.getExternalContext().getSessionMap().get("loginBean");
+        LoginBean objetoBean = null;
+        if (loginBean != null) {
+            objetoBean = (LoginBean) loginBean;
+        }
+        this.usuarioRegistrado = objetoBean.getUsuarioLog();
+        // Fin buscarUsuario
+
+        CotizacionDao cotizaciondao = new CotizacionDaoImplement();
+        this.cotizacionesAceptadas = cotizaciondao.findAllbyCotizacionesAceptadasComoEmpleado(usuarioRegistrado);
+
+        return this.cotizacionesAceptadas;
+    }
+    
     public void setCotizacionesAceptadas(List<Cotizacion> cotizacionesAceptadas) {
         this.cotizacionesAceptadas = cotizacionesAceptadas;
     }
@@ -233,6 +257,37 @@ public class CotizacionBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", msg));
             setAll();
 
+            
+            MailUtil mi = new MailUtil();
+            mi.enviarMail(this.cotizacion.getUsuario().getEmail(), "Ha recibido una aceptación para su trabajo de parte de " + this.cotizacion.getOferta().getUsuario().getNombres(), 
+                    "Recibió un aceptación de la cotización de parte de " + this.cotizacion.getOferta().getUsuario().getNombres() + " para el trabajo de " + this.cotizacion.getOferta().getTrabajo().getTitulo() + " para el día "
+            + this.cotizacion.getFechaTrabajo() + " ingresa ya a la plataforma para pagar.");
+            
+        } else {
+            this.cotizacion.setRespuesta(false);
+            msg = "Error al modificar la cotizacion";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", msg));
+        }
+    }
+    
+    public void btnRechazarCotizacion(ActionEvent actionEvent){
+        CotizacionDao cotizacionDao = new CotizacionDaoImplement();
+        String msg;
+        this.cotizacion.setRespuesta(false);
+        this.cotizacion.setFechaRespuesta(new Date());
+        //Crear Contrato para cotizacion
+        if (cotizacionDao.actualizarCotizacion(this.cotizacion)) {
+
+            msg = "Se modifico correctamente la cotizacion";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", msg));
+            setAll();
+
+            
+            MailUtil mi = new MailUtil();
+            mi.enviarMail(this.cotizacion.getOferta().getUsuario().getEmail(), "Ha recibido un rechazo a su propuesta de parte de " + this.cotizacion.getOferta().getUsuario().getNombres(), 
+                    "Recibió un rechazo de la cotización de parte de " + this.cotizacion.getUsuario().getNombres() + " para el trabajo de " + this.cotizacion.getOferta().getTrabajo().getTitulo() + " para el día "
+            + this.cotizacion.getFechaTrabajo() + " ingresa a la plataforma para buscar otros afiliados.");
+            
         } else {
             this.cotizacion.setRespuesta(false);
             msg = "Error al modificar la cotizacion";
@@ -256,6 +311,12 @@ public class CotizacionBean implements Serializable {
             msg = "Se modifico correctamente la cotizacion";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", msg));
             setAll();
+            
+            MailUtil mi = new MailUtil();
+            mi.enviarMail(this.cotizacion.getUsuario().getEmail(), "Ha recibido una aceptación de su contrapropuesta de " + this.cotizacion.getOferta().getUsuario().getNombres(), 
+                    "Recibió un aceptación de su contraoferta de " + this.cotizacion.getOferta().getUsuario().getNombres() + " para el trabajo de " + this.cotizacion.getOferta().getTrabajo().getTitulo() + " para el día "
+            + this.cotizacion.getFechaTrabajo() + ".");
+            
 
         } else {
             this.cotizacion.setRespuesta(false);

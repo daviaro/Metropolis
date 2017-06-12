@@ -30,7 +30,7 @@ public class OfertaDaoImplement implements OfertaDao {
 
         Session session = null;
         ofertas = null;
-        String sql = "FROM Oferta o INNER JOIN FETCH o.jornada as j INNER JOIN FETCH o.trabajo as t INNER JOIN FETCH o.usuario as u INNER JOIN FETCH u.ubicacion as ub INNER JOIN FETCH o.trabajo.categoria as c INNER JOIN FETCH o.trabajo.medicionTrabajo as m where o.usuario = u.idUsuario  order by o.fechaCreacion asc";
+        String sql = "FROM Oferta o INNER JOIN FETCH o.jornada as j INNER JOIN FETCH o.trabajo as t INNER JOIN FETCH o.usuario as u INNER JOIN FETCH u.ubicacion as ub INNER JOIN FETCH o.trabajo.categoria as c INNER JOIN FETCH o.trabajo.medicionTrabajo as m where o.usuario = u.idUsuario and o.estado=1  order by o.fechaCreacion asc";
 
         try {
             //Se recupera la session actual
@@ -187,7 +187,7 @@ public class OfertaDaoImplement implements OfertaDao {
     public List<Oferta> findAllbyIdUsuario(Integer idUsuario) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         List<Oferta> lista = null;
-        String sql = "FROM Oferta o INNER JOIN FETCH o.jornada as j INNER JOIN FETCH o.usuario as u INNER JOIN FETCH u.ubicacion as ub INNER JOIN FETCH o.trabajo as t INNER JOIN FETCH o.trabajo.categoria as c INNER JOIN FETCH o.trabajo.medicionTrabajo as m where u.idUsuario = '" + idUsuario + "'" + "order by o.fechaCreacion asc";
+        String sql = "FROM Oferta o INNER JOIN FETCH o.jornada as j INNER JOIN FETCH o.usuario as u INNER JOIN FETCH u.ubicacion as ub INNER JOIN FETCH o.trabajo as t INNER JOIN FETCH o.trabajo.categoria as c INNER JOIN FETCH o.trabajo.medicionTrabajo as m where u.idUsuario = '" + idUsuario + "'" + " and o.estado=1 order by o.fechaCreacion asc";
         try {
             if (session != null) {
                 session.beginTransaction();
@@ -213,9 +213,9 @@ public class OfertaDaoImplement implements OfertaDao {
         //Se crea un try catch para hacer la consulta
         String sql = "Select o From Oferta o LEFT JOIN FETCH o.trabajo as tra  LEFT JOIN FETCH tra.categoria as cat "
                 + "LEFT JOIN cat.etiquetas as e "
-                + "WHERE tra.titulo LIKE '%" + query + "%' OR e.nombre "
+                + "WHERE (tra.titulo LIKE '%" + query + "%' OR e.nombre "
                 + "LIKE '%" + query + "%' OR cat.nombre  "
-                + "LIKE '%" + query + "%' OR tra.descripcion  LIKE '%" + query + "%'";
+                + "LIKE '%" + query + "%' OR tra.descripcion  LIKE '%" + query + "%') AND o.estado = 1";
 
         try {
             //Se recupera la session actual

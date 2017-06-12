@@ -29,8 +29,8 @@ import org.apache.logging.log4j.Logger;
  */
 @ManagedBean(name = "ubicacionBean")
 @SessionScoped
-public class UbicacionBean implements Serializable{
-    
+public class UbicacionBean implements Serializable {
+
     private Logger logger = LogManager.getLogger(UbicacionBean.class);
 
     private List<Ubicacion> ubicaciones;
@@ -43,16 +43,16 @@ public class UbicacionBean implements Serializable{
 
     @PostConstruct
     public void init() {
-        
+
         logger.info("Ejecuta PostConstruct");
-        
+
         this.selectedUbicacion = new Ubicacion();
         this.createdUbicacion = new Ubicacion();
-        
+
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getCurrentInstance().getExternalContext().getContext();
         this.pathImages = servletContext.getRealPath(this.destination);
-        
-        logger.info("Se obtiene la ruta donde se van a despositar y leer imagenes {} ",this.pathImages);
+
+        logger.info("Se obtiene la ruta donde se van a despositar y leer imagenes {} ", this.pathImages);
     }
 
     /**
@@ -64,12 +64,13 @@ public class UbicacionBean implements Serializable{
 
     public List<Ubicacion> getUbicaciones() {
         logger.info("Lista de ubicaciones");
-        
+
         UbicacionDao ubicacionDao = new UbicacionDaoImplement();
         this.ubicaciones = ubicacionDao.mostrarUbicaciones();
-        
-        logger.debug("Tamaño de la lista de ubicaciones {} ",this.ubicaciones.size());
-        
+
+        if (ubicaciones != null) {
+            logger.debug("Tamaño de la lista de ubicaciones {} ", this.ubicaciones.size());
+        }
         return ubicaciones;
     }
 

@@ -60,7 +60,7 @@
         <param-name>primefaces.UPLOADER</param-name>
         <param-value>commons</param-value>
     </context-param>    
-    <context-param>
+    <!--<context-param>
         <param-name>MAILFROM</param-name>
         <param-value>info@metropolis.com.co</param-value>
     </context-param>
@@ -69,6 +69,31 @@
         <param-value>informacion</param-value>
     </context-param>
     
+    -->
+    <context-param>
+        <param-name>MAILFROM</param-name>
+        <param-value>enviosmetropolis@gmail.com</param-value>
+    </context-param>    
+    <context-param>
+        <param-name>MAILPASS</param-name>
+        <param-value>prueba123</param-value>
+    </context-param>
+    <context-param>
+        <param-name>MAILPORT</param-name>
+        <param-value>587</param-value>
+    </context-param>
+    <context-param>
+        <param-name>SMTPHOST</param-name>
+        <param-value>smtp.gmail.com</param-value>
+    </context-param>
+    <context-param>
+        <param-name>SMTPAUTH</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>SMTP_SSL</param-name>
+        <param-value>true</param-value>
+    </context-param>
     <context-param>
         <param-name>APIKEY</param-name>
         <param-value>4Vj8eK4rloUd272L48hsrarnUA</param-value>

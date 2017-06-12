@@ -31,7 +31,7 @@
                                     <h:outputText styleClass="form-control" value="#{loginBean.usuarioLog.nombres} #{loginBean.usuarioLog.apellidos}" /> 
                                 </div>
                                 <p:separator />
-                                <p:panel header="Seleccione un trabajo" style="margin-bottom:20px;margin-top: 10px;">
+                                <p:panel header="Seleccione un proyecto" style="margin-bottom:20px;margin-top: 10px;">
                                     <h:panelGrid columns="4" cellpadding="10">
 
                                         <p:outputLabel for="somCategoria" value="Categoria" />
@@ -63,10 +63,10 @@
                                         <label>Trabajo</label>
                                         <p:selectOneMenu id="somTrabajo" value="#{ofertaBean.idTrabajo}"
                                                          disabled="#{ofertaBean.idCategoria eq null or ofertaBean.idCategoria eq 0 or ofertaBean.idSubCategoria eq null or ofertaBean.idSubCategoria eq 0}"
-                                                         required="true" requiredMessage="Por favor seleccione un trabajo" >
-                                            <f:selectItem itemLabel="Seleccione trabajo" itemValue="0" />
+                                                         required="true" requiredMessage="Por favor seleccione un proyecto" >
+                                            <f:selectItem itemLabel="Seleccione proyecto" itemValue="0" />
                                             <c:if test="#{ofertaBean.trabajosTemporal.size() eq 0}">
-                                                <f:selectItem itemLabel="No se encontraron trabajos" itemValue="0" />
+                                                <f:selectItem itemLabel="No se encontraron proyectos" itemValue="0" />
                                             </c:if>
                                             <f:selectItems value="#{ofertaBean.trabajosTemporal}" var="tra" itemLabel="#{tra.titulo}" itemValue="#{tra.idTrabajo}" />
                                         </p:selectOneMenu>
@@ -89,8 +89,8 @@
                                 </div> 
                               <div class="form-group">
                                     <label>Presupuesto</label>
-                                    <p:inputText id="costo" styleClass="form-control" placeholder="Ingrese el costo de su trabajo" value="#{ofertaBean.ofertaCreate.costo}" 
-                                                 required="true" requiredMessage="Cual es el costo de su trabajo?" validatorMessage="El valor ingresado es incorrecto." >
+                                    <p:inputText id="costo" styleClass="form-control" placeholder="Ingrese el costo de su proyecto" value="#{ofertaBean.ofertaCreate.costo}" 
+                                                 required="true" requiredMessage="Cual es el costo de su proyecto?" validatorMessage="El valor ingresado es incorrecto." >
                                         <f:validateDoubleRange minimum="1" maximum="2147483647" />
                                        <!-- <p:clientValidator />-->
                                     </p:inputText>
@@ -115,7 +115,7 @@
                                         <p:outputLabel for="perfilUsuario" value="Perfil" />
 
                                         <p:inputTextarea id="perfilUsuario" rows="5" cols="30" counter="display" maxlength="300" counterTemplate="{0} caracteres restantes." autoResize="false"
-                                                         placeholder="Describa brevemente su perfil de trabajador" value="#{ofertaBean.perfil}"
+                                                         placeholder="Describa brevemente su perfil de afiliado" value="#{ofertaBean.perfil}"
                                                          styleClass="form-control" required="true" 
                                                          requiredMessage="Cual es su perfil?" ><!--rendered="#{!ofertaBean.esEmpleado()}" -->
                                             <f:validateRequired />

@@ -103,6 +103,8 @@ public class UsuarioBean implements Serializable {
     public Usuario getUsuario() {
         return usuario;
     }
+    
+   
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
@@ -310,6 +312,11 @@ public class UsuarioBean implements Serializable {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+     public Usuario UsuarioFromUsr(Usuario usuario) {
+        UsuarioDaoImplement udi = new UsuarioDaoImplement();
+        
+        return udi.buscarUsuario(usuario);
     }
 
 }

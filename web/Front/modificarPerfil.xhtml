@@ -47,7 +47,7 @@
                             <aside class="widget widget_posts">
                                 <h4 class="widget-title">Administracion</h4>
                                 <ul>
-                                    <li><a href="cuentaUsuario.xhtml"><i class="fa fa fa-user"></i> Mi cuenta </a>
+                                    <li><a href="modificarPerfil.xhtml"><i class="fa fa fa-user"></i> Mi cuenta </a>
                                     </li> 
                                     <li><a href="administrarTrabajos.xhtml"><i class="fa fa fa-suitcase"></i> Administrar Trabajos </a>
                                     </li>                                    
@@ -249,7 +249,8 @@
                                                                 goodLabel="Contraseña Buena" strongLabel="Contraseña Fuerte"
                                                                 inline="true" disabled="false"
                                                                 match="ur_pw2" 
-                                                                validatorMessage="Contraseña incorrecta o sin coincidencia. Ingrese una contraseña de minimo 8 caracteres." >
+                                                                validatorMessage="Contraseña incorrecta o sin coincidencia. Ingrese una contraseña de minimo 8 caracteres." 
+                                                                placeholder="Contraseña">
                                                         <f:validateLength minimum="8" maximum="45" ></f:validateLength>
                                                     </p:password>
 
@@ -260,7 +261,8 @@
                                                 <div class="form-group" id="divpass2">
                                                     <p:password id="ur_pw2" styleClass="form-control" disabled="false"
                                                                 value="#{loginBean.usuarioModificar.contrasena}"
-                                                                validatorMessage="Contraseña incorrecta. Ingrese una contraseña de minimo 8 caracteres. " >
+                                                                validatorMessage="Contraseña incorrecta. Ingrese una contraseña de minimo 8 caracteres. " 
+                                                                placeholder="Confirma tu Contraseña">
                                                         <f:validateLength minimum="8" maximum="45" ></f:validateLength>
                                                     </p:password>                                                        
 

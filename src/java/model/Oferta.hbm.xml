@@ -30,7 +30,7 @@
             <column name="fecha_limite" length="10" />
         </property>
         <property name="estado" type="boolean">
-            <column name="estado" not-null="true" />
+            <column name="estado" not-null="false" />
         </property>
         <set name="portafolios" table="portafolio" inverse="true" lazy="true" fetch="select">
             <key>

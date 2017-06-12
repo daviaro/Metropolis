@@ -61,13 +61,13 @@
                                     <ul class="sub_menu">
                                         <li><a href="Como_Funciona.xhtml">COMO FUNCIONA</a>
                                         </li>
-                                        <li><a href="Como_Trabajar.xhtml">COMO TRABAJAR</a>
+                                        <li><a href="Como_Trabajar.xhtml">COMO OFERTAR</a>
                                         </li>
                                         <li><a href="Como_Hacer_Un_Pago.xhtml">COMO HACER PAGOS</a>
                                         </li>
-                                        <li><a href="Como_Contratar.xhtml">CÓMO ENCUENTRO UN TRABAJO</a>
+                                        <li><a href="Como_Contratar.xhtml">CÓMO ENCUENTRO UN PROYECTO</a>
                                         </li>
-                                        <li><a href="#">COMO TERMINAR TRABAJO</a>
+                                        <li><a href="#">COMO TERMINAR PROYECTO</a>
                                         </li>                                        
                                         <li><a href="Signup.xhtml">CREAR CUENTA</a>
                                         </li>
@@ -114,7 +114,7 @@
                                     </div>
                                 </li>
                                <li>
-                                   <p:outputLabel value="#{loginBean.usuarioLog.nombres.substring(0,8)}" />
+                                   <p:outputLabel value="#{loginBean.usuarioLog.nombres.length() > 7 ? loginBean.usuarioLog.nombres.substring(0,8):loginBean.usuarioLog.nombres}" />
                                 </li>
                                 <li>
                                     <a class="mj_profileimg"> <h:graphicImage value="/images/accountIcon.png" alt="user" height="30" width="30" />
@@ -126,7 +126,7 @@
                                     <ul>
                                         <li><a href="modificarPerfil.xhtml"><i class="fa fa-user"></i> Mi cuenta</a>
                                         </li>
-                                        <li><a href="administrarTrabajos.xhtml"><i class="fa fa-suitcase"></i>Administrar Trabajos</a>
+                                        <li><a href="administrarTrabajos.xhtml"><i class="fa fa-suitcase"></i>Administrar Proyectos</a>
                                         </li>
                                         <li>
                                             <p:commandLink value="Cerrar Sesión" 
@@ -159,7 +159,7 @@
                     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2 col-sm-offset-0 col-xs-offset-0">
                         <div class="mj_weight mj_bottompadder20">
                             <a href="index.xhtml"><img src="../images/logo_footer.png" class="img-responsive" alt=""></img></a>
-                            <p>Metrópolis es la plataforma que conecta usuarios, con trabajadores independientes que tienen la capacidad, experiencia y disposición para llevar a cabo los distintos trabajos que necesitas.</p>
+                            <p>La función de Metrópolis es la de poner en contacto personas que ofrecen sus servicios con otras que tienen una necesidad inmediata y facilitar su contacto u ofrecimiento a través del sitio web.</p>
                         </div>
                         <div class="mj_weight mj_bottompadder20"><span>Suscribase</span>
                             <form class="form-inline mj_newsletter">

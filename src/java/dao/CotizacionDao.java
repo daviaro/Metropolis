@@ -22,6 +22,7 @@ public interface CotizacionDao {
     public List<Cotizacion> findAllbyCotizacionesRealizadas(Usuario usuario);
     public boolean actualizarCotizacion(Cotizacion cotizacion);
     public List<Cotizacion> findAllbyCotizacionesAceptadas(Usuario usuarioRegistrado);
+    public List<Cotizacion> findAllbyCotizacionesAceptadasComoEmpleado(Usuario usuarioEmpleado);
     public List<Cotizacion> findAllbyCotizacionesContraofertadas(Usuario usuarioRegistrado);
     public List<Cotizacion> findAll();
     public Cotizacion buscarCotizacionById(int idCoti);

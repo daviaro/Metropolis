@@ -220,6 +220,41 @@ public class LoginBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, message);
         viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
         return viewId + "?faces-redirect=true";
+        //return ruta;
+        //context.addCallbackParam("loggedIn", loggedIn);
+        //context.addCallbackParam("ruta", ruta);
+
+        //return "index?faces-redirect=true";
+    }
+    public String loginBody(ActionEvent event) {
+        RequestContext context = RequestContext.getCurrentInstance();
+        FacesMessage message;
+        String ruta = "";
+        String viewId = "";
+
+        this.usuarioLog = usuarioDao.login(usuarioLog);
+        if (usuarioLog != null && usuarioLog.getIdUsuario() != null) {
+            this.loggedIn = true;
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+            session.setAttribute("email", usuarioLog.getEmail());
+            for (Iterator iterator1 = usuarioLog.getRols().iterator(); iterator1.hasNext();) {
+                Rol rol = (Rol) iterator1.next();
+                session.setAttribute(rol.getNombre(), rol.getIdRol());
+            }
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido ", this.usuarioLog.getNombres());
+            ruta = "/Front/index.xhtml";
+            this.usuarioModificar = this.usuarioLog;
+        } else {
+            this.loggedIn = false;
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Usuario y/o Clave incorrecto.");
+            if (this.usuarioLog == null) {
+                this.usuarioLog = new Usuario();
+            }
+        }
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+        //return viewId + "?faces-redirect=true";
+        return ruta;
         //context.addCallbackParam("loggedIn", loggedIn);
         //context.addCallbackParam("ruta", ruta);
 
@@ -463,7 +498,7 @@ public class LoginBean implements Serializable {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("cuentaUsuario.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("modificarPerfil.xhtml");
             } catch (IOException ex) {
                 logger.error("Error [{}]", ex.getMessage());
             }

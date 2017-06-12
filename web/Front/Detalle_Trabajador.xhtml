@@ -40,7 +40,7 @@
                                                     <label>Calificacion</label><span class="mj_green_text">*****</span>
                                                 </li>
                                                 <li>
-                                                    <label>Promedio costo trabajo</label><span class="mj_green_text"><h:outputLabel value="#{ofertaBean.ofertaSelected.costo}"><f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="0" /></h:outputLabel></span>
+                                                    <label>Promedio costo proyecto</label><span class="mj_green_text"><h:outputLabel value="#{ofertaBean.ofertaSelected.costo}"><f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="0" /></h:outputLabel></span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -80,7 +80,7 @@
                             <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
                                 <div class="row">
                                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                                        <label>Resumen</label>
+                                        <label>Perfíl</label>
                                     </div>
                                     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                                         <div class="mj_detaildiv">
@@ -90,29 +90,7 @@
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mj_toppadder30 mj_bottompadder30">
                                         <div class="mj_divider"></div>
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                                        <label>Trabajo</label>
-                                    </div>
-                                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                                        <div class="mj_detaildiv">
-
-
-                                            <ul>
-                                                <li>
-                                                    <h3>Título</h3><br />
-                                                    <h:outputLabel value="#{ofertaBean.ofertaSelected.trabajo.titulo}"></h:outputLabel>
-                                                </li><br />
-                                                <li>
-                                                    <span>Descripción</span><br />
-                                                    <h:outputLabel value="#{ofertaBean.ofertaSelected.trabajo.descripcion}"></h:outputLabel>
-                                                </li><br />
-                                                <li>
-                                                    <h3>Categoría</h3><br />
-                                                    <h:outputLabel value="#{ofertaBean.ofertaSelected.trabajo.categoria.nombre}"></h:outputLabel>
-                                                </li><br />
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    
 
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mj_toppadder30 mj_bottompadder30">
                                         <div class="mj_divider"></div>
@@ -135,33 +113,17 @@
                                         <div class="mj_divider"></div>
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                                        <label>Trabajos</label>
+                                        <label>Profesión</label>
                                     </div>
                                     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                                        <div class="mj_detaildiv mj_bottompadder30">
-                                            <span>Muebles, burmsdf, CALI </span>
-                                            <blockquote class="mj_yellowblockquote">
-                                                <span><i class="fa fa-calendar"></i> Jul 2012 - Dec 2013</span>
-                                                <h5>MAderas CCC, CALI</h5>
-                                                <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+                                        <div class="mj_detaildiv">
+                                            <blockquote class="mj_blueblockquote">
+                                                <p><h:outputLabel value="#{ofertaBean.ofertaSelected.usuario.experiencia}"></h:outputLabel></p>
                                             </blockquote>
                                         </div>
-                                        <div class="mj_detaildiv mj_bottompadder30">
-                                            <span>World-span, Ottawa, ON</span>
-                                            <blockquote class="mj_yellowblockquote">
-                                                <span><i class="fa fa-calendar"></i> Jul 2013 - Dec 2014</span>
-                                                <h5>Ventas productos dereivados de la madera</h5>
-                                                <p>Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima.</p>
-                                            </blockquote>
-                                        </div>
-                                        <div class="mj_detaildiv mj_bottompadder30">
-                                            <span>Portilla Puertas (propio)</span>
-                                            <blockquote class="mj_yellowblockquote">
-                                                <span><i class="fa fa-calendar"></i> Jul 2014 - Dec 2015</span>
-                                                <h5>Director de producto</h5>
-                                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                                            </blockquote>
-                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mj_toppadder30 mj_bottompadder30">
+                                        <div class="mj_divider"></div>
                                     </div>
                                 </div>
                             </div>
