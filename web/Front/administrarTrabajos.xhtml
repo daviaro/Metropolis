@@ -169,8 +169,8 @@
                                     <div style="padding:20px;">
                                         <h:form id="formMostrarOfertas" >
                                             <p:dataTable emptyMessage="No se encontraron resultados" styleClass="table table-striped noHeader" var="oferta" value="#{ofertaBean.ofertasbyUsuario}"
-                                                         selectionMode="single" selection="#{ofertaBean.ofertaSelected}" rowKey="#{oferta.idOferta}" >
-                                                <p:ajax event="rowSelect" oncomplete="PF('dialogoMisOfertas').show()" update="formMostrarOfertas" />
+                                                         selectionMode="single" selection="#{ofertaBean.ofertaSelected}" rowKey="#{oferta.idOferta}" lazy="true" >
+                                                <p:ajax event="rowSelect" oncomplete="PF('dialogoMisOfertas').show()" update="UpdformMisOfertas" />
 
                                                 <p:column headerText="Descripcion">
                                                     <h:outputText value="#{oferta.trabajo.titulo}" />
@@ -179,6 +179,11 @@
                                                 <p:column headerText="Ubicacion">
                                                     <i class="fa fa-map-marker"></i>
                                                     <h:outputText value="#{oferta.usuario.ubicacion.barrio}" />
+                                                </p:column>
+                                                <p:column headerText="Fecha Límite">
+                                                    <p:outputLabel value="#{oferta.fechaLimite}">
+                                                        <f:convertDateTime pattern="MM-dd-yyyy" />
+                                                    </p:outputLabel>
                                                 </p:column>
 
                                                 <p:column headerText="Jornada">
@@ -452,7 +457,11 @@
                         <p:commandButton id="btnUpdatePendienteAceptar" actionListener="#{cotizacionBean.btnAceptarCotizacion(actionEvent)}" update=":formMostrarCotizacionesPendientes , :msgs" 
                                          oncomplete="PF('dialogCotizacionPendiente').hide()"  icon="fa fa-fw fa-edit" title="Aceptar Cotizacion" value="Aceptar Cotizacion"
                                          />
-                        <p:commandButton id="btnUpdatePendienteContraofertar" oncomplete="PF('dialogContraofertar').show(),PF('dialogCotizacionPendiente').hide() "  icon="ui-icon-cancel" title="Contraofertar" value="Contraofertar"/>
+                        <p:commandButton id="btnUpdatePendienteContraofertar" oncomplete="PF('dialogContraofertar').show(),PF('dialogCotizacionPendiente').hide() "  icon="ui-icon-cancel" title="Contraofertar" value="Contraofertar"
+                                         update="formContraofertar">
+                            <f:setPropertyActionListener value="#{cotizacionC}" target="#{cotizacionBean.cotizacion}" />
+                            
+                        </p:commandButton>
                         <p:commandButton id="btnUpdatePendienteRechazar" actionListener="#{cotizacionBean.btnRechazarCotizacion(actionEvent)}" update=":formMostrarCotizacionesPendientes" 
                                          oncomplete="PF('dialogCotizacionPendiente').hide();"  icon="fa fa-fw fa-edit" title="Rechazar Cotizacion" value="Rechazar Cotizacion"
                                          />
@@ -475,15 +484,15 @@
         <p:dialog header="Modificar Oferta" id="dialogoMisOfertas" widgetVar="dialogoMisOfertas" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
             <h:form id="UpdformMisOfertas">
                 <p:panelGrid columns="2">
-                    Título: <p:inputText value="#{ofertaBean.ofertaSelected.trabajo.titulo}" placeholder="#{ofertaBean.ofertaSelected.trabajo.titulo}"></p:inputText>
-                    Descripción: <p:inputText value="#{ofertaBean.ofertaSelected.trabajo.descripcion}" placeholder="#{ofertaBean.ofertaSelected.trabajo.descripcion}" ></p:inputText>
+                    Título: <p:inputText value="#{ofertaBean.ofertaSelected.trabajo.titulo}" placeholder="#{ofertaBean.ofertaSelected.trabajo.titulo}" disabled="true"></p:inputText>
+                    Descripción: <p:inputText value="#{ofertaBean.ofertaSelected.trabajo.descripcion}" placeholder="#{ofertaBean.ofertaSelected.trabajo.descripcion}" disabled="true"></p:inputText>
 
                     Costo: <p:inputText value="#{ofertaBean.ofertaSelected.costo}" placeholder="#{ofertaBean.ofertaSelected.costo}"></p:inputText>
                     Fecha: <p:calendar value="#{ofertaBean.ofertaSelected.fechaLimite}" placeholder="#{ofertaBean.ofertaSelected.fechaLimite}"></p:calendar>
 
-                    Guardar: <p:commandButton actionListener="#{ofertaBean.actualizarOferta()}" icon="fa fa-fw fa-edit" ajax="true" oncomplete="PF('dialogoMisOfertas'.hide();)"></p:commandButton>
+                    Guardar: <p:commandButton actionListener="#{ofertaBean.actualizarOferta()}" icon="fa fa-fw fa-edit" ajax="true" update="formMostrarOfertas" oncomplete="PF('dialogoMisOfertas'.hide();)"></p:commandButton>
                     
-                    Eliminar <p:commandButton actionListener="#{ofertaBean.eliminarOferta()}" icon="fa fa-fw fa-edit" ajax="true" oncomplete="PF('dialogoMisOfertas'.hide();)"></p:commandButton>
+                    Eliminar <p:commandButton actionListener="#{ofertaBean.eliminarOferta()}" icon="fa fa-fw fa-edit" update="formMostrarOfertas" ajax="true" oncomplete="PF('dialogoMisOfertas'.hide();)"></p:commandButton>
                 </p:panelGrid>
             </h:form>
         </p:dialog>
@@ -509,7 +518,7 @@
 
                     <f:facet name="footer">
                         <p:commandButton id="btnUpdateContratadasAceptar" actionListener="#{cotizacionBean.btnAceptarCotizacion(actionEvent)}" update=":formMostrarCotizacionesContratadas, :msgs" oncomplete="PF('dialogCotizacionContratadas').hide()"  icon="fa fa-fw fa-edit" title="Aceptar Cotizacion" value="Aceptar Cotizacion"/>
-                        <p:commandButton id="btnUpdateContratadasCancelar" oncomplete="PF('dialogCotizacionContratadas').hide()" icon="ui-icon-cancel" title="Cancelar" value="Contraofertar"/>
+                        <p:commandButton id="btnUpdateContratadasCancelar" oncomplete="PF('dialogCotizacionContratadas').hide(); PF('dialogContraofertar').show()" icon="ui-icon-cancel" title="Cancelar" value="Contraofertar" update="formContraofertar"/>
                     </f:facet>
                 </h:panelGrid>
 
@@ -525,7 +534,7 @@
 
 
                     <h:outputText styleClass="mj_blue_text" value="Fecha del Trabajo:" />
-                    <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.fechaTrabajo}" />
+                    <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.fechaTrabajo}"><f:convertDateTime pattern="MM-dd-yyyy" /></p:outputLabel>
 
 
                     <h:outputText styleClass="mj_blue_text" value="Presupuesto" />

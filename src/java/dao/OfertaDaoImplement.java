@@ -43,10 +43,10 @@ public class OfertaDaoImplement implements OfertaDao {
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
             if (session != null && session.getTransaction() != null) {
-                try{
-                session.getTransaction().rollback();
+                try {
+                    session.getTransaction().rollback();
+                } catch (Exception ex) {
                 }
-                catch(Exception ex){}
             }
         }
         return ofertas;
@@ -72,10 +72,10 @@ public class OfertaDaoImplement implements OfertaDao {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
-            try{
-            session.getTransaction().rollback();
+            try {
+                session.getTransaction().rollback();
+            } catch (Exception ex) {
             }
-            catch(Exception ex){}
         }
         return ofertasCount;
     }
@@ -96,16 +96,17 @@ public class OfertaDaoImplement implements OfertaDao {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
-            try{
-            session.getTransaction().rollback();
-            }catch(Exception ex){}
+            try {
+                session.getTransaction().rollback();
+            } catch (Exception ex) {
+            }
         }
         return ofertas;
     }
 
     @Override
     public Boolean insertarOferta(Oferta oferta) {
-        boolean flag;
+        boolean flag = false;
         Transaction trans = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -116,22 +117,24 @@ public class OfertaDaoImplement implements OfertaDao {
         } catch (RuntimeException e) {
             if (trans != null) {
                 trans.rollback();
+
+            }
+            if (session != null) {
+                session.flush();
+                session.close();
             }
             e.printStackTrace();
             flag = false;
-        } finally {
-            session.flush();
-            session.close();
         }
 
         return flag;
 
     }
-    
+
     @Override
-    public Boolean actualizarOferta(Oferta oferta){
-        boolean flag=false;
-        
+    public Boolean actualizarOferta(Oferta oferta) {
+        boolean flag = false;
+
         Transaction trans = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -149,7 +152,7 @@ public class OfertaDaoImplement implements OfertaDao {
             session.flush();
             session.close();
         }
-        
+
         return flag;
     }
 
@@ -175,10 +178,10 @@ public class OfertaDaoImplement implements OfertaDao {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
-            try{
-            session.getTransaction().rollback();
+            try {
+                session.getTransaction().rollback();
+            } catch (Exception ex) {
             }
-            catch(Exception ex){}
         }
         return oferta;
     }
@@ -196,10 +199,10 @@ public class OfertaDaoImplement implements OfertaDao {
             }
         } catch (HibernateException e) {
             if (session != null) {
-                try{
-                session.getTransaction().rollback();
-                } 
-                catch(Exception ex){}
+                try {
+                    session.getTransaction().rollback();
+                } catch (Exception ex) {
+                }
             }
             System.out.println(e.getMessage());
         }
@@ -226,10 +229,10 @@ public class OfertaDaoImplement implements OfertaDao {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
-            try{
-            session.getTransaction().rollback();
+            try {
+                session.getTransaction().rollback();
+            } catch (Exception ex) {
             }
-            catch(Exception ex){}
         }
         return lista;
     }
@@ -252,7 +255,7 @@ public class OfertaDaoImplement implements OfertaDao {
         if (filtroJornada != null && !filtroJornada.equals("")) {
             whereClausula += " and j.nombre like '%" + filtroJornada + "%'";
         }
-        
+
         if (filtroValor != null && !filtroValor.equals("")) {
             whereClausula += " and o.costo <= " + filtroValor;
         }
@@ -269,13 +272,12 @@ public class OfertaDaoImplement implements OfertaDao {
             session.getTransaction().commit();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
-            try{
-            if (session != null && session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
-            }
-            catch(Exception ex){
-                
+            try {
+                if (session != null && session.getTransaction() != null) {
+                    session.getTransaction().rollback();
+                }
+            } catch (Exception ex) {
+
             }
         }
         return ofertas;
