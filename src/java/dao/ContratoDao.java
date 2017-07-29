@@ -17,6 +17,7 @@ public interface ContratoDao {
     public Boolean crearContrato(Contrato contrato);
     public boolean modificarContrato(Contrato contrato);
     public List<Contrato> findAllContratadoByUsuario(Usuario usuarioRegistrado);
+    public List<Contrato> findAllContratadoFromUsuario(Usuario usuarioRegistrado);
     public Contrato findContratadoById(String idContrato);
     public List<Contrato> findAllContratos(Usuario usuario);
     public List<Contrato> findVigentes();

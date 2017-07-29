@@ -26,4 +26,5 @@ public interface UsuarioDao{
     public Usuario buscarUsuariobyEmailnCedula(Usuario usuarioRecuperar);
     public int insertarUsuario2(Usuario createUsuario);
     public Usuario buscarUsuariobyID(String ID);
+    public List<Usuario> getUsuariosDestacados();
 }

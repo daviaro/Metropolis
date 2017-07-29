@@ -38,6 +38,7 @@ public class OfertaDaoImplement implements OfertaDao {
             //inicializo transaccion
             session.beginTransaction();
             Query query = session.createQuery(sql);
+            query.setMaxResults(5);
             ofertas = query.list();
             session.getTransaction().commit();
         } catch (HibernateException e) {

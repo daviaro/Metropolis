@@ -62,7 +62,24 @@ public class ContratoDaoImplement implements ContratoDao {
         }
         return lista;
     }
+            
+    @Override
+    public List<Contrato> findAllContratadoFromUsuario(Usuario usuarioRegistrado) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        List<Contrato> lista = null;
+        String sql = "From Contrato contr LEFT JOIN FETCH contr.cotizacion cotiz LEFT JOIN FETCH cotiz.oferta ofer LEFT JOIN FETCH ofer.usuario u WHERE ofer.usuario = '" + usuarioRegistrado.getIdUsuario() + "'";
+        try {
+            session.beginTransaction();
+            lista = session.createQuery(sql).list();
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return lista;
+    }
 
+            
     @Override
     public List<Contrato> findAllContratos(Usuario usuario) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();

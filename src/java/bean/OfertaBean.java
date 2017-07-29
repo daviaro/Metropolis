@@ -95,6 +95,7 @@ public class OfertaBean implements Serializable {
     //Categorias en la base de datos
     private List<Categoria> categorias;
     private List<Categoria> subCategoriasTemporal;
+    private List<Usuario> afiliadosDestacados;
     private List<Jornada> jornadas;
     private Integer idCategoria = 0;
     private Integer idSubCategoria = 0;
@@ -186,15 +187,17 @@ public class OfertaBean implements Serializable {
         return ofertas;
     }
 
-    public void actualizarOferta(){
+    public void actualizarOferta() {
         OfertaDao od = new OfertaDaoImplement();
         od.actualizarOferta(ofertaSelected);
     }
-    public void eliminarOferta(){
+
+    public void eliminarOferta() {
         OfertaDao od = new OfertaDaoImplement();
         ofertaSelected.setEstado(false);
         od.actualizarOferta(ofertaSelected);
     }
+
     public List<Oferta> getOfertasbyCalificcion() {
         OfertaDao linkDao = new OfertaDaoImplement();
         ofertas = linkDao.findAllbyCalificacion();
@@ -500,6 +503,21 @@ public class OfertaBean implements Serializable {
             e.printStackTrace();
         }
     }
+    public void gotoPerfilAfiliado() {
+        
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        ExternalContext extContext = ctx.getExternalContext();
+        String urlRedirect = extContext.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/Front/Detalle_Trabajador.xhtml"));
+        
+        HttpServletRequest origRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String urlActual = origRequest.getRequestURI();
+
+        try {
+            extContext.redirect(urlRedirect);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void toCotizar() {
         HttpServletRequest origRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -522,8 +540,9 @@ public class OfertaBean implements Serializable {
         } catch (IOException e) {
         }
     }
+
     public void toCotizar(Oferta laoferta) {
-        ofertaSelected= laoferta;
+        ofertaSelected = laoferta;
         HttpServletRequest origRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String urlActual = origRequest.getRequestURI();
 
@@ -538,7 +557,6 @@ public class OfertaBean implements Serializable {
                 ofertaSelected = oferta;
             }
         }*/
-
         try {
             extContext.redirect(urlRedirectSi);
         } catch (IOException e) {
@@ -605,15 +623,16 @@ public class OfertaBean implements Serializable {
         Comision comision = cdi.getComisionAldia();
 
         cotizacionNueva.setComision(comision);
+        cotizacionNueva.setEstado(true);
 
         if (cotizacionDao.insertarCotizacion(cotizacionNueva)) {
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Excelente", "Cotizacion enviada!"));
             MailUtil mi = new MailUtil();
-            mi.enviarMail(cotizacionNueva.getOferta().getUsuario().getEmail(), "Ha recibido una oferta de " + cotizacionNueva.getOferta().getUsuario().getNombres(), 
-                    "Recibió una oferta de " + cotizacionNueva.getUsuario().getNombres() + " para el trabajo de " + cotizacionNueva.getOferta().getTrabajo().getTitulo() + " para el día "
-            + cotizacionNueva.getFechaTrabajo() + " ingresa ya a la plataforma para aceptar o contraofertar!");
-            
+            mi.enviarMail(cotizacionNueva.getOferta().getUsuario().getEmail(), "Ha recibido una oferta de Metropolis",
+                    "Recibió una oferta de Metropolis para el trabajo de " + cotizacionNueva.getOferta().getTrabajo().getTitulo() + " para el día "
+                    + cotizacionNueva.getFechaTrabajo() + " ingresa ya a la plataforma para aceptar o contraofertar!");
+
             cotizacionNueva = new Cotizacion();
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Cotizacion no enviada!"));
@@ -996,5 +1015,18 @@ public class OfertaBean implements Serializable {
 
     public void setFitroValor(String FitroValor) {
         this.FitroValor = FitroValor;
+    }
+
+    public List<Usuario> getAfiliadosDestacados() {
+
+        if (afiliadosDestacados == null) {
+            UsuarioDaoImplement udi = new UsuarioDaoImplement();
+            afiliadosDestacados = udi.getUsuariosDestacados();
+        }
+        return afiliadosDestacados;
+    }
+
+    public void setAfiliadosDestacados(List<Usuario> afiliadosDestacados) {
+        this.afiliadosDestacados = afiliadosDestacados;
     }
 }

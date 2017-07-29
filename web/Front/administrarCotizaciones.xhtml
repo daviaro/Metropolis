@@ -43,9 +43,9 @@
                                 <ul class="nav nav-tabs mj_joblist" role="tablist">
                                     <li role="presentation" class="active"><a href="#cotizacionesRealizadas" aria-controls="cotizacionesRealizadas" role="tab" data-toggle="tab">Cotizaciones</a>
                                     </li>
-                                    <li role="presentation"><a href="#cotizacionesAceptadas" aria-controls="cotizacionesAceptadas" role="tab" data-toggle="tab">Pendientes</a>
+                                    <li role="presentation"><a href="#cotizacionesAceptadas" aria-controls="cotizacionesAceptadas" role="tab" data-toggle="tab">Contraofertas</a>
                                     </li>
-                                    <li role="presentation"><a href="#contraCotiRealizadas" aria-controls="contraCotiRealizadas" role="tab" data-toggle="tab">Recibidas</a>
+                                    <li role="presentation"><a href="#contraCotiRealizadas" aria-controls="contraCotiRealizadas" role="tab" data-toggle="tab">Pendiente</a>
                                     </li>
 
                                 </ul>
@@ -71,9 +71,7 @@
                                                     <p:column headerText="Oferta">
                                                         <h:outputText value="#{cotizacionA.oferta.trabajo.titulo}" />
                                                     </p:column>
-                                                    <p:column headerText="Respuesta">
-                                                        <h:outputText value="#{cotizacionA.respuesta}" />
-                                                    </p:column>
+                                                    
                                                     <p:column headerText="Pagar">
                                                         <p:commandButton action="Resumendepagos.xhtml" icon="ui-icon-cart" title="Ver Detalles">
                                                             <f:setPropertyActionListener value="#{cotizacionA}" target="#{pagosBean.cotizacionPagar}" />
@@ -109,8 +107,8 @@
                                                     <p:column headerText="Oferta">
                                                         <h:outputText value="#{cotizacionP.oferta.trabajo.titulo}" />
                                                     </p:column>
-                                                    <p:column headerText="Respuesta">
-                                                        <h:outputText value="#{cotizacionP.respuesta}" />
+                                                    <p:column headerText="Afiliado">
+                                                        <h:outputText value="#{usuarioBean.UsuarioByID(cotizacionP.oferta.usuario).nombres}" />
                                                     </p:column>
                                                     <p:column headerText="Detalles">
                                                         <p:commandButton update=":formCotizacionRealizada" oncomplete="PF('dialogCotizacionRealizada').show()" icon="ui-icon-search" title="Ver Detalles">
@@ -195,6 +193,10 @@
                                                          paginatorPosition="bottom"
                                                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                          paginatorAlwaysVisible="false">
+                                                
+                                                <p:column headerText="Afiliado">
+                                                    <h:outputText value="#{contrato.cotizacion.oferta.usuario.nombres} #{contrato.cotizacion.oferta.usuario.apellidos}" />
+                                                </p:column>
 
                                                 <p:column headerText="Fecha">
                                                     <h:outputText value="#{contrato.fecha}" />
@@ -208,11 +210,9 @@
                                                         <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="0"/>
                                                     </h:outputText>
                                                 </p:column>
-                                                <p:column headerText="Empleado">
-                                                    <h:outputText value="#{contrato.cotizacion.oferta.usuario.nombres} #{contrato.cotizacion.oferta.usuario.apellidos}" />
-                                                </p:column>
+                                                
                                                 <p:column headerText="Calificar">
-                                                    <p:commandButton update="formMostrarTrabajosContratados" disabled="#{contrato.calificacion!=null}" oncomplete="PF('dialogCalificarTrabajo').show()" icon="ui-icon-check" title="Ver Detalles">
+                                                    <p:commandButton  disabled="#{contrato.calificacion!=null}" oncomplete="PF('dialogCalificarTrabajo').show()" icon="ui-icon-check" title="Calificar">
                                                         <f:setPropertyActionListener value="#{contrato}" target="#{cotizacionBean.contrato}" />
                                                     </p:commandButton>
                                                 </p:column>
@@ -223,7 +223,7 @@
                                 </div>
                             </div>
                             <div class="mj_showmore mj_toppadder30">
-                                <a href="#" class="mj_showmorebtn mj_bigbtn mj_bluebtn">Ver Perfil <i class="fa fa-angle-right"></i></a>
+                                
                             </div>
                         </div>    
 
@@ -238,10 +238,14 @@
         <h:form id="formCalificarTrabajo">
             <p:dialog header="Califica el trabajo #{cotizacionBean.contrato.cotizacion.descripcion}" focus="rating" widgetVar="dialogCalificarTrabajo" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgCalificarTrabajo">
                 <p:rating value="#{cotizacionBean.ratingTrabajo}" id="rating">
-                    <p:ajax event="rate" update=":formMostrarTrabajosContratados" onsuccess="PF('dialogCalificarTrabajo').hide()" listener="#{cotizacionBean.ActualizarCalificacion()}">
-
-                    </p:ajax>
+                   
                 </p:rating>
+                <br />
+                <br />
+                
+                <p:commandButton value="Calificar y finalizar" update=":formMostrarTrabajosContratados" action="#{cotizacionBean.ActualizarCalificacion()}" oncomplete="PF('dialogCalificarTrabajo').hide()" >
+                     
+                </p:commandButton>
             </p:dialog>
         </h:form>
 
@@ -257,8 +261,8 @@
 
 
                     <h:outputText styleClass="mj_blue_text" value="Fecha del Trabajo:" />
-                    <p:calendar styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.fechaTrabajo}" mode="inline" readonlyInput="true"/>
-
+                    
+                    <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.fechaTrabajo}"><f:convertDateTime pattern="MM-dd-yyyy" /></p:outputLabel>
                     <h:outputText styleClass="mj_blue_text" value="Presupuesto" />
                     <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.valorPresupuesto}" />
 

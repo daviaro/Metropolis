@@ -173,6 +173,7 @@ public class UsuarioDaoImplement implements UsuarioDao,Serializable {
         }
         return user;
     }
+    
 
     @Override
     public Integer countAll() {
@@ -197,6 +198,34 @@ public class UsuarioDaoImplement implements UsuarioDao,Serializable {
             session.getTransaction().rollback();
         }
         return usuariosCount;
+    }
+    
+    @Override
+    public List<Usuario> getUsuariosDestacados() {
+
+        List<Usuario> ususarios = null;
+        Session session = null;
+        
+        
+        //Se crea un try catch para hacer la consulta
+        //String sql = "SELECT u FROM Contrato c INNER JOIN FETCH c.cotizacion as co INNER JOIN FETCH co.oferta as o INNER JOIN FETCH o.usuario u order by sum(con.calificacion)";
+        String sql = "FROM Usuario u  INNER JOIN  u.oferta as o  INNER JOIN  o.cotizacion as co  INNER JOIN  co.contrato as c order by sum(c.calificacion)";
+        //String sql = "SELECT o FROM Contrato c, Oferta o INNER JOIN FETCH o.usuario as u INNER JOIN FETCH u.ubicacion as ub INNER JOIN FETCH o.jornada as j INNER JOIN FETCH o.trabajo as t INNER JOIN FETCH t.categoria as cat INNER JOIN FETCH t.medicionTrabajo as m where c.cotizacion.oferta = o.idOferta and c.calificacion  is not null";
+        try {
+            //Se recupera la session actual
+            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            //inicializo transaccion
+            session.beginTransaction();
+            Query query = session.createQuery(sql);
+            usuarios = query.list();
+            
+
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            //si no se cumple se hace un rollback
+            session.getTransaction().rollback();
+        }
+        return usuarios;
     }
 
     @Override

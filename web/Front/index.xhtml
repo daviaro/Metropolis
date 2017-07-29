@@ -587,9 +587,9 @@
                         <div class="mj_tabs mj_bottompadder50">
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs mj_joblist" role="tablist">
-                                <li role="presentation" class="active"><a href="#recentjobs" aria-controls="recentjobs" role="tab" data-toggle="tab">Trabajos recientes</a>
+                                <li role="presentation" class="active"><a href="#recentjobs" aria-controls="recentjobs" role="tab" data-toggle="tab">Ofertas recientes</a>
                                 </li>
-                                <li role="presentation"><a href="#featuredjobs" aria-controls="featuredjobs" role="tab" data-toggle="tab">Trabajos destacados</a>
+                                <li role="presentation"><a href="#featuredjobs" aria-controls="featuredjobs" role="tab" data-toggle="tab">Afiliados  destacados</a>
                                 </li>
                             </ul>
                             <!-- Tab panes -->
@@ -639,30 +639,26 @@
                                 <div role="tabpanel" class="tab-pane" id="featuredjobs">
                                     <div class="mj_tabcontent mj_toppadder30">
                                         <h:form id="formMostrarOfertabyCalificcion" >
-                                            <h:dataTable  styleClass="table table-striped noHeader" var="oferta" value="#{ofertaBean.ofertasbyCalificcion}" >
+                                            <h:dataTable  styleClass="table table-striped noHeader" var="afiliado" value="#{ofertaBean.afiliadosDestacados}" >
                                                 <h:column>
-                                                    <h:commandLink action="#{ofertaBean.gotoTrabajo(oferta)}"> 
-                                                        <p:graphicImage value="#{oferta.usuario.foto == null or oferta.usuario.foto.equals('') ? '/images/perfil-sinfoto.png':oferta.usuario.foto }"  styleClass="img-responsive" alt="" width="70" height="70" />
-                                                   </h:commandLink>
-                                                </h:column>
-                                                <h:column >
-                                                    <h:commandLink action="#{ofertaBean.toCotizar(oferta)}">
-                                                        <h:outputText value="#{oferta.trabajo.titulo}" />
+                                                    <h:commandLink action="#{ofertaBean.gotoPerfilAfiliado()}"> 
+                                                        <p:graphicImage value="#{afiliado.foto == null or afiliado.foto.equals('') ? '/images/perfil-sinfoto.png':afiliado.foto }"  styleClass="img-responsive" alt="" width="70" height="70" />
                                                     </h:commandLink>
+                                                </h:column>
+                                                <h:column >                                                    
+                                                    <h:outputText value="#{afiliado.nombres} #{ afiliado.apellidos}" />                                                    
                                                 </h:column>
 
                                                 <h:column >
                                                     <i class="fa fa-map-marker"></i>
-                                                    <h:outputText value="#{oferta.usuario.ubicacion.barrio}" />
+                                                    <h:outputText value="#{afiliado.profesion.length() > 10 ? afiliado.profesion.substring(0,10) : afiliado.profesion}" />
                                                 </h:column>
 
                                                 <h:column >
-                                                    <a href="#" class="mj_btn mj_greenbtn">#{oferta.jornada.nombre}</a>
+                                                    <a href="#" class="mj_btn mj_greenbtn">#{afiliado.perfil.length() > 10?afiliado.perfil.substring(0,10) : afiliado.perfil}</a>
                                                 </h:column>                                                
 
-                                                <h:column >
-                                                    <h:outputText value="#{oferta.costo}" />
-                                                </h:column>
+
                                             </h:dataTable>
                                         </h:form>
                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 col-lg-offset-4 col-md-offset-4">

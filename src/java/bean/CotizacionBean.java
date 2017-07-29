@@ -23,6 +23,7 @@ import model.Contrato;
 import model.Cotizacion;
 import model.Oferta;
 import model.Usuario;
+import org.primefaces.context.RequestContext;
 import util.MailUtil;
 
 /**
@@ -37,6 +38,7 @@ public class CotizacionBean implements Serializable {
     private List<Cotizacion> cotizacionesContratadas;
     private List<Cotizacion> cotizacionesRealizadas;
     private List<Contrato> trabajosContratados;
+    private List<Contrato> trabajosContratadosEmpleado;
     private List<Cotizacion> cotizacionesAceptadas;
     private List<Cotizacion> cotizacionesContraofertas;
     
@@ -87,7 +89,7 @@ public class CotizacionBean implements Serializable {
         ContratoDaoImplement cdi = new ContratoDaoImplement();
         contrato.setCalificacion(ratingTrabajo);
         cdi.modificarContrato(contrato);
-        
+        RequestContext.getCurrentInstance().update("formMostrarTrabajosContratados");
         MailUtil mi = new MailUtil();
             mi.enviarMail(this.cotizacion.getOferta().getUsuario().getEmail(), "Ha recibido una calificación para el proyecto de parte de " + this.cotizacion.getOferta().getUsuario().getNombres(), 
                     "Recibió un calificación de la cotización de parte de " + this.cotizacion.getUsuario().getNombres() + " para el proyecto de " + this.cotizacion.getOferta().getTrabajo().getTitulo());
@@ -232,7 +234,11 @@ public class CotizacionBean implements Serializable {
         this.cotizacionesContraofertas = cotizacionesContraofertas;
     }
     
-    
+    public void eliminarCotizacion(Cotizacion cotizacionC){
+        CotizacionDaoImplement cdi = new CotizacionDaoImplement();
+        cotizacionC.setEstado(false);
+        cdi.actualizarCotizacion(cotizacionC);
+    }
     
     
 
@@ -355,6 +361,28 @@ public class CotizacionBean implements Serializable {
 
     public void setRatingTrabajo(Integer ratingTrabajo) {
         this.ratingTrabajo = ratingTrabajo;
+    }
+
+    public List<Contrato> getTrabajosContratadosEmpleado() {
+        this.trabajosContratados = new ArrayList<>();
+        //Obtener Bean login y acceder al usuarioRegistrado logeado
+        FacesContext context = javax.faces.context.FacesContext.getCurrentInstance();
+        Object loginBean = context.getExternalContext().getSessionMap().get("loginBean");
+        LoginBean objetoBean = null;
+        if (loginBean != null) {
+            objetoBean = (LoginBean) loginBean;
+        }
+        this.usuarioRegistrado = objetoBean.getUsuarioLog();
+        // Fin buscarUsuario
+
+        ContratoDao contratoDao = new ContratoDaoImplement();
+        this.trabajosContratados = contratoDao.findAllContratadoFromUsuario(usuarioRegistrado);
+
+        return this.trabajosContratados;
+    }
+
+    public void setTrabajosContratadosEmpleado(List<Contrato> trabajosContratadosEmpleado) {
+        this.trabajosContratadosEmpleado = trabajosContratadosEmpleado;
     }
 
 }

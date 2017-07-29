@@ -318,5 +318,11 @@ public class UsuarioBean implements Serializable {
         
         return udi.buscarUsuario(usuario);
     }
+     
+     public Usuario UsuarioByID(Usuario usuario) {
+        UsuarioDaoImplement udi = new UsuarioDaoImplement();
+        
+        return udi.buscarUsuariobyID(usuario.getIdUsuario().toString());
+    }
 
 }
