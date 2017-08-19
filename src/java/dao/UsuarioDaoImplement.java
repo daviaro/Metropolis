@@ -208,15 +208,22 @@ public class UsuarioDaoImplement implements UsuarioDao,Serializable {
         
         
         //Se crea un try catch para hacer la consulta
-        //String sql = "SELECT u FROM Contrato c INNER JOIN FETCH c.cotizacion as co INNER JOIN FETCH co.oferta as o INNER JOIN FETCH o.usuario u order by sum(con.calificacion)";
-        String sql = "FROM Usuario u  INNER JOIN  u.oferta as o  INNER JOIN  o.cotizacion as co  INNER JOIN  co.contrato as c order by sum(c.calificacion)";
+        String sql = "SELECT u "
+                + "FROM Contrato c INNER JOIN  c.cotizacion as co "
+                + "INNER JOIN  co.oferta as o "
+                + "INNER JOIN  o.usuario u "
+                + "group by u.idUsuario "
+                + "order by avg(c.calificacion) ";
+        //String sql = "SELECT u FROM Usuario u  INNER JOIN  u.oferta as o  INNER JOIN  o.cotizacion as co  INNER JOIN  co.contrato as c order by sum(c.calificacion)";
         //String sql = "SELECT o FROM Contrato c, Oferta o INNER JOIN FETCH o.usuario as u INNER JOIN FETCH u.ubicacion as ub INNER JOIN FETCH o.jornada as j INNER JOIN FETCH o.trabajo as t INNER JOIN FETCH t.categoria as cat INNER JOIN FETCH t.medicionTrabajo as m where c.cotizacion.oferta = o.idOferta and c.calificacion  is not null";
         try {
             //Se recupera la session actual
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             //inicializo transaccion
             session.beginTransaction();
+            
             Query query = session.createQuery(sql);
+            query.setMaxResults(5);
             usuarios = query.list();
             
 
@@ -355,7 +362,7 @@ public class UsuarioDaoImplement implements UsuarioDao,Serializable {
 
     @Override
     public int insertarUsuario2(Usuario usuario) {
-        int usuarioID = -1;
+        int usuarioID = 0;
         Transaction trans = null;
         Session session = null;
         try {
@@ -365,14 +372,24 @@ public class UsuarioDaoImplement implements UsuarioDao,Serializable {
             usuarioID = usuario.getIdUsuario();
             trans.commit();
         } catch (RuntimeException e) {
+            
             if (trans != null) {
+                try{
                 trans.rollback();
+                session.close();
+                }
+                catch(Exception ex){
+                    return 0;
+                }
+                return 0;
             }
-            e.printStackTrace();
+            //e.printStackTrace();
+            //return 0;
         } finally {
             if (session != null) {
                 session.flush();
                 session.close();
+                return usuarioID;
             }
         }
         return usuarioID;

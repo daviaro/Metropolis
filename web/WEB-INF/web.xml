@@ -46,7 +46,7 @@
         </init-param>
         <init-param>
             <param-name>uploadDirectory</param-name>
-            <param-value>/Users/desarrollo001/Documents/NetBeansProjects/Metropolis2/build/web/images</param-value>
+            <param-value>C:\Users\Jotamarios\Desktop\Install\Clonada 17 Diciembre\Metropolis-master\build\web\images</param-value>
         </init-param>
     </filter>
     

@@ -10,6 +10,7 @@ import model.Trabajo;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import util.HibernateUtil;
 
 /**
@@ -81,6 +82,30 @@ public class TrabajoDaoImplement implements TrabajoDao {
             session.getTransaction().rollback();
         }
         return trabajo;
+    }
+    
+    
+    @Override
+    public boolean modificarTrabajo(Trabajo trabajo) {
+        boolean flag;
+        Transaction trans = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trans = session.beginTransaction();
+            session.update(trabajo);
+            session.getTransaction().commit();
+            flag = true;
+        } catch (RuntimeException e) {
+            if (trans != null) {
+                trans.rollback();
+            }
+            e.printStackTrace();
+            flag = false;
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return flag;
     }
 
 }

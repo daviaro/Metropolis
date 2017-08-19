@@ -138,7 +138,7 @@
                                                         <h:outputText value="#{usuarioBean.UsuarioByID(cotizacionC.usuario).nombres}" />
                                                     </p:column>
                                                     <p:column headerText="Estado">
-                                                        <h:outputText value="#{cotizacionC.respuesta?'Rechazada':'En espera'}" />
+                                                        <h:outputText value="#{cotizacionC.respuesta?'Aceptada':'Rechazada'}" />
                                                     </p:column>
                                                     <p:column headerText="Acciones">
                                                         <p:commandButton update="formMostrarCotizacionesAceptadas_" action="#{cotizacionBean.eliminarCotizacion(cotizacionC)}" icon="ui-icon-trash" title="Eliminar">
@@ -280,7 +280,7 @@
                     <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.fechaTrabajo}" />
 
                     <h:outputText styleClass="mj_blue_text" value="Presupuesto" />
-                    <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.valorPresupuesto}" />
+                    <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.valorPresupuesto}"><f:convertNumber type="currency"  currencySymbol="$" maxFractionDigits="0" /></p:outputLabel>
 
                     <h:outputText styleClass="mj_blue_text" value="Unidades de trabajo" />
                     <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.unidadesTrabajo} (#{cotizacionBean.cotizacion.oferta.trabajo.medicionTrabajo.nombre})" />
@@ -294,7 +294,7 @@
 
                             
                         </p:commandButton>
-                        <p:commandButton id="btnUpdatePendienteRechazar" actionListener="#{cotizacionBean.btnRechazarCotizacion(actionEvent)}" update=":formMostrarCotizacionesPendientes" 
+                        <p:commandButton id="btnUpdatePendienteRechazar" actionListener="#{cotizacionBean.btnRechazarCotizacion(actionEvent)}" update="formMostrarCotizacionesPendientes" 
                                          oncomplete="PF('dialogCotizacionPendiente').hide();"  icon="fa fa-fw fa-edit" title="Rechazar Cotizacion" value="Rechazar Cotizacion"
                                          />
                     </f:facet>
@@ -311,7 +311,7 @@
                     Título: <p:inputText value="#{ofertaBean.ofertaSelected.trabajo.titulo}" placeholder="#{ofertaBean.ofertaSelected.trabajo.titulo}" disabled="true"></p:inputText>
                     Descripción: <p:inputText value="#{ofertaBean.ofertaSelected.trabajo.descripcion}" placeholder="#{ofertaBean.ofertaSelected.trabajo.descripcion}" disabled="true"></p:inputText>
 
-                    Costo: <p:inputText value="#{ofertaBean.ofertaSelected.costo}" placeholder="#{ofertaBean.ofertaSelected.costo}"></p:inputText>
+                    Costo: <p:inputText value="#{ofertaBean.ofertaSelected.costo}" placeholder="#{ofertaBean.ofertaSelected.costo}"><f:convertNumber type="currency"  currencySymbol="$" maxFractionDigits="0" /></p:inputText>
                     Fecha: <p:calendar value="#{ofertaBean.ofertaSelected.fechaLimite}" placeholder="#{ofertaBean.ofertaSelected.fechaLimite}"></p:calendar>
 
                     Guardar: <p:commandButton actionListener="#{ofertaBean.actualizarOferta()}" icon="fa fa-fw fa-edit" ajax="true" update="formMostrarOfertas" oncomplete="PF('dialogoMisOfertas'.hide();)"></p:commandButton>
@@ -335,7 +335,7 @@
                     
                     <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.fechaTrabajo}"><f:convertDateTime pattern="MM-dd-yyyy" /></p:outputLabel>
                     <h:outputText styleClass="mj_blue_text" value="Presupuesto" />
-                    <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.valorPresupuesto}" />
+                    <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.valorPresupuesto}"><f:convertNumber type="currency"  currencySymbol="$" maxFractionDigits="0" /></p:outputLabel>
 
                     <h:outputText styleClass="mj_blue_text" value="Unidades de trabajo" />
                     <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.unidadesTrabajo} (#{cotizacionBean.cotizacion.oferta.trabajo.medicionTrabajo.nombre})" />
@@ -362,7 +362,7 @@
 
 
                     <h:outputText styleClass="mj_blue_text" value="Presupuesto" />
-                    <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.valorPresupuesto}" />
+                    <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.valorPresupuesto}"><f:convertNumber type="currency"  currencySymbol="$" maxFractionDigits="0" /></p:outputLabel>
 
                     <h:outputText styleClass="mj_blue_text" value="Unidades de trabajo" />
                     <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.unidadesTrabajo} (#{cotizacionBean.cotizacion.oferta.trabajo.medicionTrabajo.nombre})" />

@@ -30,6 +30,7 @@ public class CategoriaBean implements Serializable {
 
     private List<Categoria> categorias;
     private List<Categoria> categoriasPrincipales;
+    private List<Categoria> SubCategorias;
     private Categoria selectedCategoria;
     private Categoria createdCategoria;
     private Categoria subCategoria;
@@ -115,6 +116,16 @@ public class CategoriaBean implements Serializable {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+    }
+
+    public List<Categoria> getSubCategorias() {
+        CategoriaDaoImplement cdi = new CategoriaDaoImplement();
+        return cdi.mostrarSubCategorias();
+        
+    }
+
+    public void setSubCategorias(List<Categoria> SubCategorias) {
+        this.SubCategorias = SubCategorias;
     }
 
 }

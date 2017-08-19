@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -104,6 +105,8 @@ public class OfertaBean implements Serializable {
     private String perfil;
     private String experiencia;
     private String profesion;
+    private String titulo;
+    private String descripcion;
     private Date date1;
 
     //Oferta seleccionada desde datatable
@@ -436,6 +439,7 @@ public class OfertaBean implements Serializable {
 
         ofertaCreate.setJornada(jornada);
         ofertaCreate.setTrabajo(trabajo);
+        //ofertaCreate.getTrabajo().
         ofertaCreate.setFechaCreacion(new Date());
         ofertaCreate.setEstado(true);
         //Si no tiene rol empleado
@@ -626,12 +630,14 @@ public class OfertaBean implements Serializable {
         cotizacionNueva.setEstado(true);
 
         if (cotizacionDao.insertarCotizacion(cotizacionNueva)) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+            String fechaTrabajo = sdf.format(cotizacionNueva.getFechaTrabajo());
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Excelente", "Cotizacion enviada!"));
             MailUtil mi = new MailUtil();
             mi.enviarMail(cotizacionNueva.getOferta().getUsuario().getEmail(), "Ha recibido una oferta de Metropolis",
                     "Recibió una oferta de Metropolis para el trabajo de " + cotizacionNueva.getOferta().getTrabajo().getTitulo() + " para el día "
-                    + cotizacionNueva.getFechaTrabajo() + " ingresa ya a la plataforma para aceptar o contraofertar!");
+                    + fechaTrabajo + " ingresa ya a la plataforma para aceptar o contraofertar!");
 
             cotizacionNueva = new Cotizacion();
         } else {
@@ -909,17 +915,17 @@ public class OfertaBean implements Serializable {
             if (portafolioSwitch && uploadFiles != null && uploadFiles.size() > 0) {
                 this.createdPortafolio.setEstado(true);
                 this.createdPortafolio.setFechaCreacion(new Date());
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Con portafolio"));
+                /*FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Con portafolio"));
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Estado", "" + this.createdPortafolio.isEstado()));
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Descripcion", "" + this.createdPortafolio.getDescripcion()));
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Fecha creacion", "" + this.createdPortafolio.getFechaCreacion()));
-
+                */
                 createdPortafolio.setOferta(ofertaCreate);
                 ofertaCreate.getPortafolios().add(createdPortafolio);
                 //Guardar Portafolio
                 PortafolioDao portafolioLink = new PortafolioDaoImplement();
                 if (portafolioLink.insertarPortafolio(createdPortafolio)) {
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Excelente", "Portafolio guardado!"));
+                    /*FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Excelente", "Portafolio guardado!"));*/
 
                     String nombreImagen = "";
                     int i = 1;
@@ -939,19 +945,19 @@ public class OfertaBean implements Serializable {
                             //Guardar Imagen
                             imagenesLink.insertarImagen(imagen);
                             FacesContext context2 = FacesContext.getCurrentInstance();
-                            context2.addMessage(null, new FacesMessage("Bien!", "Se subio correctamente la foto"));
+                            /*context2.addMessage(null, new FacesMessage("Bien!", "Se subio correctamente la foto"));*/
                         } catch (IOException ex) {
                             FacesContext context3 = FacesContext.getCurrentInstance();
                             context3.addMessage(null, new FacesMessage("Error", "Error subiendo la foto"));
                         }
 
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Foto", "" + u.getFileName()));
+                        /*FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Foto", "" + u.getFileName()));*/
                         i++;
                     }
 
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Sin portafolio"));
+                /*FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Sin portafolio"));*/
             }
 
             limpiarCrearOferta();
@@ -1028,5 +1034,21 @@ public class OfertaBean implements Serializable {
 
     public void setAfiliadosDestacados(List<Usuario> afiliadosDestacados) {
         this.afiliadosDestacados = afiliadosDestacados;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

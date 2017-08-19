@@ -145,7 +145,7 @@ public class PagosBean {
         Usuario usr = this.cotizacionPagar.getUsuario();
 
         usr = udi.buscarUsuariobyID(usr.getIdUsuario().toString());
-        String mail = "jotamario@gmail.com";//usr.getEmail();
+        String mail = usr.getEmail();
         return mail;
     }
 
@@ -175,56 +175,66 @@ public class PagosBean {
     }
 
     public void cargarDatos() {
-        String estado = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("transactionState");
+
         String codigoReferencia = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("referenceCode");
-        String firma = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("signature");
-        String cus = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("cus");
-        String bancoPSE = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("pseBank");
-        String metodoPago = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("lapPaymentMethodType");
-        String codigoAutorizacion = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("authorizationCode");
-        String textoEstado = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("lapTransactionState");
-        String merchantId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("merchantId");
-        String total = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("TX_VALUE");
-
-        DecimalFormat df = new DecimalFormat("0.0");
-        Double totalD = Double.valueOf(total);
-        String totalUnDecimal = df.format(totalD);
-
-        BigDecimal bg = new BigDecimal(total).setScale(1, RoundingMode.HALF_EVEN);
-        String otro = bg.toPlainString();
-
-        PagoUtil pu = new PagoUtil();
-
-        String firmaRetorno = pu.getMD5Respuesta(codigoReferencia, merchantId, estado, otro);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
-        String date = sdf.format(new Date());
-
-        if (firmaRetorno.equals(firma)) {
-            //Estado aprobado
-            if (estado != null && estado.equals("4")) {
-                //CAMBIAR CotizacionPagar para buscarla si no existe
-
-                if (cotizacionPagar == null) {
-                    int codigoReferenciaInt = 0;
-                    CotizacionDaoImplement cdi = new CotizacionDaoImplement();
-                    try {
-                        codigoReferenciaInt = Integer.parseInt(codigoReferencia);
-                    } catch (NumberFormatException nfe) {
-
-                    }
-                    cotizacionPagar = cdi.buscarCotizacionById(codigoReferenciaInt);
-                }
-
-                pu.almacenarPago(this.cotizacionPagar.getIdCotizacion().toString(), metodoPago, date, String.valueOf(this.getValorTotal()), codigoAutorizacion, estado + '-' + textoEstado);
-
-                MailUtil mi = new MailUtil();
-                mi.enviarMail(this.cotizacionPagar.getOferta().getUsuario().getEmail(), "Pago realizado por la oferta " + this.cotizacionPagar.getOferta().getIdOferta() + " de " + this.cotizacionPagar.getOferta().getUsuario().getNombres(),
-                        " La oferta de " + this.cotizacionPagar.getUsuario().getNombres() + " para el trabajo de " + this.cotizacionPagar.getOferta().getTrabajo().getTitulo() + " para el día "
-                        + this.cotizacionPagar.getFechaTrabajo() + " fue realizado. Recuerda acudir a la fecha acordada para tener una buena calificación.");
+        if (cotizacionPagar == null) {
+            int codigoReferenciaInt = 0;
+            CotizacionDaoImplement cdi = new CotizacionDaoImplement();
+            try {
+                codigoReferenciaInt = Integer.parseInt(codigoReferencia);
+            } catch (NumberFormatException nfe) {
 
             }
+            cotizacionPagar = cdi.buscarCotizacionById(codigoReferenciaInt);
         }
 
+        if (cotizacionPagar != null && cotizacionPagar.getContratos() != null && cotizacionPagar.getContratos().size() == 0) {
+
+            String estado = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("transactionState");
+
+            String firma = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("signature");
+            String cus = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("cus");
+            String bancoPSE = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("pseBank");
+            String metodoPago = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("lapPaymentMethodType");
+            String codigoAutorizacion = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("authorizationCode");
+            String textoEstado = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("lapTransactionState");
+            String merchantId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("merchantId");
+            String total = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("TX_VALUE");
+
+            DecimalFormat df = new DecimalFormat("0.0");
+            Double totalD = Double.valueOf(total);
+            String totalUnDecimal = df.format(totalD);
+
+            BigDecimal bg = new BigDecimal(total).setScale(1, RoundingMode.HALF_EVEN);
+            String otro = bg.toPlainString();
+
+            PagoUtil pu = new PagoUtil();
+
+            String firmaRetorno = pu.getMD5Respuesta(codigoReferencia, merchantId, estado, otro);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
+            String date = sdf.format(new Date());
+
+            if (firmaRetorno.equals(firma)) {
+                //Estado aprobado
+                if (estado != null && estado.equals("4")) {
+                    //CAMBIAR CotizacionPagar para buscarla si no existe
+                    
+                    String fechaTrabajo = sdf.format(this.cotizacionPagar.getFechaTrabajo());
+
+                    pu.almacenarPago(this.cotizacionPagar.getIdCotizacion().toString(), metodoPago, date, String.valueOf(this.getValorTotal()), codigoAutorizacion, estado + '-' + textoEstado);
+                    try {
+                        MailUtil mi = new MailUtil();
+                        mi.enviarMail(this.cotizacionPagar.getOferta().getUsuario().getEmail(), "Pago realizado por la oferta " + this.cotizacionPagar.getOferta().getIdOferta() + " de " + this.cotizacionPagar.getOferta().getUsuario().getNombres(),
+                                " La oferta de " + this.cotizacionPagar.getUsuario().getNombres() + " para el trabajo de " + this.cotizacionPagar.getOferta().getTrabajo().getTitulo() + " para el día "
+                                + fechaTrabajo + " fue realizado. Recuerda acudir a la fecha acordada para tener una buena calificación.");
+
+                    } catch (Exception e) {
+
+                    }
+                }
+            }
+
+        }
     }
 }

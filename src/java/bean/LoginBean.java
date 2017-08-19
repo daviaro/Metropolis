@@ -308,6 +308,7 @@ public class LoginBean implements Serializable {
         this.usuarioReg.setRols(rols);
 
         idGenerado = usuarioDao.insertarUsuario2(usuarioReg);
+        idGenerado++;
         /**
          * Insertado correctamente.
          */
@@ -578,7 +579,7 @@ public class LoginBean implements Serializable {
             try {
                 /*ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
                 context.redirect(context.getRequestContextPath() + "/index.xhtml");*/
-                FacesContext.getCurrentInstance().getExternalContext().redirect("Login.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../Front/Login.xhtml");
             } catch (Exception e) {
 
             }

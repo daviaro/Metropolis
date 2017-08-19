@@ -139,7 +139,7 @@ public class CotizacionDaoImplement implements CotizacionDao {
     public List<Cotizacion> findAllbyCotizacionesAceptadas(Usuario usuarioRegistrado) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         List<Cotizacion> lista = null;
-        String sql = "FROM Cotizacion c LEFT JOIN FETCH c.contratos contra INNER JOIN FETCH c.oferta as co INNER JOIN FETCH co.trabajo as  cot INNER JOIN FETCH cot.medicionTrabajo as  m WHERE (c.fechaRespuesta IS NOT NULL and c.fechaContraPropuestaRespuesta IS NULL and  c.valorContrapropuesta IS NULL and c.fechaEstricta IS NULL) and contra IS NULL and c.usuario ='" + usuarioRegistrado.getIdUsuario() + "'";
+        String sql = "FROM Cotizacion c LEFT JOIN FETCH c.contratos contra INNER JOIN FETCH c.oferta as co INNER JOIN FETCH co.trabajo as  cot INNER JOIN FETCH cot.medicionTrabajo as  m WHERE (c.fechaRespuesta IS NOT NULL and c.fechaContraPropuestaRespuesta IS NULL and  c.valorContrapropuesta IS NULL and c.fechaEstricta IS NULL and c.estado=1) and contra IS NULL and c.usuario ='" + usuarioRegistrado.getIdUsuario() + "'";
         try {
             session.beginTransaction();
             lista = session.createQuery(sql).list();
@@ -155,7 +155,7 @@ public class CotizacionDaoImplement implements CotizacionDao {
     public List<Cotizacion> findAllbyCotizacionesAceptadasComoEmpleado(Usuario usuarioEmpleado) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         List<Cotizacion> lista = null;
-        String sql = "FROM Cotizacion c LEFT JOIN FETCH c.contratos contra INNER JOIN FETCH c.oferta as co INNER JOIN FETCH co.trabajo as  cot INNER JOIN FETCH cot.medicionTrabajo as  m WHERE (c.fechaRespuesta IS NOT NULL and c.fechaContraPropuestaRespuesta IS NULL and  c.valorContrapropuesta IS NULL and c.fechaEstricta IS NULL and c.respuesta=1) and contra IS NULL and co.usuario ='" + usuarioEmpleado.getIdUsuario() + "'";
+        String sql = "FROM Cotizacion c LEFT JOIN FETCH c.contratos contra INNER JOIN FETCH c.oferta as co INNER JOIN FETCH co.trabajo as  cot INNER JOIN FETCH cot.medicionTrabajo as  m WHERE (c.fechaRespuesta IS NOT NULL and c.fechaContraPropuestaRespuesta IS NULL and  c.valorContrapropuesta IS NULL and c.fechaEstricta IS NULL and c.estado=1) and contra IS NULL and co.usuario ='" + usuarioEmpleado.getIdUsuario() + "'";
         try {
             session.beginTransaction();
             lista = session.createQuery(sql).list();
@@ -172,7 +172,7 @@ public class CotizacionDaoImplement implements CotizacionDao {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         List<Cotizacion> lista = null;
         //String sql = "FROM Cotizacion c LEFT JOIN FETCH c.contratos contra INNER JOIN FETCH c.oferta as co INNER JOIN FETCH co.trabajo as  cot INNER JOIN FETCH cot.medicionTrabajo as  m WHERE (c.fechaRespuesta IS NOT NULL and c.fechaContraPropuestaRespuesta IS NOT NULL and  c.valorContrapropuesta IS NOT NULL) and contra IS NULL and c.usuario ='" + usuarioRegistrado.getIdUsuario() + "'";
-        String sql = "FROM Cotizacion c LEFT JOIN FETCH c.contratos contra INNER JOIN FETCH c.oferta as co  INNER JOIN FETCH co.trabajo as  cot INNER JOIN FETCH cot.medicionTrabajo WHERE (c.fechaRespuesta IS NOT NULL and c.fechaContraPropuestaRespuesta IS NOT NULL and  c.valorContrapropuesta IS NOT NULL) and contra IS NULL and c.estado = true and co.usuario ='" + usuarioRegistrado.getIdUsuario() + "'";
+        String sql = "FROM Cotizacion c LEFT JOIN FETCH c.contratos contra INNER JOIN FETCH c.oferta as co  INNER JOIN FETCH co.trabajo as  cot INNER JOIN FETCH cot.medicionTrabajo WHERE (c.fechaRespuesta IS NOT NULL and c.fechaContraPropuestaRespuesta IS NOT NULL and  c.valorContrapropuesta IS NOT NULL) and contra IS NULL and c.estado = 1 and c.respuesta=1 and c.usuario ='" + usuarioRegistrado.getIdUsuario() + "'";
         try {
             session.beginTransaction();
             lista = session.createQuery(sql).list();
@@ -217,6 +217,9 @@ public class CotizacionDaoImplement implements CotizacionDao {
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
             session.getTransaction().rollback();
+        }
+        catch(Exception e){
+            
         }
         return cotizacion;
     }

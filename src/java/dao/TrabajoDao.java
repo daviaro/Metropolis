@@ -16,4 +16,5 @@ public interface TrabajoDao {
     public List<Trabajo> mostrarTrabajos();
     public List<Trabajo> buscarTrabajosByCategoriaId(Integer idCategoria);
     public Trabajo buscarTrabajoById(Integer idTrabajo);
+    public boolean modificarTrabajo(Trabajo trabajo);
 }

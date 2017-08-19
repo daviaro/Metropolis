@@ -145,9 +145,13 @@ public class UbicacionDaoImplement implements UbicacionDao {
             //uniqueResult() para que sea solo un solo resultado
             ubicacion = (Ubicacion) query.list().get(0);
             session.getTransaction().commit();
+            //session.flush();
+            //session.close();
         } catch (HibernateException e) {
             //si no se cumple se hace un rollback
             session.getTransaction().rollback();
+            session.flush();
+            session.close();
         }
         return ubicacion;
     }
