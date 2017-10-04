@@ -53,8 +53,11 @@ public class CategoriaBean implements Serializable {
     }
 
     public List<Categoria> getCategorias() {
-        CategoriaDao categoriaDao = new CategoriaDaoImplement();
-        this.categorias = categoriaDao.mostrarCategorias();
+        try {
+            CategoriaDao categoriaDao = new CategoriaDaoImplement();
+            this.categorias = categoriaDao.mostrarCategorias();
+        } catch (Exception e) {
+        }
         return categorias;
     }
 
@@ -121,7 +124,7 @@ public class CategoriaBean implements Serializable {
     public List<Categoria> getSubCategorias() {
         CategoriaDaoImplement cdi = new CategoriaDaoImplement();
         return cdi.mostrarSubCategorias();
-        
+
     }
 
     public void setSubCategorias(List<Categoria> SubCategorias) {

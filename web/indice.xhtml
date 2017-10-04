@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Metropolis2/Ciudad de Oportunidades</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+        <meta name="description" content=""></meta>
+        <meta name="keywords" content=""></meta>
+        <meta name="author" content=""></meta>
+        <meta name="MobileOptimized" content="320"></meta>
+        <link href="/Metropolis2/css/main.css" rel="stylesheet" type="text/css" />
+        <ui:insert name="head"></ui:insert>
+        <link rel="shortcut icon" type="image/png" href="/Metropolis2/images/favicon.png" />
+
+    </h:head>
+
+    <h:body>
+        <!--Loader Start -->
+        <div class="mj_preloaded">
+            <div class="mj_preloader">
+                <div class="lines">
+                    <div class="line line-1"></div>
+                    <div class="line line-2"></div>
+                    <div class="line line-3"></div>
+                </div>
+
+                <div class="loading-text">CARGANDO</div>
+            </div>
+        </div>
+        <!--Loader End -->
+        <div class="mj_header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="mj_logo">
+                            <a href="index.html"><img src="images/logo.png" class="img-responsive" alt="logo"></img>
+                            </a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mj_menu" aria-expanded="false">
+                                <span class="sr-only">MENU</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                        <div class="collapse navbar-collapse mj_navmenu" id="mj_menu">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="index.html">INICIO</a>
+                                </li>
+                                <li><a href="#">TRABAJOS</a>
+                                    <ul class="sub_menu">
+                                        <li><a href="jobs.html">PERSONALIZADA</a>
+                                        </li>
+                                        <li><a href="jobs_location.html">BUSACAR POR UBICACION</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><a href="post_job.html">OFERTAR</a>
+                                </li>
+                                <li><a href="#">COMO FUNCIONA</a>
+                                    <ul class="sub_menu">
+                                        <li><a href="work.html">COMO FUNCIONA</a>
+                                        </li>
+                                        <li><a href="blog_fullwidth.html">COMO TRABAJAR</a>
+                                        </li>
+                                        <li><a href="blog_sidebar.html">COMO FUNCIONA PAGOS</a>
+                                        </li>
+                                        <li><a href="blog_single.html">COMO CONTRATAR</a>
+                                        </li>
+                                        <li><a href="companies.html">COMO TERMINAR TRABAJO</a>
+                                        </li>
+                                        <li><a href="contact.html">CONTACTO</a>
+                                        </li>
+                                        <li><a href="create_account.html">CREAR CUENTA CLIENTE</a>
+                                        </li>
+                                        <li><a href="freelancer_account.html">CREAR CUENTA TRABAJADOR</a>
+                                        </li>
+                                        <li><a href="signup.html">CREAR CUENTA</a>
+                                        </li>
+                                        <li><a href="login.html">INICIAR SESION</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right mj_right_menu mj_withoutlogin_menu">
+                                <li class="mj_searchbtn"><a href="#"><i class="fa fa-search"></i></a>
+                                    <div class="mj_search_option">
+                                        <form>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon"><i class="fa fa-search"></i>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="Buscar"></input>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+                                <li><a href="signup.html"><i class="fa fa-lock"></i>CREAR CUENTA</a>
+                                </li>
+                                <li><a class="mj_logintoggle" onclick="show_my_div('my_profile_div_login', 'id')"><i class="fa fa-user"></i>INICIAR SESION</a>
+                                </li>
+                            </ul>
+                            <div class="mj_profilediv" id="my_profile_div_login">
+                                <form>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Nombre de Susuario o Email" id="ur_name" class="form-control"></input>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" placeholder="Contrasena" id="ur_password" class="form-control"></input>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="mj_checkbox">
+                                            <input type="checkbox" value="1" id="check1" name="checkbox"></input>
+                                            <label for="check1"></label>
+                                        </div>
+                                        <span> Recordarme</span>
+                                    </div>
+                                    <div class="mj_showmore"> <a href="#" class="mj_showmorebtn mj_greenbtn">Iniciar Ya!</a> </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- Script Start -->
+        <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.js" type="text/javascript"></script>
+        <script src="js/modernizr.custom.js" type="text/javascript"></script>
+        <script type="text/javascript" src="js/plugins/rsslider/jquery.themepunch.tools.min.js"></script>
+        <script type="text/javascript" src="js/plugins/rsslider/jquery.themepunch.revolution.min.js"></script>
+        <script type="text/javascript" src="js/plugins/rsslider/revolution.extension.layeranimation.min.js"></script>
+        <script type="text/javascript" src="js/plugins/rsslider/revolution.extension.navigation.min.js"></script>
+        <script type="text/javascript" src="js/plugins/rsslider/revolution.extension.parallax.min.js"></script>
+        <script type="text/javascript" src="js/plugins/rsslider/revolution.extension.slideanims.min.js"></script>
+        <script src="js/plugins/countto/jquery.countTo.js" type="text/javascript"></script>
+        <script src="js/plugins/owl/owl.carousel.js" type="text/javascript"></script>
+        <script src="js/plugins/bootstrap-slider/bootstrap-slider.js" type="text/javascript"></script>
+        <script src="js/plugins/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+        <script src="js/plugins/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+        <script src="js/jquery.mixitup.js" type="text/javascript"></script>
+        <script src="js/plugins/jquery-ui/jquery-ui.js"></script>
+        <script src="js/plugins/isotop/isotope.pkgd.js"></script>
+        <script src="js/plugins/ckeditor/ckeditor.js"></script>
+        <script src="js/plugins/ckeditor/adapters/jquery.js"></script>
+        <script src="js/custom.js" type="text/javascript"></script>
+        <!-- Script End -->
+    </h:body>
+
+</html>

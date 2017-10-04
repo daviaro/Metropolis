@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./MainTemplete_Logeado.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="contenido">
+        <f:event type="preRenderView" listener="#{loginBean.Autorizar()}"></f:event>
+        <div class="mj_lightgraytbg mj_blogsidebar mj_bottompadder80 mj_toppadder80">
+            <div class="container">
+                <div class="row">
+
+                    <div class="mj_postdiv mj_shadow_blue mj_postpage">
+                        <div class="mj_mainheading" >
+                            <h2><span>Mis Trabajos</span></h2>
+                        </div>
+                        <ul class="nav nav-tabs mj_joblist" role="tablist">
+                            <li role="presentation" class="active"><a href="#cotizacionesPendientes" aria-controls="cotizacionesPendientes" role="tab" data-toggle="tab">Propuestas</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <p:growl id="msgs" showDetail="true"/> 
+                            <h:form id="formMostrarCotizacionesPendientes" >
+                                <div role="tabpanel" class="tab-pane active" id="cotizacionesPendientes">
+                                    <div style="padding:20px;">
+
+
+                                        <p:dataTable emptyMessage="Actualmente no tiene cotizaciones pendientes" styleClass="table table-striped" var="cotizacionP" value="#{cotizacionBean.cotizacionesPendientes}"
+                                                     rows="10"
+                                                     paginator="true"
+                                                     paginatorPosition="bottom"
+                                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     paginatorAlwaysVisible="false">
+
+                                            <p:column headerText="Descripcion">
+                                                <h:outputText value="#{cotizacionP.descripcion}" />
+                                            </p:column>
+
+                                            <p:column headerText="Fecha Trabajo">
+                                                <h:outputText value="#{cotizacionP.fechaTrabajo}" />
+                                            </p:column>
+                                            <p:column headerText="Oferta">
+                                                <h:outputText value="#{cotizacionP.oferta.trabajo.titulo}" />
+                                            </p:column>
+
+                                            <p:column headerText="Detalles">
+                                                <p:commandButton update="formCotizacionPendientes" oncomplete="PF('dialogCotizacionPendiente').show()" icon="ui-icon-search" title="Ver Detalles">
+                                                    <f:setPropertyActionListener value="#{cotizacionP}" target="#{cotizacionBean.cotizacion}" />
+                                                </p:commandButton>
+                                            </p:column>
+
+                                        </p:dataTable>
+
+                                    </div>
+                                </div>
+
+                            </h:form>
+
+
+                            <p:dialog header="Detalle Cotizacion para #{cotizacionBean.cotizacion.oferta.trabajo.titulo}" widgetVar="dialogCotizacionPendiente" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                                <h:form id="formCotizacionPendientes">
+                                    <h:panelGrid id="display" columns="2"  columnClasses="label,value">
+
+                                        <h:outputText styleClass="mj_blue_text" value="Descripcion:" />
+                                        <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.descripcion}" />
+
+
+                                        <h:outputText styleClass="mj_blue_text" value="Fecha del Trabajo:" />                    
+                                        <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.fechaTrabajo}" />
+
+                                        <h:outputText styleClass="mj_blue_text" value="Presupuesto" />
+                                        <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.valorPresupuesto}"><f:convertNumber type="currency"  currencySymbol="$" maxFractionDigits="0" /></p:outputLabel>
+
+                                        <h:outputText styleClass="mj_blue_text" value="Unidades de trabajo" />
+                                        <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.unidadesTrabajo} (#{cotizacionBean.cotizacion.oferta.trabajo.medicionTrabajo.nombre})" />
+
+                                        <f:facet name="footer">
+                                            <p:commandButton id="btnUpdatePendienteAceptar" actionListener="#{cotizacionBean.btnAceptarCotizacion(actionEvent)}" update=":formMostrarCotizacionesPendientes" 
+                                                             oncomplete="PF('dialogCotizacionPendiente').hide()"  icon="fa fa-fw fa-edit" title="Aceptar Cotizacion" value="Aceptar Cotizacion"
+                                                             />
+                                            <p:commandButton id="btnUpdatePendienteRechazar" actionListener="#{cotizacionBean.btnRechazarCotizacion(actionEvent)}" update="formMostrarCotizacionesPendientes" 
+                                                             oncomplete="PF('dialogCotizacionPendiente').hide();"  icon="fa fa-fw fa-edit" title="Rechazar Cotizacion" value="Rechazar Cotizacion"
+                                                             />
+                                        </f:facet>
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:dialog>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                if (#{loginBean.esRol("Empleado")} || #{loginBean.esRol("Administrador")}) {
+                    var rolEmpleado = "block";
+                } else {
+                    var rolEmpleado = "none";
+                }
+                if (#{loginBean.esRol("Usuario")} || #{loginBean.esRol("Administrador")}) {
+                    var rolUsuario = "block";
+                } else {
+                    var rolUsuario = "none";
+                }
+                document.getElementById("divPerfilEmpleado").style = "display: " + rolEmpleado;
+                document.getElementById("divPerfilUsuario").style = "display: " + rolUsuario;
+            });
+        </script>
+
+    </ui:define>
+
+</ui:composition>

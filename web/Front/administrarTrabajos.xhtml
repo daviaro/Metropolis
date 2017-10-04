@@ -25,7 +25,7 @@
                                 <li><a href="administrarCotizaciones.xhtml"><i class="fa fa fa-inbox"></i> Mi cuenta </a>
                                 </li>
                             </ul>
-                            
+
                         </aside>
                     </div> 
                     <!-- Empleado Begin -->
@@ -45,10 +45,13 @@
                                     </li>
                                 </ul>
                                 <div class="tab-content">
+                                    <p:growl id="msgs" showDetail="true"/> 
+
                                     <div role="tabpanel" class="tab-pane active" id="cotizacionesPendientes">
-                                        <div style="padding:20px;">
-                                            <p:growl id="msgs" showDetail="true"/> 
-                                            <h:form id="formMostrarCotizacionesPendientes" >
+                                        <h:form id="formMostrarCotizacionesPendientes" >
+                                            <div style="padding:20px;">
+
+
                                                 <p:dataTable emptyMessage="Actualmente no tiene cotizaciones pendientes" styleClass="table table-striped" var="cotizacionP" value="#{cotizacionBean.cotizacionesPendientes}"
                                                              rows="10"
                                                              paginator="true"
@@ -66,7 +69,7 @@
                                                     <p:column headerText="Oferta">
                                                         <h:outputText value="#{cotizacionP.oferta.trabajo.titulo}" />
                                                     </p:column>
-                                                    
+
                                                     <p:column headerText="Detalles">
                                                         <p:commandButton update="formCotizacionPendientes" oncomplete="PF('dialogCotizacionPendiente').show()" icon="ui-icon-search" title="Ver Detalles">
                                                             <f:setPropertyActionListener value="#{cotizacionP}" target="#{cotizacionBean.cotizacion}" />
@@ -74,8 +77,9 @@
                                                     </p:column>
 
                                                 </p:dataTable>
-                                            </h:form>
-                                        </div>
+
+                                            </div>
+                                        </h:form>
                                     </div>
 
 
@@ -104,7 +108,7 @@
                                                     </p:column>
                                                     <p:column headerText="Acciones" width="20px">
                                                         <p:commandButton update="formMostrarCotizacionesContratadas" action="#{cotizacionBean.eliminarCotizacion(cotizacionC)}" iconPos="center" dir="center"  icon="ui-icon-trash" title="Eliminar">
-                                                            
+
                                                         </p:commandButton>
                                                     </p:column>
 
@@ -142,7 +146,7 @@
                                                     </p:column>
                                                     <p:column headerText="Acciones">
                                                         <p:commandButton update="formMostrarCotizacionesAceptadas_" action="#{cotizacionBean.eliminarCotizacion(cotizacionC)}" icon="ui-icon-trash" title="Eliminar">
-                                                            
+
                                                         </p:commandButton>
                                                     </p:column>
 
@@ -195,7 +199,9 @@
                                                 </p:column>                                                
 
                                                 <p:column  headerText="Valor">
-                                                    <h:outputText value="#{oferta.costo}" />
+                                                    <h:outputText value="#{oferta.costo}">
+                                                        <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="0" />
+                                                    </h:outputText>
                                                 </p:column>
 
                                             </p:dataTable>
@@ -210,7 +216,7 @@
                         </div>
                         <!-- Empleado End -->
                         <!-- Usuario Begin -->
-                        
+
                         <div class="row" style="background-color:#FFFFFF;">
                             <div >
                                 <div class="mj_mainheading" >
@@ -259,7 +265,7 @@
                                 <a href="#" class="mj_showmorebtn mj_bigbtn mj_bluebtn">Ver Perfil <i class="fa fa-angle-right"></i></a>
                             </div>
                         </div>
-                        
+
 
                         <!-- Usuario End --> 
                     </div>
@@ -286,13 +292,13 @@
                     <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.unidadesTrabajo} (#{cotizacionBean.cotizacion.oferta.trabajo.medicionTrabajo.nombre})" />
 
                     <f:facet name="footer">
-                        <p:commandButton id="btnUpdatePendienteAceptar" actionListener="#{cotizacionBean.btnAceptarCotizacion(actionEvent)}" update=":formMostrarCotizacionesPendientes , :msgs" 
+                        <p:commandButton id="btnUpdatePendienteAceptar" actionListener="#{cotizacionBean.btnAceptarCotizacion(actionEvent)}" update=":formMostrarCotizacionesPendientes" 
                                          oncomplete="PF('dialogCotizacionPendiente').hide()"  icon="fa fa-fw fa-edit" title="Aceptar Cotizacion" value="Aceptar Cotizacion"
                                          />
                         <p:commandButton id="btnUpdatePendienteContraofertar" oncomplete="PF('dialogContraofertar').show(), PF('dialogCotizacionPendiente').hide() "  icon="ui-icon-cancel" title="Contraofertar" value="Contraofertar"
                                          update="formContraofertar">
 
-                            
+
                         </p:commandButton>
                         <p:commandButton id="btnUpdatePendienteRechazar" actionListener="#{cotizacionBean.btnRechazarCotizacion(actionEvent)}" update="formMostrarCotizacionesPendientes" 
                                          oncomplete="PF('dialogCotizacionPendiente').hide();"  icon="fa fa-fw fa-edit" title="Rechazar Cotizacion" value="Rechazar Cotizacion"
@@ -302,7 +308,7 @@
             </p:dialog>
         </h:form> 
 
-        
+
 
 
         <p:dialog header="Modificar Oferta" id="dialogoMisOfertas" widgetVar="dialogoMisOfertas" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
@@ -314,8 +320,16 @@
                     Costo: <p:inputText value="#{ofertaBean.ofertaSelected.costo}" placeholder="#{ofertaBean.ofertaSelected.costo}"><f:convertNumber type="currency"  currencySymbol="$" maxFractionDigits="0" /></p:inputText>
                     Fecha: <p:calendar value="#{ofertaBean.ofertaSelected.fechaLimite}" placeholder="#{ofertaBean.ofertaSelected.fechaLimite}"></p:calendar>
 
+                    Agregar fotos: <p:fileUpload id="port_foto" mode="advanced"
+                                                 fileUploadListener="#{ofertaBean.agregarFileToFiles}" 
+                                                 allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                                 multiple="true" process="@this" 
+                                                 dragDropSupport="true" cancelLabel="Cancelar" uploadLabel="Subir" label="Agregar" previewWidth="200" >
+                    </p:fileUpload>
+
+
                     Guardar: <p:commandButton actionListener="#{ofertaBean.actualizarOferta()}" icon="fa fa-fw fa-edit" ajax="true" update="formMostrarOfertas" oncomplete="PF('dialogoMisOfertas'.hide();)"></p:commandButton>
-                    
+
                     Eliminar <p:commandButton actionListener="#{ofertaBean.eliminarOferta()}" icon="fa fa-fw fa-edit" update="formMostrarOfertas" ajax="true" oncomplete="PF('dialogoMisOfertas'.hide();)"></p:commandButton>
                 </p:panelGrid>
             </h:form>
@@ -332,7 +346,7 @@
 
 
                     <h:outputText styleClass="mj_blue_text" value="Fecha del Trabajo:" />
-                    
+
                     <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.fechaTrabajo}"><f:convertDateTime pattern="MM-dd-yyyy" /></p:outputLabel>
                     <h:outputText styleClass="mj_blue_text" value="Presupuesto" />
                     <p:outputLabel styleClass="mj_black_text" value="#{cotizacionBean.cotizacion.valorPresupuesto}"><f:convertNumber type="currency"  currencySymbol="$" maxFractionDigits="0" /></p:outputLabel>
@@ -407,7 +421,7 @@
                 </h:panelGrid>
             </p:dialog>
         </h:form> 
-        
+
         <script type="text/javascript">
             $(document).ready(function () {
                 if (#{loginBean.esRol("Empleado")} || #{loginBean.esRol("Administrador")}) {

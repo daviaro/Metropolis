@@ -597,11 +597,11 @@
                                 <div role="tabpanel" class="tab-pane active" id="recentjobs">
                                     <div class="mj_tabcontent mj_toppadder30">
                                         <h:form id="formMostrarOfertabyRecientes" >
-                                            <h:dataTable   var="oferta" value="#{ofertaBean.ofertasbyRecientes}" styleClass="table table-striped" >
+                                            <h:dataTable   var="oferta" value="#{ofertaBean.ofertasbyRecientes2}" styleClass="table table-striped" >
 
                                                 <h:column>
                                                     <h:commandLink action="#{ofertaBean.gotoTrabajo(oferta)}">
-                                                        <p:graphicImage value="#{oferta.usuario.foto == null or oferta.usuario.foto.equals('') ? '/images/perfil-sinfoto.png':oferta.usuario.foto }"  styleClass="img-responsive" alt="" width="70" height="70" />
+                                                        <p:graphicImage value="#{oferta.usuario.foto == null or oferta.usuario.foto.equals('') ? '/images/perfil-sinfoto.png':'/images/Profile/'.concat(oferta.usuario.foto) }"  styleClass="img-responsive" alt="" width="70" height="70" />
                                                     </h:commandLink>
                                                 </h:column>
 
@@ -728,6 +728,20 @@
                 </div>
             </div>
         </div>
+        <div class="mj_mockup_section mj_toppadder70">
+            <div class="mj_overlay"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2 col-sm-offset-0 col-xs-offset-0"> </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2 col-sm-offset-0 col-xs-offset-0">
+                        <div class="mj_iphonemockup">
+                            <img src="../images/PAUTA_HOME_TRANS.png" class="img-responsive" alt=""></img>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br /><br />
         <div class="mj_transprentbg">
             <div class="container-fluid">
                 <div class="row">
@@ -736,7 +750,7 @@
                             <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1 col-sm-offset-0 col-xs-offset-0 mj_toppadder80 mj_bottompadder50">
                                 <div class="mj_videosection_data mj_toppadder50">
                                     <h1>Como Funciona</h1>
-                                    <p>En metrópolis te ayudamos a ponerte en contacto de manera ágil, confiable y segura con la persona indicada para realizar el trabajo que necesitas.En solo 3 pasos ENCEUNTRA, COTIZA &amp; ADJUDICACuéntanos que servicios buscas ejemplo: clases de matemáticas, pintor, modista, etc. Espera que nuestro buscador haga su trabajo. </p>
+                                    <p>En metrópolis te ayudamos a ponerte en contacto de manera ágil, confiable y segura con la persona indicada para realizar el proyecto que necesitas o servicio que ofrezcas. En solo 3 pasos ENCUENTRA, COTIZA Y ADJUDICA / OFRECE, COTIZA Y EJECUTA Cuéntanos que servicios buscas o que servicios ofreces ejemplo: clases de matemáticas, pintor, modista, mecánico etc.  Puedes encontrar u ofrecer casi lo que quieras… </p>
                                     <a href="Como_Funciona.xhtml" class="mj_readmore">Leer Mas</a>
                                 </div>
                             </div>
@@ -841,19 +855,7 @@
                 </div>
             </div>
         </div>
-        <div class="mj_mockup_section mj_toppadder70">
-            <div class="mj_overlay"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2 col-sm-offset-0 col-xs-offset-0"> </div>
-                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 col-md-offset-2 col-sm-offset-0 col-xs-offset-0">
-                        <div class="mj_iphonemockup">
-                            <img src="../images/PAUTA_HOME_TRANS.png" class="img-responsive" alt=""></img>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <!-- <div class="mj_lightgraytbg mj_bottompadder80">
             <div class="container">
                 <div class="row">

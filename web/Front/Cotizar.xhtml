@@ -14,7 +14,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
                         <div class="mj_resume_heading">
-                            <p:graphicImage value="#{ofertaBean.ofertaSelected.usuario.foto}" ></p:graphicImage>
+                            <p:graphicImage value="/images/Profile/#{ofertaBean.ofertaSelected.usuario.foto}" ></p:graphicImage>
 
                             <h1>O<span>ferta</span> <span>#{ofertaBean.ofertaSelected.trabajo.titulo}</span></h1>
                             <br />
@@ -46,7 +46,7 @@
                                         </div>
                                         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                                             <div class="mj_detaildiv">
-                                                
+
                                                 <blockquote class="mj_blueblockquote">                                            
                                                     <!--<p>Descripcion: #{ofertaBean.ofertaSelected.trabajo.descripcion}</p>-->
                                                     <p>Costo: <h:outputLabel value="#{ofertaBean.ofertaSelected.costo}" style="font-size: 14"><f:convertNumber type="currency"  currencySymbol="$" maxFractionDigits="0" /> </h:outputLabel> / #{ofertaBean.ofertaSelected.trabajo.medicionTrabajo.nombre} </p>
@@ -63,9 +63,9 @@
                                         </div>
                                         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                                             <div class="mj_detaildiv">
-                                                
+
                                                 <blockquote class="mj_blueblockquote">                                            
-                                                    
+
                                                     <p> #{usuarioBean.UsuarioFromUsr( ofertaBean.ofertaSelected.usuario).experiencia} </p>
                                                 </blockquote>
                                             </div>
@@ -94,16 +94,16 @@
                                                     </div>                                                    
                                                     <div class="form-group" >
                                                         <h:outputLabel for="itvalorPresupuesto" value="Presupuesto" style="font-weight:bold"/>                    
-                                                        
+
                                                         <p:inputText id="itvalorPresupuesto" value="#{ofertaBean.cotizacionNueva.valorPresupuesto}" 
                                                                      label="Costo" styleClass="form-control"
                                                                      placeholder="Ingrese el valor a pagar" required="true"
                                                                      requiredMessage="Cual es su presupuesto?" validatorMessage="Valor presupuesto incorrecto.">
-                                                            
+
                                                             <f:validateDoubleRange minimum="1" maximum="2147483647" />
                                                             <p:clientValidator />
                                                         </p:inputText>         
-                                                        
+
                                                         <p:message for="itvalorPresupuesto" />
                                                     </div>
                                                     <div class="form-group" >
@@ -127,7 +127,29 @@
                                                     </div>
                                                 </blockquote>
                                             </div>
-                                        </div>                                        
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mj_toppadder30 mj_bottompadder30">
+                                            <div class="mj_divider"></div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                            <label>Portafolio</label>
+                                        </div>
+                                        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                            <div class="mj_detaildiv">
+                                                <span>Portafolio del servicio</span>
+                                                <blockquote class="mj_yellowblockquote">
+
+                                                    <div class="form-group" >
+                                                        <p:galleria value="#{ofertaBean.getImagesFromOferta(ofertaBean.ofertaSelected)}" var="imagen">                                                            
+                                                            <p:graphicImage value="/images/Portafolio/#{imagen}" style="max-height: 400px; max-width: 600px"></p:graphicImage>
+                                                        </p:galleria>
+                                                    </div>
+                                                </blockquote>
+                                            </div>
+                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +161,7 @@
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="row">
                                     <div class="mj_resume_changeing mj_bluebg">
-                                        <a href="detalleOferta.xhtml"><i class="fa fa-angle-left"></i>Atras</a>
+                                        <a href="index.xhtml"><i class="fa fa-angle-left"></i>Atras</a>
                                     </div>
                                 </div>
                             </div>

@@ -123,7 +123,7 @@ public class CotizacionDaoImplement implements CotizacionDao {
     public List<Cotizacion> findAllbyCotizacionesRealizadas(Usuario usuario) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         List<Cotizacion> lista = null;
-        String sql = "FROM Cotizacion c LEFT JOIN FETCH c.contratos contra INNER JOIN FETCH c.oferta as co INNER JOIN FETCH co.trabajo as  cot INNER JOIN FETCH cot.medicionTrabajo as  m WHERE (c.fechaRespuesta IS NULL) and contra IS NULL and c.usuario ='" + usuario.getIdUsuario() + "'";
+        String sql = "FROM Cotizacion c LEFT JOIN FETCH c.contratos contra INNER JOIN FETCH c.oferta as co INNER JOIN FETCH co.trabajo as  cot INNER JOIN FETCH cot.medicionTrabajo as  m WHERE (c.fechaRespuesta IS NULL) and c.estado=1 and contra IS NULL and c.usuario ='" + usuario.getIdUsuario() + "'";
         try {
             session.beginTransaction();
             lista = session.createQuery(sql).list();

@@ -84,7 +84,29 @@ public class TrabajoDaoImplement implements TrabajoDao {
         return trabajo;
     }
     
-    
+    @Override
+    public boolean insertarTrabajo(Trabajo trabajo) {
+        boolean flag;
+        Transaction trans = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            trans = session.beginTransaction();
+            session.save(trabajo);
+            session.getTransaction().commit();
+            flag = true;
+        } catch (RuntimeException e) {
+            if (trans != null) {
+                trans.rollback();
+
+            }
+            e.printStackTrace();
+            flag = false;
+        } finally {
+            session.flush();
+            session.close();
+        }
+        return flag;
+    }
     @Override
     public boolean modificarTrabajo(Trabajo trabajo) {
         boolean flag;

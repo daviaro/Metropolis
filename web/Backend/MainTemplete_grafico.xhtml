@@ -15,7 +15,7 @@
         <meta name="author" content=""></meta>
         <meta name="MobileOptimized" content="320"></meta>
         <link href="../css/main.css" rel="stylesheet" type="text/css" />
-        <h:outputStylesheet library="default" name="css/jquery.datetimepicker.css"  />
+        
         <ui:insert name="head"></ui:insert>
         <link rel="shortcut icon" type="image/png" href="../images/favicon.png" />
     </h:head>
@@ -47,24 +47,7 @@
                                 <li><a href="Trabajador.xhtml">BUSCAR SERVICIOS</a></li>
                                 <li><a href="Ofertar.xhtml">OFERTAR</a>
                                 </li>
-                                <li><a href="#">COMO FUNCIONA</a>
-                                    <ul class="sub_menu">
-                                        <li><a href="Como_Funciona.xhtml">COMO FUNCIONA</a>
-                                        </li>
-                                        <li><a href="Como_Trabajar.xhtml">COMO TRABAJAR</a>
-                                        </li>
-                                        <li><a href="Como_Hacer_Un_Pago.xhtml">COMO HACER PAGOS</a>
-                                        </li>
-                                        <li><a href="Como_Contratar.xhtml">CÓMO ENCUENTRO UN TRABAJO</a>
-                                        </li>
-                                        <li><a href="#">COMO TERMINAR TRABAJO</a>
-                                        </li>                                        
-                                        <li><a href="Signup.xhtml">CREAR CUENTA</a>
-                                        </li>
-                                        <li><a href="login.xhtml">INICIAR SESION</a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                
                                 <li style="display: #{loginBean.isAdmin() ? 'list-item' : 'none'};" ><a href="#">Administración</a>
                                     <ul class="sub_menu">
                                         <li><a href="../Backend/Miembro.xhtml">Miembros</a>
@@ -83,7 +66,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="Contacto.xhtml">CONTACTO</a></li>
+                                
                             </ul>
                             <ul class="nav navbar-nav navbar-right mj_right_menu mj_withoutlogin_menu">
                                 <li class="mj_searchbtn"><a href="#"><i class="fa fa-search"></i></a>
@@ -190,6 +173,32 @@
         </div>
 
         
+        <h:outputScript library="default" name="js/jquery-ui-1.12.1/jquery-ui.min.js"  />
+        <h:outputScript library="default" name="js/jquery-migrate-1.4.1.js"  />
+        <h:outputScript library="default" name="js/bootstrap.js"  />
+        <h:outputScript library="default" name="js/modernizr.custom.js"  /> 
+        <h:outputScript library="default" name="js/plugins/rsslider/jquery.themepunch.tools.min.js"  /> 
+        <h:outputScript library="default" name="js/plugins/rsslider/jquery.themepunch.revolution.min.js"  /> 
+        <h:outputScript library="default" name="js/plugins/rsslider/revolution.extension.layeranimation.min.js"  /> 
+        <h:outputScript library="default" name="js/plugins/rsslider/revolution.extension.navigation.min.js"  /> 
+        <h:outputScript library="default" name="js/plugins/rsslider/revolution.extension.parallax.min.js"  /> 
+        <h:outputScript library="default" name="js/plugins/rsslider/revolution.extension.slideanims.min.js"  />  
+        <h:outputScript library="default" name="js/plugins/countto/jquery.countTo.js"  />  
+        <h:outputScript library="default" name="js/plugins/owl/owl.carousel.js"  />  
+        <h:outputScript library="default" name="js/plugins/bootstrap-slider/bootstrap-slider.js"  />  
+        <h:outputScript library="default" name="js/plugins/fancybox/jquery.fancybox.js"  />  
+        <h:outputScript library="default" name="js/plugins/fancybox/jquery.fancybox.pack.js"  />  
+
+        <h:outputScript library="default" name="js/jquery.mixitup.js"  />  
+        <h:outputScript library="default" name="js/plugins/isotop/isotope.pkgd.js"  />  
+        <h:outputScript library="default" name="js/plugins/ckeditor/ckeditor.js"  />  
+        <h:outputScript library="default" name="js/plugins/ckeditor/ckeditor.js"  /> 
+        <h:outputScript library="default" name="js/plugins/ckeditor/adapters/jquery.js"  /> 
+        <h:outputScript library="default" name="js/plugins/fileupload/js/jquery.iframe-transport.js"  />
+        <h:outputScript library="default" name="js/plugins/fileupload/js/jquery.fileupload.js"  /> 
+        <h:outputScript library="default" name="js/plugins/datetimepicker/jquery.datetimepicker.full.js"  /> 
+        <!--<script src="/Metropolis2/js/plugins/ckeditor/adapters/jquery.js"></script>-->
+        <h:outputScript library="default" name="js/custom.js"  /> 
         
         
     </h:body>

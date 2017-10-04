@@ -7,6 +7,7 @@ package dao;
 
 import java.util.List;
 import model.Categoria;
+import model.Trabajo;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -118,6 +119,28 @@ public class CategoriaDaoImplement implements CategoriaDao {
             }
         }
         return model;
+    }
+    
+    //@Override
+    public Categoria buscarCategoria(Trabajo tr) {
+        Categoria categoria = null;
+        Trabajo trabajo = null;
+        Session sesion = HibernateUtil.getSessionFactory().getCurrentSession();
+        String sql = "FROM Trabajo t WHERE idTrabajo ='" + tr.getIdTrabajo() + "'";
+        try {
+            sesion.beginTransaction();
+            trabajo = (Trabajo) sesion.createQuery(sql).uniqueResult();
+            sesion.beginTransaction().commit();
+            int idTrabajo =trabajo.getCategoria().getIdCategoria();
+            sesion.close();
+            categoria = this.buscarbyId(idTrabajo);
+            
+        } catch (Exception e) {
+            if (sesion != null) {
+                sesion.beginTransaction().rollback();
+            }
+        }
+        return categoria;
     }
 
     @Override

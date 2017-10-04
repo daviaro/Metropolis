@@ -145,7 +145,7 @@ public class ContratoDaoImplement implements ContratoDao {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         List<Object> lista = null;
         List<EstructuraVentas> listaes = new ArrayList<>();
-        String sql = "select CONCAT(YEAR(fecha), MONTH (fecha)), count(*) From Contrato GROUP BY CONCAT(YEAR(fecha), MONTH (fecha)) ORDER BY 1";
+        String sql = "select YEAR(fecha), MONTH (fecha), count(*) From Contrato GROUP BY YEAR(fecha), MONTH (fecha) ORDER BY 1,2 ASC";
         try {
             session.beginTransaction();
             lista = session.createQuery(sql).list();
@@ -153,8 +153,8 @@ public class ContratoDaoImplement implements ContratoDao {
             Iterator itr = lista.iterator();
             while (itr.hasNext()) {
                 Object[] obj = (Object[]) itr.next();
-                String mes = String.valueOf(obj[0]);
-                int cantidad = Integer.parseInt(String.valueOf(obj[1]));
+                String mes = String.valueOf(obj[0]).concat(String.valueOf(obj[1]));
+                int cantidad = Integer.parseInt(String.valueOf(obj[2]));
                 listaes.add(new EstructuraVentas(mes, cantidad));
             }
 

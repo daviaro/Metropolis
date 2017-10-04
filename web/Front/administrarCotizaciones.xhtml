@@ -120,7 +120,12 @@
                                                         <p:commandButton update=":formCotizacionRealizada" oncomplete="PF('dialogCotizacionRealizada').show()" icon="ui-icon-search" title="Ver Detalles">
                                                             <f:setPropertyActionListener value="#{cotizacionP}" target="#{cotizacionBean.cotizacion}" />
                                                         </p:commandButton>
+                                                        <p:commandButton update="formMostrarCotizacionesRealizadas" action="#{cotizacionBean.eliminarCotizacion(cotizacionP)}" icon="ui-icon-trash" title="Eliminar" >
+
+                                                        </p:commandButton>
                                                     </p:column>
+                                                    
+                                                    
 
                                                 </p:dataTable>
                                             </h:form>

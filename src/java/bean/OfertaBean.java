@@ -125,7 +125,15 @@ public class OfertaBean implements Serializable {
     private List<UploadedFile> uploadFiles = new ArrayList<>();
     //fotos
     private String pathImages = "";
-    private String destination = "/images/";
+
+    public String getPathImages() {
+        return pathImages;
+    }
+
+    public void setPathImages(String pathImages) {
+        this.pathImages = pathImages;
+    }
+    private String destination = "/images/Portafolio/";
     //Switch
     private boolean portafolioSwitch = false;
 
@@ -138,14 +146,22 @@ public class OfertaBean implements Serializable {
 
     @PostConstruct
     public void init() {
+        this.setFitroValor("");
+        this.setUbicacionFilter("");
+        setFitroJornada("");
+        setFitroValor("");
+        
+        
         cotizacionNueva = new Cotizacion();
         ofertaCreate = new Oferta();
         createdPortafolio = new Portafolio();
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getCurrentInstance().getExternalContext().getContext();
         this.pathImages = servletContext.getRealPath(this.destination);
+        //this.FitroTitulo = "desa";
 
         //logger.info("Se obtiene la ruta donde se van a despositar y leer imagenes {} ", this.pathImages);
     }
+    
 
     /**
      * Creates a new instance of OfertaBean
@@ -189,9 +205,55 @@ public class OfertaBean implements Serializable {
         //limitTable(ofertas, 10);
         return ofertas;
     }
+    public List<Oferta> getOfertasbyRecientes2() {
+
+        OfertaDao linkDao = new OfertaDaoImplement();
+        //ofertas = linkDao.findAllbyRecientes(this.FitroTitulo, this.FitroUbicacion, this.FitroJornada, this.FitroValor);
+        ofertas = linkDao.findAllbyRecientes();
+        return ofertas;
+    }
 
     public void actualizarOferta() {
         OfertaDao od = new OfertaDaoImplement();
+
+        if (uploadFiles != null && uploadFiles.size() > 0) {
+
+            PortafolioDaoImplement pdi = new PortafolioDaoImplement();
+            
+            Portafolio portafolio = pdi.getPortafolios(ofertaSelected).get(0);
+                       
+            ImagenesDao imagenesLink = new ImagenesDaoImplement();
+            
+            String nombreImagen = "";
+            List<Imagenes> imagenes = new ArrayList<>();
+            imagenes = imagenesLink.getImagenes(ofertaSelected);
+            int i = imagenesLink.getImagenes(ofertaSelected).size()+1;
+            //Crear imagenes y subirlas al server
+            
+            //Asignar nombres de las imagenes
+            for (UploadedFile u : uploadFiles) {
+                String nombre = u.getFileName();
+                String extencion = nombre.substring(nombre.indexOf(".") + 1);
+                nombreImagen = "Portafolio-" + portafolio.getIdPortafolio() + "-" + i + "." + extencion;
+                Imagenes imagen = new Imagenes(portafolio, nombreImagen, true);
+                
+                imagenes.add(imagen);
+                portafolio.setImageneses(new HashSet<Imagenes>(imagenes));
+                //Guardar Imagen
+                try {
+                    TransferFile(nombreImagen, u.getInputstream(), u);
+                    //Guardar Imagen
+                    imagenesLink.insertarImagen(imagen);
+                    FacesContext context2 = FacesContext.getCurrentInstance();
+                } catch (IOException ex) {
+                    FacesContext context3 = FacesContext.getCurrentInstance();
+                    context3.addMessage(null, new FacesMessage("Error", "Error subiendo la foto"));
+                }
+                i++;
+
+            }
+        }
+
         od.actualizarOferta(ofertaSelected);
     }
 
@@ -507,12 +569,13 @@ public class OfertaBean implements Serializable {
             e.printStackTrace();
         }
     }
+
     public void gotoPerfilAfiliado() {
-        
+
         FacesContext ctx = FacesContext.getCurrentInstance();
         ExternalContext extContext = ctx.getExternalContext();
         String urlRedirect = extContext.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/Front/Detalle_Trabajador.xhtml"));
-        
+
         HttpServletRequest origRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String urlActual = origRequest.getRequestURI();
 
@@ -831,10 +894,19 @@ public class OfertaBean implements Serializable {
 
         List<String> results = new ArrayList<String>();
         for (int i = 0; i < ofertas.size(); i++) {
-            results.add(ofertas.get(i).getIdOferta() + " " + ofertas.get(i).getTrabajo().getTitulo() + " " + ofertas.get(i).getTrabajo().getCategoria().getNombre() + " " + ofertas.get(i).getTrabajo().getDescripcion());
+            results.add(ofertas.get(i).getTrabajo().getTitulo());// + " " + ofertas.get(i).getTrabajo().getCategoria().getNombre() + " " + ofertas.get(i).getTrabajo().getDescripcion());
         }
 
         return results;
+    }
+
+    public void buscarPalabra() {
+        this.FitroTitulo = ofertaSearchString;
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("Trabajador.xhtml");
+        } catch (IOException ex) {
+            //   Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void verOferta() {
@@ -919,7 +991,7 @@ public class OfertaBean implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Estado", "" + this.createdPortafolio.isEstado()));
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Descripcion", "" + this.createdPortafolio.getDescripcion()));
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Fecha creacion", "" + this.createdPortafolio.getFechaCreacion()));
-                */
+                 */
                 createdPortafolio.setOferta(ofertaCreate);
                 ofertaCreate.getPortafolios().add(createdPortafolio);
                 //Guardar Portafolio
@@ -935,7 +1007,7 @@ public class OfertaBean implements Serializable {
                     for (UploadedFile u : uploadFiles) {
                         String nombre = u.getFileName();
                         String extencion = nombre.substring(nombre.indexOf(".") + 1);
-                        nombreImagen = "Potafolio-" + createdPortafolio.getIdPortafolio() + "-" + i + "." + extencion;
+                        nombreImagen = "Portafolio-" + createdPortafolio.getIdPortafolio() + "-" + i + "." + extencion;
                         Imagenes imagen = new Imagenes(createdPortafolio, nombreImagen, true);
                         createdPortafolio.getImageneses().add(imagen);
 
@@ -1050,5 +1122,18 @@ public class OfertaBean implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public List<String> getImagesFromOferta(Oferta oferta) {
+        List<String> imagenes = new ArrayList<String>();
+
+        ImagenesDaoImplement idi = new ImagenesDaoImplement();
+        List<Imagenes> imagenesList = idi.getImagenes(oferta);
+
+        for (int i = 0; i < imagenesList.size(); i++) {
+            imagenes.add(imagenesList.get(i).getUrl());
+        }
+
+        return imagenes;
     }
 }

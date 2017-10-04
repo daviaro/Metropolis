@@ -61,7 +61,7 @@ public class LoginBean implements Serializable {
     private boolean aceptaPoliticas;
     //Foto
     private String pathImages = "";
-    private String destination = "/images/";
+    private final String destination = "/images/Profile/";
     //Foto Cliente
     private UploadedFile uploadedFile;
     private StreamedContent clientImage = null;
@@ -187,7 +187,10 @@ public class LoginBean implements Serializable {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         String mail = String.valueOf(session.getAttribute("email"));
         usr = this.usuarioDao.buscarUsuariobyEmail(mail);
-
+        //if(usr.getUbicacion()==null || usr.getUbicacion().getBarrio()==null){
+            UbicacionDaoImplement udi =  new UbicacionDaoImplement();
+            usr.setUbicacion(udi.buscarUbicacionById(usr.getUbicacion().getIdUbicacion()));
+        //}
         return usr;
 
     }
@@ -283,6 +286,8 @@ public class LoginBean implements Serializable {
         //context.addCallbackParam("ruta", ruta);
         return "index?faces-redirect=true";
     }
+    
+     
 
     public void registrarCliente() throws IOException {
         //Id del usuario a guardar
@@ -574,6 +579,14 @@ public class LoginBean implements Serializable {
         }
     }
 
+    public void irAcomoMeVen(){
+        try {     
+                
+                FacesContext.getCurrentInstance().getExternalContext().redirect("Perfil_Preview.xhtml");
+            } catch (Exception e) {
+
+            }
+    }
     public void AutorizarAdmin() {
         if (!isAdmin()) {
             try {

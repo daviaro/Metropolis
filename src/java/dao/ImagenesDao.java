@@ -5,7 +5,9 @@
  */
 package dao;
 
+import java.util.List;
 import model.Imagenes;
+import model.Oferta;
 
 /**
  *
@@ -14,4 +16,5 @@ import model.Imagenes;
 public interface ImagenesDao {
     
     public boolean insertarImagen(Imagenes imagen);
+    public List<Imagenes> getImagenes(Oferta oferta);
 }

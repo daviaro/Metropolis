@@ -83,7 +83,18 @@ public class MedicionTrabajo  implements java.io.Serializable {
         this.trabajos = trabajos;
     }
 
-
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof MedicionTrabajo)) {
+            return false;
+        }
+        MedicionTrabajo other = (MedicionTrabajo) object;
+        if ((this.idMedicionTrabajo == null && other.idMedicionTrabajo != null) || (this.idMedicionTrabajo != null && !this.idMedicionTrabajo.equals(other.idMedicionTrabajo))) {
+            return false;
+        }
+        return true;
+    }
 
 
 }

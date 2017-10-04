@@ -70,6 +70,10 @@
     </context-param>
     
     -->
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/WEB-INF/error.html</location>
+    </error-page>
     <context-param>
         <param-name>MAILFROM</param-name>
         <param-value>enviosmetropolis@gmail.com</param-value>

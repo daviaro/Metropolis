@@ -12,7 +12,7 @@
     <ui:define name="contenido">
         <f:event type="preRenderView" listener="#{loginBean.Autorizar()}"></f:event>
         <div class="mj_pagetitle2 mj_bottompadder80">
-            
+
             <div class="mj_pagetitle_inner">
                 <div class="container">
                     <div class="row">
@@ -45,20 +45,25 @@
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                         <div class="mj_sidebar_wrapper">
                             <aside class="widget widget_posts">
-                            <h4 class="widget-title">Administracion</h4>
-                            <ul>
-                                <li><a href="modificarPerfil.xhtml"><i class="fa fa fa-user"></i> Perfíl </a>
-                                </li>
-                                <li><a href="administrarTrabajos.xhtml"><i class="fa fa fa-suitcase"></i> Afiliados </a>
-                                </li>
-                                <li><a href="administrarCotizaciones.xhtml"><i class="fa fa fa-inbox"></i> Mi cuenta </a>
-                                </li>
-                            </ul>
-                            
-                        </aside>                          
+                                <h4 class="widget-title">Administracion</h4>
+                                <ul>
+                                    <li><a href="modificarPerfil.xhtml"><i class="fa fa fa-user"></i> Perfíl </a>
+                                    </li>
+                                    <li><a href="administrarTrabajos.xhtml"><i class="fa fa fa-suitcase"></i> Afiliados </a>
+                                    </li>
+                                    <li><a href="administrarCotizaciones.xhtml"><i class="fa fa fa-inbox"></i> Mi cuenta </a>
+                                    </li>
+                                </ul>
+
+                            </aside>                          
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" >
+
+
+                        
+                        <p:commandButton id="hdnBtn" actionListener="#{loginBean.irAcomoMeVen()}" value="¿Cómo me ven?" /><br />                                        
+                        
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div id="divPerfil" >
@@ -66,9 +71,6 @@
 
                                         <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col-lg-offset-1 col-md-offset-1">
 
-                                            <p:commandButton action="Perfil_Preview.xhtml" icon="ui-icon-zoomin" value="Como me ven?" />
-                                                                                                
-                                            
                                             <div class="mj_mainheading " >
                                                 <h2><span>Modificar Cuenta</span></h2>
                                             </div>

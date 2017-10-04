@@ -95,7 +95,7 @@
 
                                         <h:column>
                                             <h:commandLink action="#{ofertaBean.gotoTrabajo(oferta)}">
-                                                <p:graphicImage value="#{oferta.usuario.foto == null or oferta.usuario.foto.equals('') ? '/images/perfil-sinfoto.png':oferta.usuario.foto }"  styleClass="img-responsive" alt="" width="70" height="70" />
+                                                <p:graphicImage value="#{oferta.usuario.foto == null or oferta.usuario.foto.equals('') ? '/images/perfil-sinfoto.png':'/images/Profile/'.concat(oferta.usuario.foto) }"  styleClass="img-responsive" alt="" width="70" height="70" />
                                             </h:commandLink>
                                         </h:column>
 

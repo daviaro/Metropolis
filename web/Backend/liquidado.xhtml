@@ -31,7 +31,9 @@
                                 <h:outputText value="#{liquidacionBean.getNombresUsr(liquidacion.usuario)}" />
                             </p:column>                            
                             <p:column headerText="Fecha" style="text-align:center">
-                                <h:outputText value="#{liquidacion.fechaLiquidacion}" />
+                                <h:outputText value="#{liquidacion.fechaLiquidacion}">
+                                    <f:convertDateTime pattern="MM-dd-yyyy" />
+                                </h:outputText>
                             </p:column>
                             <p:column headerText="A pagar" style="text-align:center">
                                 <h:outputText value="#{liquidacion.subtotal}" >

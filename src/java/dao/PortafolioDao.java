@@ -5,6 +5,8 @@
  */
 package dao;
 
+import java.util.List;
+import model.Oferta;
 import model.Portafolio;
 
 /**
@@ -14,4 +16,5 @@ import model.Portafolio;
 public interface PortafolioDao {
     
     public boolean insertarPortafolio(Portafolio portafolio);
+    public List<Portafolio> getPortafolios(Oferta oferta) ;
 }

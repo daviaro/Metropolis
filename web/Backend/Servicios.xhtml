@@ -73,7 +73,7 @@
                                     
                                     <f:facet name="footer">
 
-                                        <p:commandButton id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogcategoriaupdate').hide()" actionListener="#{servicioBean.btnUpdateCategoria(actionEvent)}" icon="ui-icon-save" title="Guardar" value="Guardar"/>
+                                        <p:commandButton id="btnUpdateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogcategoriaupdate').hide()" actionListener="#{servicioBean.btnUpdateServicio(actionEvent)}" icon="ui-icon-save" title="Guardar" value="Guardar"/>
                                         <p:commandButton id="btnUpdateCancelar" oncomplete="PF('dialogcategoriaupdate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
                                     </f:facet>
                                 </h:panelGrid>
@@ -81,25 +81,35 @@
                             </p:dialog>
                         </h:form>
                         <h:form id="formCreate"> 
-                            <p:dialog header="Crear Categoria" widgetVar="dialogcategoriacreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgCategoriaCreate">
+                            <p:dialog header="Crear Servicio" widgetVar="dialogcategoriacreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="dlgCategoriaCreate">
 
                                 <h:panelGrid  id="display" columns="2"  columnClasses="label,value">
 
-                                    <h:outputText class="mj_blue_text"  value="Nombre" />
-                                    <p:inputText value="#{categoriaBean.createdCategoria.nombre}" />
+                                    <h:outputText class="mj_blue_text"  value="Título" />
+                                    <p:inputText value="#{servicioBean.createdTrabajo.titulo}" required="true" requiredMessage="Por favor ingrese un título"/>
 
+                                    <h:outputText class="mj_blue_text"  value="Descripción" />
+                                    <p:inputText value="#{servicioBean.createdTrabajo.descripcion}" required="true" requiredMessage="Por favor ingrese la descripción" />
+                                    
                                     <h:outputText class="mj_blue_text"  value="Hablitada" />
-                                    <p:selectBooleanCheckbox value="#{categoriaBean.createdCategoria.estado}"/>
+                                    <p:selectBooleanCheckbox value="#{servicioBean.createdTrabajo.estado}"/>
 
                                     <h:outputText class="mj_blue_text"  value="Categoria" />
-                                    <p:selectOneMenu value="#{categoriaBean.createdCategoria.categoria}" required="false"
+                                    <p:selectOneMenu value="#{servicioBean.createdTrabajo.categoria}" required="false"
                                                      converter="categoriaConverter" converterMessage="No se pudo convertir">
                                         <f:selectItem  itemLabel="Seleccione Categoria" itemValue="" />
-                                        <f:selectItems value="#{categoriaBean.categoriasPrincipales}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat}" />
+                                        <f:selectItems value="#{servicioBean.subCategorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat}" />
+                                    </p:selectOneMenu>
+                                    
+                                    <h:outputText class="mj_blue_text"  value="Medición trabajo" />
+                                    <p:selectOneMenu value="#{servicioBean.createdTrabajo.medicionTrabajo}" required="false"
+                                                     converter="medicionTrabajoConverter" converterMessage="No se pudo convertir">
+                                        <f:selectItem  itemLabel="Seleccione Medida" itemValue="" />
+                                        <f:selectItems value="#{servicioBean.medicionTrabajo}" var="medTr" itemLabel="#{medTr.nombre}" itemValue="#{medTr}" />
                                     </p:selectOneMenu>
 
                                     <f:facet name="footer">
-                                        <p:commandButton id="btnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogcategoriacreate').hide()" actionListener="#{categoriaBean.btnCreateCategoria(actionEvent)}" icon="ui-icon-save" title="Guardar" value="Guardar"/>   
+                                        <p:commandButton id="btnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogcategoriacreate').hide()" actionListener="#{servicioBean.btnCreateServicio(actionEvent)}" icon="ui-icon-save" title="Guardar" value="Guardar"/>   
                                         <p:commandButton id="btnCreateCancelar" oncomplete="PF('dialogcategoriacreate').hide()" icon="ui-icon-cancel" title="Cancelar" value="Cancelar"/>
                                     </f:facet>
                                 </h:panelGrid>

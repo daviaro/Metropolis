@@ -77,7 +77,7 @@ public class CotizacionBean implements Serializable {
         for (Iterator iterator1 = usuarioRegistrado.getOfertas().iterator(); iterator1.hasNext();) {
             Oferta oferta = (Oferta) iterator1.next();
             List<Cotizacion> cotizacionesTemp = cotizaciondao.findAllbyOfertaPendiente(oferta);
-            if (!cotizacionesTemp.isEmpty()) {
+            if (cotizacionesTemp!=null && !cotizacionesTemp.isEmpty()) {
                 this.cotizacionesPendientes.addAll(cotizacionesTemp);
 
             }

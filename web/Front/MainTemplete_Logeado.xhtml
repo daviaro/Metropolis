@@ -61,18 +61,15 @@
                                     <ul class="sub_menu">
                                         <li><a href="Como_Funciona.xhtml">COMO FUNCIONA</a>
                                         </li>
-                                        <li><a href="Como_Trabajar.xhtml">COMO OFERTAR</a>
+                                        <li><a href="Como_Trabajar.xhtml">COMO OFRECER UN SERVICIO</a>
                                         </li>
                                         <li><a href="Como_Hacer_Un_Pago.xhtml">COMO HACER PAGOS</a>
                                         </li>
-                                        <li><a href="Como_Contratar.xhtml">CÓMO ENCUENTRO UN PROYECTO</a>
+                                        <li><a href="Como_Contratar.xhtml">CÓMO ENCUENTRO UN SERVICIO</a>
                                         </li>
-                                        <li><a href="#">COMO TERMINAR PROYECTO</a>
+                                        <li><a href="como_terminar_servicio.xhtml">COMO TERMINAR SERVICIO</a>
                                         </li>                                        
-                                        <li><a href="Signup.xhtml">CREAR CUENTA</a>
-                                        </li>
-                                        <li><a href="login.xhtml">INICIAR SESION</a>
-                                        </li>
+                                        
                                     </ul>
                                 </li>
                                 <li style="display: #{loginBean.isAdmin() ? 'list-item' : 'none'};" ><a href="#">Administración</a>
@@ -108,7 +105,7 @@
                                                                     completeMethod="#{ofertaBean.buscarOferta}" 
                                                                     minQueryLength="3" size="65" effect="blind" >
                                                         <p:ajax event="itemSelect"
-                                                                listener="#{ofertaBean.verOferta()}" />
+                                                                listener="#{ofertaBean.buscarPalabra()}" />
                                                     </p:autoComplete> 
                                                 </div>
                                             </div>

@@ -30,7 +30,7 @@ public class OfertaDaoImplement implements OfertaDao {
 
         Session session = null;
         ofertas = null;
-        String sql = "FROM Oferta o INNER JOIN FETCH o.jornada as j INNER JOIN FETCH o.trabajo as t INNER JOIN FETCH o.usuario as u INNER JOIN FETCH u.ubicacion as ub INNER JOIN FETCH o.trabajo.categoria as c INNER JOIN FETCH o.trabajo.medicionTrabajo as m where o.usuario = u.idUsuario and o.estado=1  order by o.fechaCreacion asc";
+        String sql = "FROM Oferta o INNER JOIN FETCH o.jornada as j INNER JOIN FETCH o.trabajo as t INNER JOIN FETCH o.usuario as u INNER JOIN FETCH u.ubicacion as ub INNER JOIN FETCH o.trabajo.categoria as c INNER JOIN FETCH o.trabajo.medicionTrabajo as m where o.usuario = u.idUsuario and o.estado=1  order by o.fechaCreacion DESC";
 
         try {
             //Se recupera la session actual
@@ -38,7 +38,7 @@ public class OfertaDaoImplement implements OfertaDao {
             //inicializo transaccion
             session.beginTransaction();
             Query query = session.createQuery(sql);
-            query.setMaxResults(5);
+            query.setMaxResults(10);
             ofertas = query.list();
             session.getTransaction().commit();
         } catch (HibernateException e) {
@@ -92,6 +92,7 @@ public class OfertaDaoImplement implements OfertaDao {
             //inicializo transaccion
             session.beginTransaction();
             Query query = session.createQuery(sql);
+            query.setMaxResults(10);
             ofertas = query.list();
 
             session.getTransaction().commit();
@@ -269,6 +270,7 @@ public class OfertaDaoImplement implements OfertaDao {
             //inicializo transaccion
             session.beginTransaction();
             Query query = session.createQuery(sql);
+            query.setMaxResults(10);
             ofertas = query.list();
             session.getTransaction().commit();
         } catch (HibernateException e) {

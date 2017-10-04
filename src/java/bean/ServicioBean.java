@@ -7,11 +7,13 @@ package bean;
 
 import dao.CategoriaDao;
 import dao.CategoriaDaoImplement;
+import dao.MedicionTrabajoDaoImplement;
 import dao.TrabajoDao;
 import dao.TrabajoDaoImplement;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
@@ -21,6 +23,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import model.Categoria;
+import model.MedicionTrabajo;
 import model.Trabajo;
 
 /**
@@ -37,6 +40,7 @@ public class ServicioBean implements Serializable {
     private Trabajo selectedTrabajo;
     private Trabajo createdTrabajo;
     private Categoria subCategoria;
+    private List<MedicionTrabajo> medicionTrabajo;
 
     /**
      * Creates a new instance of categoriaBean
@@ -62,6 +66,21 @@ public class ServicioBean implements Serializable {
     }
 
     public Trabajo getSelectedTrabajo() {
+        if (selectedTrabajo != null) {
+            try {
+                if (selectedTrabajo.getCategoria().getNombre() == null) {
+                    CategoriaDaoImplement cdi = new CategoriaDaoImplement();
+                    selectedTrabajo.setCategoria(cdi.buscarCategoria(selectedTrabajo));
+
+                }
+            } catch (Exception e) {
+                CategoriaDaoImplement cdi = new CategoriaDaoImplement();
+                selectedTrabajo.setCategoria(cdi.buscarbyId(selectedTrabajo.getCategoria().getIdCategoria()));
+                /*CategoriaDaoImplement cdi = new CategoriaDaoImplement();
+                selectedTrabajo.setCategoria(cdi.buscarCategoria(selectedTrabajo));*/
+            }
+
+        }
         return selectedTrabajo;
     }
 
@@ -87,42 +106,46 @@ public class ServicioBean implements Serializable {
         this.categoriasPrincipales = categoriasPrincipales;
     }
 
-    public void btnCreateCategoria(ActionEvent actionEvent) {
+    public void btnCreateServicio(ActionEvent actionEvent) {
 
-        /*CategoriaDao categoriaDao = new CategoriaDaoImplement();
+        TrabajoDaoImplement tdi = new TrabajoDaoImplement();
         String msg;
-        if (categoriaDao.insertarCategoria(this.createdCategoria)) {
-            msg = "Se guardo correctamente la categoria";
+        createdTrabajo.setFechaCreacion(new Date());
+        if (tdi.insertarTrabajo(this.createdTrabajo)) {
+            msg = "Se guardo correctamente el Servicio";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
-            createdCategoria = new Categoria();
+            createdTrabajo = new Trabajo();
         } else {
-            msg = "Error al crear la categoria";
+            msg = "Error al crear el servicio";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
 
-        System.out.println(createdCategoria);*/
+        //System.out.println(createdTrabajo);
     }
 
-    public void btnUpdateCategoria(ActionEvent actionEvent) {
-        /*CategoriaDao categoriaDao = new CategoriaDaoImplement();
+    public void btnUpdateServicio(ActionEvent actionEvent) {
+
+        TrabajoDaoImplement tdi = new TrabajoDaoImplement();
         String msg;
-        if (categoriaDao.modificarCategoria(this.selectedCategoria)) {
-            msg = "Se modifico correctamente la categoria";
+
+        if (tdi.modificarTrabajo(this.selectedTrabajo)) {
+            msg = "Se modifico correctamente el trabajo";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
-            selectedCategoria = new Categoria();
+            selectedTrabajo = new Trabajo();
         } else {
-            msg = "Error al modificar la categoria";
+            msg = "Error al modificar el trabajo";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
-        }*/
+        }
     }
 
     public List<Categoria> getSubCategorias() {
         CategoriaDaoImplement cdi = new CategoriaDaoImplement();
-        return cdi.mostrarSubCategorias();
+        this.SubCategorias = cdi.mostrarSubCategorias();
+        return this.SubCategorias;
 
     }
 
@@ -148,6 +171,18 @@ public class ServicioBean implements Serializable {
             return this.selectedTrabajo.getCategoria();
         }
         return null;
+    }
+
+    public List<MedicionTrabajo> getMedicionTrabajo() {
+        if (medicionTrabajo == null || medicionTrabajo.size() == 0) {
+            MedicionTrabajoDaoImplement mtdi = new MedicionTrabajoDaoImplement();
+            medicionTrabajo = mtdi.mostrarMedidionTrabjo();
+        }
+        return medicionTrabajo;
+    }
+
+    public void setMedicionTrabajo(List<MedicionTrabajo> medicionTrabajo) {
+        this.medicionTrabajo = medicionTrabajo;
     }
 
 }
